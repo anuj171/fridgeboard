@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
-// this is the ultimate main activity
+// this is the main java activity
 public class MainActivity extends Activity {
 
     @Override
