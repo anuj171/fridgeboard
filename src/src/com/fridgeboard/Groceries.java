@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 public class Groceries extends FragmentActivity {
@@ -72,9 +74,9 @@ public class Groceries extends FragmentActivity {
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a DummySectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			Fragment fragment = new DummySectionFragment();
+			Fragment fragment = new GroceryListFragment();
 			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putInt(GroceryListFragment.ARG_CATEGORY, position);
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -106,26 +108,33 @@ public class Groceries extends FragmentActivity {
 	 * A dummy fragment representing a section of the app, but that simply
 	 * displays dummy text.
 	 */
-	public static class DummySectionFragment extends Fragment {
+	public static class GroceryListFragment extends ListFragment {
 		/**
 		 * The fragment argument representing the section number for this
 		 * fragment.
 		 */
-		public static final String ARG_SECTION_NUMBER = "section_number";
+		public static final String ARG_CATEGORY = "CATEGORY";
 
-		public DummySectionFragment() {
+		public GroceryListFragment() {
 		}
 
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_groceries_dummy,
-					container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
-			return rootView;
+		public void onActivityCreated(Bundle savedInstanceState) {
+		    super.onActivityCreated(savedInstanceState);
+		    
+		    String[][] groceriesList = new String[][]
+		    		{
+		    			{ "Milk", "Cheese", "Butter", "Ghee" },
+		    			{ "Wheat Flour" },
+		    			{ "Capsicum", "Mushroom", "Tomatoes", "Potatoes", "French beans" },
+		    			{ "A", "B", "C" }		    			
+		    		};
+		    
+		    int option = getArguments().getInt(ARG_CATEGORY);
+		    
+		    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+		        android.R.layout.simple_list_item_checked, groceriesList[option]);
+		    setListAdapter(adapter);
 		}
 	}
 
