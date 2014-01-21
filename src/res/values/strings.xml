@@ -8,5 +8,10 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_search_recipe">SearchRecipeActivity</string>
+    <string name="title_activity_groceries">Groceries</string>
+    <string name="title_section1">Dairy</string>
+    <string name="title_section2">Cereals</string>
+    <string name="title_section3">Vegetables</string>
+    <string name="title_section4">Pulses</string>
 
 </resources>

@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="18" />
 
     <application
@@ -36,6 +36,15 @@
         <activity
             android:name="com.fridgeboard.SearchRecipeActivity"
             android:label="@string/title_activity_search_recipe" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.fridgeboard.Groceries"
+            android:label="@string/title_activity_groceries" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
