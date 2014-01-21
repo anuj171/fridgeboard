@@ -13,5 +13,7 @@
     <string name="title_section2">Cereals</string>
     <string name="title_section3">Vegetables</string>
     <string name="title_section4">Pulses</string>
+    <string name="today">today</string>
+    <string name="grocery_list_duration_title">Show list for</string>
 
 </resources>
