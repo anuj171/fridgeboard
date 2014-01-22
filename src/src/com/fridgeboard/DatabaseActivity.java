@@ -19,7 +19,7 @@ public class DatabaseActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_database);
         
         DataAccess dataAccess = new DataAccess();
         datasource = dataAccess.new CommentsDataSource(this);
