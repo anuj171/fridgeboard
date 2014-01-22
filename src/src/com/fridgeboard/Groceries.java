@@ -2,6 +2,8 @@ package com.fridgeboard;
 
 import java.util.Locale;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -18,6 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+
 
 public class Groceries extends FragmentActivity {
 
@@ -59,6 +64,34 @@ public class Groceries extends FragmentActivity {
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)	{
+		switch(item.getItemId()) {
+		case R.id.item0:
+			//Toast.makeText(this, "Ordering on Big Basket", Toast.LENGTH_SHORT).show();
+			new AlertDialog.Builder(this)
+		    .setTitle("Shop for groceries on BigBasket.com")
+		    .setMessage("We will pass on your grocery list to BigBasket. You'll be able to make changes before checkout.")
+		    .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) { 
+		            // continue with delete
+		        }
+		     })
+		    .setNegativeButton("Later", new DialogInterface.OnClickListener() {
+		        public void onClick(DialogInterface dialog, int which) { 
+		            // do nothing
+		        }
+		     })
+		    .show();
+			break;
+		case R.id.item1:
+		case R.id.item2:
+			Toast.makeText(this, "Updating list", Toast.LENGTH_SHORT).show();
+			break;
+		}
+		return false;
+	}
+	
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
