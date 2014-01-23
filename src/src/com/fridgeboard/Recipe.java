@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -54,6 +55,24 @@ public class Recipe extends Activity {
 		//final View controlsView = findViewById(R.id.fullscreen_content_controls);
 		final View contentView = findViewById(R.id.fullscreen_content);
 
+		ExpandableTextView ingredientsTextView = (ExpandableTextView) findViewById(R.id.ingredients_text);
+		ingredientsTextView.setText(R.string.ingredients_text);
+        
+		ExpandableTextView instructionsTextView = (ExpandableTextView) findViewById(R.id.instructions_text);
+		instructionsTextView.setText(R.string.instructions_text);
+		
+		TextView linksTextView = (TextView) findViewById(R.id.links_text);
+		linksTextView.setText(R.string.links_text);
+		
+		TextView prepsTextView = (TextView) findViewById(R.id.preptime_text);
+		prepsTextView.setText(R.string.preptime_text);
+		
+		TextView cookTextView = (TextView) findViewById(R.id.cooktime_text);
+		cookTextView.setText(R.string.cooktime_text);
+		
+		TextView totalTextView = (TextView) findViewById(R.id.totaltime_text);
+		totalTextView.setText(R.string.totaltime_text);
+		
 		// Set up an instance of SystemUiHider to control the system UI for
 		// this activity.
 //		mSystemUiHider = SystemUiHider.getInstance(this, contentView,
