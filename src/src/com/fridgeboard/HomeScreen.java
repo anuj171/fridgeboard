@@ -25,12 +25,12 @@ public class HomeScreen extends Activity {
         
         Meal meal_plan[] = new Meal[]
         {
-            new Meal(R.drawable.cart, "Boiled Eggs"),
-            new Meal(R.drawable.cart, "Bread"),
-            new Meal(R.drawable.cart, "Aloo Gobhi"),
-            new Meal(R.drawable.cart, "Biryani"),
-            new Meal(R.drawable.cart, "Roti"),
-            new Meal(R.drawable.cart, "Wine"),
+            new Meal(R.drawable.cart, "Boiled Eggs", "Description description Description description Description description...", "Time: 15 Min"),
+            new Meal(R.drawable.food, "Bread", "Description description Description description Description description...", "Time: 10 Min"),
+            new Meal(R.drawable.ic_launcher, "Aloo Gobhi", "Description description Description description Description description...", "Time: 25 Min"),
+            new Meal(R.drawable.cart, "Biryani", "Description description Description description Description description...", "Time: 45 Min"),
+            new Meal(R.drawable.food, "Roti", "Description description Description description Description description...", "Time: 15 Min"),
+            new Meal(R.drawable.ic_launcher, "Wine", "Description description Description description Description description...", "Time: 5 Min"),
         };
         
 		Calendar rightNow = Calendar.getInstance();

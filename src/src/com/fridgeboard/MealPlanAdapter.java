@@ -35,6 +35,8 @@ public class MealPlanAdapter extends ArrayAdapter<Meal>{
             holder = new MealHolder();
             holder.imgIcon = (ImageView)row.findViewById(R.id.imgIcon);
             holder.txtTitle = (TextView)row.findViewById(R.id.txtTitle);
+            holder.txtDesc = (TextView)row.findViewById(R.id.txtDesc);
+            holder.txtDuration = (TextView)row.findViewById(R.id.txtDuration);
             
             row.setTag(holder);
         }
@@ -45,6 +47,8 @@ public class MealPlanAdapter extends ArrayAdapter<Meal>{
         
         Meal meal = data[position];
         holder.txtTitle.setText(meal.title);
+        holder.txtDesc.setText(meal.desc);
+        holder.txtDuration.setText(meal.duration);
         holder.imgIcon.setImageResource(meal.icon);
         
         return row;
@@ -54,5 +58,7 @@ public class MealPlanAdapter extends ArrayAdapter<Meal>{
     {
         ImageView imgIcon;
         TextView txtTitle;
+        TextView txtDesc;
+        TextView txtDuration;
     }
 }
