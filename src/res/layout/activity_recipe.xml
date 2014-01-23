@@ -50,7 +50,7 @@
 	android:paddingRight="5dp"
 	android:paddingLeft="5dp"
 	android:layout_width="match_parent"
-	android:layout_height="200dp"
+	android:layout_height="150dp"
 	android:src="@drawable/punjabirajma"	
 	android:scaleType="fitCenter"	    
 	/>
@@ -65,12 +65,12 @@
 	    android:background="#222222"
 	    android:textSize="12sp"/>
     
-     <TextView
+     <com.fridgeboard.ExpandableTextView
+        android:id="@+id/ingredients_text"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:paddingRight="5dp"
     	android:paddingLeft="5dp"
-	    android:text="@string/ingredients_text"
 	    android:textColor="#909090"
 	    android:textSize="12sp"/>
      
@@ -84,12 +84,32 @@
 	    android:background="#222222"
 	    android:textSize="12sp"/>
     
-     <TextView
+     <com.fridgeboard.ExpandableTextView
+        android:id="@+id/instructions_text"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:paddingRight="5dp"
     	android:paddingLeft="5dp"
 	    android:text="@string/instructions_text"
+	    android:textColor="#909090"
+	    android:textSize="12sp"/>
+     
+      <TextView
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingRight="5dp"
+    	android:paddingLeft="5dp"
+	    android:text="@string/links_title"
+	    android:textColor="#909090"
+	    android:background="#222222"
+	    android:textSize="12sp"/>
+    
+     <TextView
+        android:id="@+id/links_text"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingRight="5dp"
+    	android:paddingLeft="5dp"
 	    android:textColor="#909090"
 	    android:textSize="12sp"/> 
 	

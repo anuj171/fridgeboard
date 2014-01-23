@@ -23,8 +23,7 @@
     <string name="recipe_desc">Red kidney beans cooked in tomatoes, onions and spices.</string>
     <string name="recipe_img">Recipe Image</string>
     <string name="ingredients_title">Ingredients</string>
-    <string name="ingredients_text">
-Rajma(Red Kidney Bean) - 3/4 cup\n
+    <string name="ingredients_text">Rajma(Red Kidney Bean) - 3/4 cup\n
 Garam Masala powder- 1/4 tsp(optional)\n
 Kasoori Methi - 1 generous pinch\n
 Cream / Milk - 1 tbsp(optional)\n
@@ -49,5 +48,9 @@ Cloves - 2
 4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n
 5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.
 </string>
-    
+<string name="links_title">Links</string>
+<string name="links_text">
+http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\n
+http://cooks.ndtv.com/recipe/show/rajma-233367
+</string>
 </resources>
