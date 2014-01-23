@@ -1,6 +1,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/item1" android:title="@string/grocery_list_duration_title">
-        <menu></menu>
-    </item>
+    <group android:id="@+id/group1">
+        <item 
+            android:id="@+id/item0" 
+            android:icon="@drawable/cart"
+            android:showAsAction="always"
+            android:title="Buy Online">            
+        </item>
+        <group>
+        <item 
+            android:id="@+id/item1" 
+            android:title="Show list for -">            
+        </item>
+        <item 
+            android:id="@+id/item2" 
+            android:title="Today">           
+        </item>
+        <item 
+            android:id="@+id/item2" 
+            android:title="1 Week">           
+        </item>
+        <item 
+            android:id="@+id/item2" 
+            android:title="2 Weeks">           
+        </item>
+        </group>
+    </group>
 
 </menu>
