@@ -13,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class HomeScreen extends Activity {
 
@@ -47,7 +49,7 @@ public class HomeScreen extends Activity {
 		
 		df = new SimpleDateFormat("EEE, d MMM");
 		dayf = new SimpleDateFormat("EEE");
-		datef = new SimpleDateFormat("d-m-yyyy");
+		datef = new SimpleDateFormat("EEE, d MMM");
         
     	DataAccess dataAccess = new DataAccess();
         datasource = dataAccess.new MealsDataSource(this);
@@ -137,18 +139,9 @@ public class HomeScreen extends Activity {
 	   	int groupPosition = tag_array[0];
 	   	int childPosition = tag_array[1];
 
-    	;
+	   	Toast.makeText(this, "Loading recipe "+listAdapter.categoryList.get(groupPosition).mealList.get(childPosition).title, Toast.LENGTH_SHORT).show();
     	// Do something in response to button click
-		new AlertDialog.Builder(this)
-	    .setTitle("Load recipe?")
-	    .setMessage(listAdapter.categoryList.get(groupPosition).mealList.get(childPosition).title)
-	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-	        public void onClick(DialogInterface dialog, int which) { 
-	            // continue with load recipe
-	        	startActivity(new Intent(getApplicationContext(), Recipe.class));
-	        }
-	     })
-	    .show();    
+    	startActivity(new Intent(this, Recipe.class));
 	}
     /** Called when the user touches the button */
     public void addMeal(View view) {
@@ -259,6 +252,8 @@ public class HomeScreen extends Activity {
     	categoryList.clear();
 
         List<DataAccess.MealItem> mealitems = datasource.getAllMealItemsForADate(datef.format(rightNow.getTime()));
+		Log.w("HomeScreen","Loading data for "+datef.format(rightNow.getTime())+", matching meals = "+mealitems.size());
+		Toast.makeText(this, "Loading data for "+datef.format(rightNow.getTime())+", matching meals = "+mealitems.size(), Toast.LENGTH_SHORT).show();
 
         ArrayList<Meal> breakfasts = new ArrayList<Meal>();
     	ArrayList<Meal> lunches = new ArrayList<Meal>();
@@ -284,6 +279,8 @@ public class HomeScreen extends Activity {
     	categoryList.add(new MealCategory("LUNCH", lunches));
     	categoryList.add(new MealCategory("DINNER", dinners));
     	if(others.size() == 0){
+    		Log.w("HomeScreen","creating data for "+datef.format(rightNow.getTime())+", matching meals = "+mealitems.size());
+    		Toast.makeText(this, "creating data for "+datef.format(rightNow.getTime())+", matching meals = "+mealitems.size(), Toast.LENGTH_SHORT).show();
     		createData();
     		loadData();
     	}
