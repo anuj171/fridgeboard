@@ -53,4 +53,5 @@ Cloves - 2
 http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\n
 http://cooks.ndtv.com/recipe/show/rajma-233367
 </string>
+<string name="search_recipe_hint">Enter recipe name</string>
 </resources>
