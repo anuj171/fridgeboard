@@ -1,55 +1,244 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
-    tools:context=".Recipe" >
+    tools:context=".Recipe"
+    android:background="#333333"
+    android:fitsSystemWindows="true" >
 
     <!--
          The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc.
     -->
+	
+	
+    <LinearLayout 
+    android:orientation="vertical" 
+    android:id="@+id/fullscreen_content" 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+	    	    
+	    <LinearLayout 
+		    android:orientation="vertical" 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:gravity="left"
+		   	android:paddingRight="5dp"
+		    android:paddingLeft="5dp"
+		    android:background="#222222">
+	
+			<TextView
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/recipe_name"
+			    android:textColor="#d0d0d0"
+			    android:textSize="18sp"
+			    android:textStyle="bold"/>
+			
+			<TextView
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/recipe_desc"
+			    android:textColor="#909090"
+			    android:textSize="12sp"
+			    android:textStyle="italic"/>
+		</LinearLayout>
+	
+	<ImageView 
+		android:paddingRight="5dp"
+		android:paddingLeft="5dp"
+		android:layout_width="match_parent"
+		android:layout_height="150dp"
+		android:src="@drawable/punjabirajma"	
+		android:scaleType="fitCenter" />
+		
+	<LinearLayout
+	    android:orientation="horizontal" 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="left"
+	   	android:padding="5dp"
+	    android:background="#222222">
+	
+	    <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_weight="0.33"
+	        android:gravity="center"
+	        android:orientation="vertical" >
 
+			<TextView
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/preptime_title"
+			    android:textColor="#909090"
+			    android:textSize="12sp" />
+		    
+		     <TextView
+		         android:id="@+id/preptime_text"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:textColor="#909090"
+		         android:textSize="12sp" />
+
+		</LinearLayout>
+		
+	    <LinearLayout
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_weight="0.33"
+	        android:gravity="center"
+	        android:orientation="vertical">
+
+			<TextView
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/cooktime_title"
+			    android:textColor="#909090"
+			    android:textSize="12sp" />
+		    
+		     <TextView
+		         android:id="@+id/cooktime_text"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:textColor="#909090"
+		         android:textSize="12sp" />
+
+		</LinearLayout>	
+		
+	    <LinearLayout 
+		    android:orientation="vertical" 
+		    android:layout_width="wrap_content"
+		    android:layout_height="match_parent"
+		    android:layout_weight="0.33"
+		    android:gravity="center">
+
+			<TextView
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/totaltime_title"
+			    android:textColor="#909090"
+			    android:textSize="12sp" />
+		    
+		     <TextView
+		         android:id="@+id/totaltime_text"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:textColor="#909090"
+		         android:textSize="12sp" />
+
+		</LinearLayout>	
+	</LinearLayout>
+    
+	<LinearLayout 
+	    android:orientation="horizontal" 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	   	android:padding="5dp">
+	    
+	    <TextView
+	         android:text="@string/taste_text"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:textSize="12sp" />
+	   
+	    <RatingBar
+        android:id="@+id/tasteRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="4.5"
+        android:stepSize="0.5" />
+
+	    <LinearLayout 
+	    android:orientation="horizontal" 
+	    android:layout_width="0dip"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	   	android:padding="5dp" 
+	   	android:layout_weight="1"/>
+		     
+	    <TextView
+	         android:text="@string/health_text"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:textSize="12sp" />
+	    
+	    <RatingBar
+        android:id="@+id/healthRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="3"
+        android:stepSize="0.5" />
+	    
+	</LinearLayout>
+	
     <TextView
-        android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="@string/dummy_content"
-        android:textColor="#33b5e5"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingRight="5dp"
+    	android:paddingLeft="5dp"
+	    android:text="@string/ingredients_title"
+	    android:textColor="#909090"
+	    android:background="#222222"
+	    android:textSize="12sp"/>
+    
+     <com.fridgeboard.ExpandableTextView
+        android:id="@+id/ingredients_text"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingRight="5dp"
+    	android:paddingLeft="5dp"
+	    android:textColor="#909090"
+	    android:textSize="12sp"/>
+     
+     <TextView
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingRight="5dp"
+    	android:paddingLeft="5dp"
+	    android:text="@string/instructions_title"
+	    android:textColor="#909090"
+	    android:background="#222222"
+	    android:textSize="12sp"/>
+    
+     <com.fridgeboard.ExpandableTextView
+        android:id="@+id/instructions_text"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingRight="5dp"
+    	android:paddingLeft="5dp"
+	    android:text="@string/instructions_text"
+	    android:textColor="#909090"
+	    android:textSize="12sp"/>
+     
+      <TextView
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingRight="5dp"
+    	android:paddingLeft="5dp"
+	    android:text="@string/links_title"
+	    android:textColor="#909090"
+	    android:background="#222222"
+	    android:textSize="12sp"/>
+    
+     <TextView
+        android:id="@+id/links_text"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingRight="5dp"
+    	android:paddingLeft="5dp"
+	    android:textColor="#909090"
+	    android:textSize="12sp"/> 
+	
+</LinearLayout>
 
-    <!--
-         This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows.
-    -->
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true" >
-
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?buttonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent" >
-
-            <Button
-                android:id="@+id/dummy_button"
-                style="?buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
-        </LinearLayout>
-    </FrameLayout>
-
-</FrameLayout>
+</ScrollView>
