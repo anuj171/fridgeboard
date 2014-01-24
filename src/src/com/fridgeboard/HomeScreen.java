@@ -2,6 +2,7 @@ package com.fridgeboard;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -12,73 +13,61 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class HomeScreen extends Activity {
 
-    private ListView listView1;
-	Calendar rightNow;
+	private ArrayList<MealCategory> categoryList = new ArrayList<MealCategory>(); 
+	private MealPlanAdapter listAdapter;
+	private ExpandableListView mealPlanListView;
+
+    Calendar rightNow;
 	DateFormat df;
 	private TextView mealPlanHeader;
-
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen);
         
-        Meal meal_plan[] = new Meal[]
-        {
-            new Meal(R.drawable.cart, "Boiled Eggs", "Description description Description description Description description...", "Time: 15 Min"),
-            new Meal(R.drawable.food, "Bread", "Description description Description description Description description...", "Time: 10 Min"),
-            new Meal(R.drawable.ic_launcher, "Aloo Gobhi", "Description description Description description Description description...", "Time: 25 Min"),
-            new Meal(R.drawable.cart, "Biryani", "Description description Description description Description description...", "Time: 45 Min"),
-            new Meal(R.drawable.food, "Roti", "Description description Description description Description description...", "Time: 15 Min"),
-            new Meal(R.drawable.ic_launcher, "Wine", "Description description Description description Description description...", "Time: 5 Min"),
-        };
+        loadData();
         
 		rightNow = Calendar.getInstance();
 		
 		df = new SimpleDateFormat("EEE, d MMM");
 		
-       
-        MealPlanAdapter adapter = new MealPlanAdapter(this, 
-                R.layout.widget_recipe_item, meal_plan);
+		//get reference to the ExpandableListView
+		mealPlanListView = (ExpandableListView) findViewById(R.id.mealPlanExpandableList);
+		
         
-        
-        listView1 = (ListView)findViewById(R.id.listView1);
-         
         View header = (View)getLayoutInflater().inflate(R.layout.home_screen_header, null);
         
         mealPlanHeader = (TextView)header.findViewById(R.id.txtHeader);
         mealPlanHeader.setText(df.format(rightNow.getTime()));
-        
-//        Button nextDate = (Button) findViewById(R.id.buttonNext);
-//        nextDate.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                // Do something in response to button click
-//                TextView mealPlanHeader = (TextView)v.findViewById(R.id.txtHeader);
-//                rightNow.add(Calendar.DAY_OF_MONTH, 1);
-//                mealPlanHeader.setText(df.format(rightNow.getTime()));
-//                v.invalidate();
-//            }
-//        });
-//
-//        Button prevDate = (Button) findViewById(R.id.buttonPrevious);
-//        prevDate.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                // Do something in response to button click
-//                TextView mealPlanHeader = (TextView)v.findViewById(R.id.txtHeader);
-//                rightNow.add(Calendar.DAY_OF_MONTH, -1);
-//                mealPlanHeader.setText(df.format(rightNow.getTime()));
-//                v.invalidate();
-//            }
-//        });
 
-        listView1.addHeaderView(header);
+        mealPlanListView.addHeaderView(header);
         
-        listView1.setAdapter(adapter);
+		//create the adapter by passing your ArrayList data
+		listAdapter = new MealPlanAdapter(this, categoryList);
+		//attach the adapter to the list
+		mealPlanListView.setAdapter(listAdapter);
+		 
+		//expand all Groups
+		expandAll();
+
+    }
+    
+    //method to expand all groups
+    private void expandAll() {
+     int count = listAdapter.getGroupCount();
+     for (int i = 0; i < count; i++){
+      mealPlanListView.expandGroup(i);
+     }
     }
     
     /** Called when the user touches the button */
@@ -156,4 +145,21 @@ public class HomeScreen extends Activity {
 		}
 		return false;
 	}
+    
+  //load some initial data into out list 
+    private void loadData(){
+    	ArrayList<Meal> breakfasts = new ArrayList<Meal>();
+    	breakfasts.add(new Meal(R.drawable.ic_launcher, "Boiled Eggs", "Description description Description description Description description...", "Time: 15 Min"));
+    	breakfasts.add(new Meal(R.drawable.food, "Bread", "Description description Description description Description description...", "Time: 10 Min"));
+    	categoryList.add(new MealCategory("BREAKFAST", breakfasts));
+
+    	ArrayList<Meal> lunches = new ArrayList<Meal>();
+    	lunches.add(new Meal(R.drawable.punjabirajma, "Aloo Gobhi", "Description description Description description Description description...", "Time: 15 Min"));
+    	lunches.add(new Meal(R.drawable.food, "Naan", "Description description Description description Description description...", "Time: 10 Min"));
+    	categoryList.add(new MealCategory("LUNCH", lunches));
+
+    	ArrayList<Meal> dinners = new ArrayList<Meal>();
+    	dinners.add(new Meal(R.drawable.ic_launcher, "Biryani", "Description description Description description Description description...", "Time: 15 Min"));
+    	categoryList.add(new MealCategory("DINNER", dinners));
+    }
 }

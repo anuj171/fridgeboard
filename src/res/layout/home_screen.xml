@@ -5,9 +5,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#FFFFFF"> 
-    
-     <ListView
-        android:id="@+id/listView1"
+     <ExpandableListView
+        android:id="@+id/mealPlanExpandableList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
      
