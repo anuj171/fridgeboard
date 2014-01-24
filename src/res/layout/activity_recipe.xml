@@ -54,7 +54,7 @@
 		android:src="@drawable/punjabirajma"	
 		android:scaleType="fitCenter" />
 		
-	<LinearLayout 
+	<LinearLayout
 	    android:orientation="horizontal" 
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
@@ -132,6 +132,55 @@
 		</LinearLayout>	
 	</LinearLayout>
     
+	<LinearLayout 
+	    android:orientation="horizontal" 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	   	android:padding="5dp">
+	    
+	    <TextView
+	         android:text="@string/taste_text"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:textSize="12sp" />
+	   
+	    <RatingBar
+        android:id="@+id/tasteRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="4.5"
+        android:stepSize="0.5" />
+
+	    <LinearLayout 
+	    android:orientation="horizontal" 
+	    android:layout_width="0dip"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"
+	   	android:padding="5dp" 
+	   	android:layout_weight="1"/>
+		     
+	    <TextView
+	         android:text="@string/health_text"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:textSize="12sp" />
+	    
+	    <RatingBar
+        android:id="@+id/healthRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="3"
+        android:stepSize="0.5" />
+	    
+	</LinearLayout>
+	
     <TextView
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
