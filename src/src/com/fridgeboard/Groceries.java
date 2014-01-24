@@ -1,6 +1,8 @@
 package com.fridgeboard;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -46,6 +48,8 @@ public class Groceries extends FragmentActivity {
 	
 	static TextView mRemainingLabel;
 
+	public static String[] Categories = {"Dairy", "Bakery", "Vegetables", "Cereals", "Pulses"};
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -126,23 +130,13 @@ public class Groceries extends FragmentActivity {
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 4;
+			return Categories.length;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
 			Locale l = Locale.getDefault();
-			switch (position) {
-			case 0:
-				return getString(R.string.title_section1).toUpperCase(l);
-			case 1:
-				return getString(R.string.title_section2).toUpperCase(l);
-			case 2:
-				return getString(R.string.title_section3).toUpperCase(l);
-			case 3:
-				return getString(R.string.title_section4).toUpperCase(l);
-			}
-			return null;
+			return Categories[position].toUpperCase(l);
 		}
 	}
 
@@ -160,29 +154,32 @@ public class Groceries extends FragmentActivity {
 		public GroceryListFragment() {
 		}
 
+		static int total;
+		
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 		    super.onActivityCreated(savedInstanceState);
-		    
-		    String[][] groceriesList = new String[][]
-		    		{
-		    			{ "Milk", "Cheese", "Butter", "Ghee" },
-		    			{ "Wheat Flour" },
-		    			{ "Capsicum", "Mushroom", "Tomatoes", "Potatoes", "French beans" },
-		    			{ "A", "B", "C" }		    			
-		    		};
-		    
+
 		    int option = getArguments().getInt(ARG_CATEGORY);
+
+		    GroceriesData groceries = new GroceriesData();
+		    List<String> list = groceries.getListForRecipesAndCategory(null, option);
+		    
+		    total = groceries.getTotalCount();
+
+		    mRemainingLabel.setText(total + " items remaining");
 		    
 		    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-		        android.R.layout.simple_list_item_checked, groceriesList[option]);
+		        android.R.layout.simple_list_item_checked, list);
+		    
 		    setListAdapter(adapter);
+		    
 		    getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		    getListView().setOnItemClickListener(new OnItemClickListener() {
 		        @Override
 		        public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
 		        	int x = getListView().getCheckedItemCount();
-		        	int remaining = 23 - x;
+		        	int remaining = total - x;
 		        	mRemainingLabel.setText(remaining + " items remaining");
 		        }
 		    });
