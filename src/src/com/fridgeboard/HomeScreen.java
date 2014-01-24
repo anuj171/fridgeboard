@@ -72,7 +72,69 @@ public class HomeScreen extends Activity {
       mealPlanListView.expandGroup(i);
      }
     }
+
+    /** Called when the user touches the button */
+    public void refreshMeal(View view) {
+    	int[] tag_array = (int [])view.getTag();
+	   	int groupPosition = tag_array[0];
+	   	int childPosition = tag_array[1];
+
+    	listAdapter.categoryList.get(groupPosition).mealList.get(childPosition).title = "Meal suggestion";
+    	listAdapter.notifyDataSetInvalidated();
+//    	// Do something in response to button click
+//		new AlertDialog.Builder(this)
+//	    .setTitle("Next Day")
+//	    .setMessage(df.format(rightNow.getTime()))
+//	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//	        public void onClick(DialogInterface dialog, int which) { 
+//	            // continue with delete
+//	        }
+//	     })
+//	    .show();    
+	}
     
+    /** Called when the user touches the button */
+    public void removeMeal(View view) {
+    	int[] tag_array = (int [])view.getTag();
+	   	int groupPosition = tag_array[0];
+	   	int childPosition = tag_array[1];
+
+    	listAdapter.categoryList.get(groupPosition).mealList.remove(childPosition);
+    	listAdapter.notifyDataSetInvalidated();
+//    	// Do something in response to button click
+//		new AlertDialog.Builder(this)
+//	    .setTitle("Next Day")
+//	    .setMessage(df.format(rightNow.getTime()))
+//	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//	        public void onClick(DialogInterface dialog, int which) { 
+//	            // continue with delete
+//	        }
+//	     })
+//	    .show();    
+	}
+
+    /** Called when the user touches the button */
+    public void addMeal(View view) {
+//    	startActivity(new Intent(this, SearchRecipeActivity.class));
+
+    	int[] tag_array = (int [])view.getTag();
+	   	int groupPosition = tag_array[0];
+
+	   	listAdapter.categoryList.get(groupPosition).mealList.add(new Meal(R.drawable.ic_launcher, "New meal added", "Description description Description description Description description...", "Time: 15 Min"));
+    	listAdapter.notifyDataSetInvalidated();
+
+    	//    	// Do something in response to button click
+//		new AlertDialog.Builder(this)
+//	    .setTitle("Next Day")
+//	    .setMessage(df.format(rightNow.getTime()))
+//	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//	        public void onClick(DialogInterface dialog, int which) { 
+//	            // continue with delete
+//	        }
+//	     })
+//	    .show();    
+	}
+
     /** Called when the user touches the button */
     public void nextDay(View view) {
     	rightNow.add(Calendar.DAY_OF_MONTH, 1);
@@ -93,6 +155,7 @@ public class HomeScreen extends Activity {
 //	     })
 //	    .show();    
 	}
+    
     
     /** Called when the user touches the button */
     public void previousDay(View view) {

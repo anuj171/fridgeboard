@@ -60,14 +60,18 @@
 	    android:paddingLeft="5dp"
 	    >
 	    <ImageButton
+	        android:id="@+id/buttonRefresh"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
         	android:background="#ffffff"
+        	android:onClick="refreshMeal"
 	        android:src="@drawable/ic_action_refresh" />
 	    <ImageButton
+	        android:id="@+id/buttonRemove"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
         	android:background="#ffffff"
+        	android:onClick="removeMeal"
 	        android:src="@drawable/ic_action_remove" />
 	</LinearLayout>
            

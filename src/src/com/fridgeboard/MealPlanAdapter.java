@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,9 +49,20 @@ public class MealPlanAdapter extends BaseExpandableListAdapter {
 	 ((TextView)view.findViewById(R.id.txtDesc)).setText(meal.desc);
 	 ((TextView)view.findViewById(R.id.txtDuration)).setText(meal.duration);
 	 ((ImageView)view.findViewById(R.id.imgIcon)).setImageResource(meal.icon);
-
+	 ImageButton remove = (ImageButton) view.findViewById(R.id.buttonRemove);
+	 int[] tag_array = new int[2]; 
+	 tag_array[0] = groupPosition;
+	 tag_array[1] = childPosition;
+	 remove.setTag(tag_array);
+	 ImageButton refresh = (ImageButton) view.findViewById(R.id.buttonRefresh);
+	 int[] tag_array2 = new int[2]; 
+	 tag_array2[0] = groupPosition;
+	 tag_array2[1] = childPosition;
+	 refresh.setTag(tag_array2);
      return view;
     }
+    
+    
     
     @Override
     public int getChildrenCount(int groupPosition) {
@@ -82,6 +95,10 @@ public class MealPlanAdapter extends BaseExpandableListAdapter {
      }
       
      ((TextView) view.findViewById(R.id.category)).setText(category.category.trim());
+	 ImageButton add = (ImageButton) view.findViewById(R.id.buttonAdd);
+	 int[] tag_array = new int[1]; 
+	 tag_array[0] = groupPosition;
+	 add.setTag(tag_array);
       
      return view;
     }
