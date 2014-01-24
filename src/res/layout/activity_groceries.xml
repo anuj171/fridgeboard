@@ -40,7 +40,10 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal|bottom"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#666"        
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="#333"        
+    	android:background="#f5f5f5"
         android:text="23 items remaining"/>
     
 </LinearLayout>
