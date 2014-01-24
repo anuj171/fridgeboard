@@ -16,7 +16,7 @@ public class MealPlanAdapter extends BaseExpandableListAdapter {
 
     Context context; 
     int layoutResourceId;  
-    private ArrayList<MealCategory> categoryList;
+    ArrayList<MealCategory> categoryList;
         
     public MealPlanAdapter(Context context, ArrayList<MealCategory> categoryList) {
 //        super(context, layoutResourceId, data);

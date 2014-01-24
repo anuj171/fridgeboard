@@ -28,6 +28,8 @@ public class HomeScreen extends Activity {
 
     Calendar rightNow;
 	DateFormat df;
+	DateFormat dayf;
+	
 	private TextView mealPlanHeader;
 	
     @Override
@@ -40,6 +42,7 @@ public class HomeScreen extends Activity {
 		rightNow = Calendar.getInstance();
 		
 		df = new SimpleDateFormat("EEE, d MMM");
+		dayf = new SimpleDateFormat("EEE");
 		
 		//get reference to the ExpandableListView
 		mealPlanListView = (ExpandableListView) findViewById(R.id.mealPlanExpandableList);
@@ -75,7 +78,10 @@ public class HomeScreen extends Activity {
     	rightNow.add(Calendar.DAY_OF_MONTH, 1);
     	mealPlanHeader.setText(df.format(rightNow.getTime()));
     	mealPlanHeader.invalidate();
-
+    	
+    	refreshMealPlan(dayf.format(rightNow.getTime()));
+    	listAdapter.categoryList = (ArrayList<MealCategory>) categoryList.clone();
+    	listAdapter.notifyDataSetInvalidated();
 //    	// Do something in response to button click
 //		new AlertDialog.Builder(this)
 //	    .setTitle("Next Day")
@@ -95,6 +101,9 @@ public class HomeScreen extends Activity {
     	mealPlanHeader.setText(df.format(rightNow.getTime()));
     	mealPlanHeader.invalidate();
 
+    	refreshMealPlan(dayf.format(rightNow.getTime()));
+    	listAdapter.categoryList = (ArrayList<MealCategory>) categoryList.clone();
+    	listAdapter.notifyDataSetInvalidated();
 //    	// Do something in response to button click
 //		new AlertDialog.Builder(this)
 //	    .setTitle("Previous Day")
@@ -161,5 +170,24 @@ public class HomeScreen extends Activity {
     	ArrayList<Meal> dinners = new ArrayList<Meal>();
     	dinners.add(new Meal(R.drawable.ic_launcher, "Biryani", "Description description Description description Description description...", "Time: 15 Min"));
     	categoryList.add(new MealCategory("DINNER", dinners));
+    }
+    
+    //load dummy next day's meal plan
+    private void refreshMealPlan(String date){
+    	categoryList.clear();
+    	
+    	ArrayList<Meal> breakfasts = new ArrayList<Meal>();
+    	breakfasts.add(new Meal(R.drawable.ic_launcher, "Boiled Eggs "+date, "Description description Description description Description description...", "Time: 15 Min"));
+    	breakfasts.add(new Meal(R.drawable.food, "Bread "+date, "Description description Description description Description description...", "Time: 10 Min"));
+    	categoryList.add(new MealCategory("BREAKFAST", breakfasts));
+
+    	ArrayList<Meal> lunches = new ArrayList<Meal>();
+    	lunches.add(new Meal(R.drawable.punjabirajma, "Aloo Gobhi "+date, "Description description Description description Description description...", "Time: 15 Min"));
+    	lunches.add(new Meal(R.drawable.food, "Naan "+date, "Description description Description description Description description...", "Time: 10 Min"));
+    	categoryList.add(new MealCategory("LUNCH", lunches));
+
+    	ArrayList<Meal> dinners = new ArrayList<Meal>();
+    	dinners.add(new Meal(R.drawable.ic_launcher, "Biryani "+date, "Description description Description description Description description...", "Time: 15 Min"));
+    	categoryList.add(new MealCategory("DINNER", dinners));    	
     }
 }
