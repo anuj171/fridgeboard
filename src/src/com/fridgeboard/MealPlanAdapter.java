@@ -45,10 +45,22 @@ public class MealPlanAdapter extends BaseExpandableListAdapter {
 	      LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	      view = infalInflater.inflate(R.layout.widget_recipe_item, null);
      }
-	 ((TextView)view.findViewById(R.id.txtTitle)).setText(meal.title);
+	 TextView txtTitle = (TextView)view.findViewById(R.id.txtTitle);
+	 txtTitle.setText(meal.title);
+	 View midLayout = (View)view.findViewById(R.id.recipeMidLayout);
+	 int[] tagT_array = new int[2]; 
+	 tagT_array[0] = groupPosition;
+	 tagT_array[1] = childPosition;
+	 midLayout.setTag(tagT_array);
 	 ((TextView)view.findViewById(R.id.txtDesc)).setText(meal.desc);
 	 ((TextView)view.findViewById(R.id.txtDuration)).setText(meal.duration);
-	 ((ImageView)view.findViewById(R.id.imgIcon)).setImageResource(meal.icon);
+	 ImageView imgIcon = (ImageView)view.findViewById(R.id.imgIcon);
+	 imgIcon.setImageResource(meal.icon);
+	 int[] tagI_array = new int[2]; 
+	 tagI_array[0] = groupPosition;
+	 tagI_array[1] = childPosition;
+	 imgIcon.setTag(tagI_array);
+
 	 ImageButton remove = (ImageButton) view.findViewById(R.id.buttonRemove);
 	 int[] tag_array = new int[2]; 
 	 tag_array[0] = groupPosition;

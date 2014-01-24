@@ -113,6 +113,24 @@ public class HomeScreen extends Activity {
 //	    .show();    
 	}
 
+    public void loadRecipe(View view) {
+    	int[] tag_array = (int [])view.getTag();
+	   	int groupPosition = tag_array[0];
+	   	int childPosition = tag_array[1];
+
+    	;
+    	// Do something in response to button click
+		new AlertDialog.Builder(this)
+	    .setTitle("Load recipe?")
+	    .setMessage(listAdapter.categoryList.get(groupPosition).mealList.get(childPosition).title)
+	    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+	        public void onClick(DialogInterface dialog, int which) { 
+	            // continue with load recipe
+	        	startActivity(new Intent(getApplicationContext(), Recipe.class));
+	        }
+	     })
+	    .show();    
+	}
     /** Called when the user touches the button */
     public void addMeal(View view) {
 //    	startActivity(new Intent(this, SearchRecipeActivity.class));
