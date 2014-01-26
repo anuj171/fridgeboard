@@ -24,7 +24,6 @@
     <string name="recipe_img">Recipe Image</string>
     <string name="ingredients_title">INGREDIENTS</string>
     <string name="ingredients_text">
-        
 Rajma(Red Kidney Bean) - 3/4 cup\n
 Garam Masala powder- 1/4 tsp(optional)\n
 Kasoori Methi - 1 generous pinch\n
@@ -55,13 +54,12 @@ Cloves - 2
 http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\n
 http://cooks.ndtv.com/recipe/show/rajma-233367
 </string>
-<string name="search_recipe_hint">Enter recipe name</string>
 <string name="preptime_title">PREP TIME</string>
 <string name="preptime_text">9 mins</string>
 <string name="cooktime_title">COOK TIME</string>
 <string name="cooktime_text">45 mins</string>
 <string name="totaltime_title">TOTAL TIME</string>
 <string name="totaltime_text">54 mins</string>
-<string name="taste_text">Taste: </string>
-<string name="health_text">Health: </string>
+<string name="taste_text">Taste:</string>
+<string name="health_text">Health:</string>
 </resources>
