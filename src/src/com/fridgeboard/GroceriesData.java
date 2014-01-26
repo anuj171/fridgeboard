@@ -21,7 +21,7 @@ import android.support.v4.app.FragmentActivity;
 class GroceriesTable extends SQLiteOpenHelper {
 	
 	private static final String DATABASE_NAME = "mealplanner.db";
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 	
 	public GroceriesTable(Context context) {
 	    super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -30,23 +30,26 @@ class GroceriesTable extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase database) {
 		try {
-			database.execSQL("CREATE TABLE Category ( id INTEGER PRIMARY KEY, name VARCHAR( 100 ) );");
-			database.execSQL("INSERT INTO [Category] ([id], [name]) VALUES (1, 'Bakery')");
-			database.execSQL("INSERT INTO [Category] ([id], [name]) VALUES (2, 'Vegetables')");
-			database.execSQL("INSERT INTO [Category] ([id], [name]) VALUES (3, 'Cereals')");
-			database.execSQL("INSERT INTO [Category] ([id], [name]) VALUES (4, 'Pulses')");
-			database.execSQL("INSERT INTO [Category] ([id], [name]) VALUES (5, 'Dairy')");
-			
-			database.execSQL("CREATE TABLE Ingredients ( id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR( 100 ) NOT NULL, cat_id INTEGER REFERENCES Category ( id ) ); ");
-			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id]) VALUES (1, 'Capsicum', 2)");
-			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id]) VALUES (2, 'Mushroom', 2)");
-			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id]) VALUES (3, 'Tomatoes', 2)");
-			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id]) VALUES (4, 'Potatoes', 2)");
-			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id]) VALUES (5, 'Onion', 2)");
-			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id]) VALUES (6, 'French Beans', 2)");
-			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id]) VALUES (7, 'Milk', 5)");
-			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id]) VALUES (8, 'Butter', 5)");
-			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id]) VALUES (9, 'Cheese', 5);");
+			database.execSQL("CREATE TABLE Ingredients ( id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100) NOT NULL, cat_id INTEGER, unit VARCHAR(30) );");
+			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id], [unit]) VALUES (1, 'Capsicum', 2, 'gm');");
+			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id], [unit]) VALUES (2, 'Mushroom', 2, 'gm');");
+			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id], [unit]) VALUES (3, 'Tomatoes', 2, 'gm');");
+			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id], [unit]) VALUES (4, 'Potatoes', 2, 'gm');");
+			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id], [unit]) VALUES (5, 'Onion', 2, 'gm');");
+			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id], [unit]) VALUES (6, 'French Beans', 2, 'gm');");
+			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id], [unit]) VALUES (7, 'Milk', 0, 'ml');");
+			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id], [unit]) VALUES (8, 'Butter', 0, 'gm');");
+			database.execSQL("INSERT INTO [Ingredients] ([id], [name], [cat_id], [unit]) VALUES (9, 'Cheese', 0, 'gm');");
+
+			database.execSQL("CREATE TABLE Recipe ( id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100) NOT NULL);");
+			database.execSQL("INSERT INTO [recipe] ([id], [name]) VALUES (1, 'rajma');");
+			database.execSQL("INSERT INTO [recipe] ([id], [name]) VALUES (2, 'rice');");
+			database.execSQL("INSERT INTO [recipe] ([id], [name]) VALUES (3, 'dal makhni');");
+
+			database.execSQL("CREATE TABLE recipe_ingred ( rec_id INTEGER REFERENCES recipe (id), ing_id INTEGER REFERENCES Ingredients (id), quantity VARCHAR(30) );");
+			database.execSQL("INSERT INTO [recipe_ingred] ([rec_id], [ing_id], [quantity]) VALUES (1, 1, 200);");
+			database.execSQL("INSERT INTO [recipe_ingred] ([rec_id], [ing_id], [quantity]) VALUES (1, 7, 500);");
+			database.execSQL("INSERT INTO [recipe_ingred] ([rec_id], [ing_id], [quantity]) VALUES (3, 1, 300);");
 		}
 		catch(SQLException e) {
 			String x = e.toString();
@@ -63,9 +66,7 @@ class GroceriesTable extends SQLiteOpenHelper {
 
 class GroceriesDB {
 	  private GroceriesTable dbHelper;
-	  
-	  String sql = "select i.id as _id, i.name as name, c.name as value from Ingredients i, Category c where i.cat_id = c.id";
-	  
+	  	  
 	  public GroceriesDB(Context context) {
 	    dbHelper = new GroceriesTable(context);
 	  }
@@ -77,19 +78,27 @@ class GroceriesDB {
 	  public void close() {
 	    dbHelper.close();
 	  }
-	  
-	  public Cursor getItems() {
+
+	  private Cursor execSql(String sql) {
 		  Cursor c = null;
-		  
+
 		  try {
 			  c = getDB().rawQuery(sql, null);		  
 		  }
 		  catch(SQLException e) {
 			  String x = e.toString();
 		  }
-		  int count = c.getCount();
-		  
 		  return c;
+	  }
+
+	  public Cursor getItems(int option) {
+		  String sql = "select i.id as _id, i.name as name, sum(m.quantity) || ' ' || i.unit as value, 'used in ' || r.name as desc from recipe r, recipe_ingred m, ingredients i where r.id = m.rec_id and i.id = m.ing_id and i.cat_id = %s group by i.id";
+		  return execSql(String.format(sql, option));
+	  }
+	  	  
+	  public Cursor getAllItems() {
+		  String sql = "select i.id as _id from Ingredients i";
+		  return execSql(sql);
 	  }
 }
 
@@ -100,13 +109,13 @@ public class GroceriesData {
 		db = new GroceriesDB(context);		
 	}
 	
-	public Cursor getListForRecipesAndCategory(List<Recipe> recipes, int option) {
-	    return db.getItems();	    
+	// [name, value, desc] for category
+	public Cursor getListForCategory(int option) {
+	    return db.getItems(option);
 	}
-	
+		
 	public int getTotalCount() {
-		int count = 0;
-		return count;
+		return db.getAllItems().getCount();
 	}
 }
 

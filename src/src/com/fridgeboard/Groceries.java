@@ -168,15 +168,15 @@ public class Groceries extends FragmentActivity {
 		    int option = getArguments().getInt(ARG_CATEGORY);
 
 		    GroceriesData groceries = new GroceriesData(getActivity());
-		    Cursor list = groceries.getListForRecipesAndCategory(null, option);
+		    Cursor list = groceries.getListForCategory(option);
 		    getActivity().startManagingCursor(list);
 		    
 		    total = groceries.getTotalCount();
 
 		    mRemainingLabel.setText(total + " items remaining");
  
-            String[] columns = new String[] { "name", "value" };
-            int[] to = new int[] { R.id.grocery_name, R.id.grocery_value};
+            String[] columns = new String[] { "name", "value", "desc" };
+            int[] to = new int[] { R.id.grocery_name, R.id.grocery_value, R.id.grocery_desc};
  
             try {
             	SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.groceries_item, list, columns, to);
