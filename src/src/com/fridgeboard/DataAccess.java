@@ -21,6 +21,7 @@ public class RecipeDataHelper extends SQLiteOpenHelper {
 	  public static final String TABLE_RECIPE = "recipe";
 	  public static final String COLUMN_ID = "_id";
 	  public static final String COLUMN_NAME = "name";
+	  public static final String COLUMN_DESCRIPTION = "desc";
 	  public static final String COLUMN_IMAGE = "image";
 	  public static final String COLUMN_PREP_TIME = "prep_time";
 	  public static final String COLUMN_COOKING_TIME = "cooking_time";
@@ -34,7 +35,8 @@ public class RecipeDataHelper extends SQLiteOpenHelper {
 	  // Database creation sql statement
 	  private static final String DATABASE_CREATE = "create table " + TABLE_RECIPE + "(" 
 		  + COLUMN_ID + " integer primary key autoincrement, " 
-		  + COLUMN_NAME + " text not null,"
+		  + COLUMN_NAME + " text not null, "
+		  + COLUMN_DESCRIPTION + " text, "
 	      + COLUMN_IMAGE + " text, "
 	      + COLUMN_PREP_TIME + " text, "
 	      + COLUMN_COOKING_TIME + " text, "
@@ -68,6 +70,7 @@ public class RecipeDataHelper extends SQLiteOpenHelper {
 public class RecipeItem {
 	  private long _id;
 	  private String _name;
+	  private String _desc;
 	  private String _image;
 	  private String _prepTime;
 	  private String _cookingTime;
@@ -81,6 +84,7 @@ public class RecipeItem {
 	  public RecipeItem(
 		  long id,
 		  String name,
+		  String desc,
 		  String image,
 		  String prepTime,
 		  String cookingTime,
@@ -93,6 +97,7 @@ public class RecipeItem {
 	  {
 		 _id = id;
 		 _name = name;
+		 _desc = desc;
 		 _image = image;
 		 _prepTime = prepTime;
 		 _cookingTime = cookingTime;
@@ -106,6 +111,7 @@ public class RecipeItem {
 	  
 	  public long getId() { return _id; }
 	  public String getName() { return _name; }
+	  public String getDescription() { return _desc; }
 	  public String getImage() { return _image; }
 	  public String getPrepTime() { return _prepTime; }
 	  public String getCookingTime() { return _cookingTime; }
@@ -132,6 +138,7 @@ public class RecipeDataSource {
 	  private String[] allColumns = { 
 			  RecipeDataHelper.COLUMN_ID,
 			  RecipeDataHelper.COLUMN_NAME,
+			  RecipeDataHelper.COLUMN_DESCRIPTION,
 			  RecipeDataHelper.COLUMN_IMAGE,
 			  RecipeDataHelper.COLUMN_PREP_TIME,
 			  RecipeDataHelper.COLUMN_COOKING_TIME,
@@ -160,7 +167,8 @@ public class RecipeDataSource {
 		  {
 			  createRecipeItem(
 					  "Rajma Masala",
-					  "@drawable/punjabirajma",
+					  "Red kidney beans cooked in tomatoes, onions and spices.",
+					  "punjabirajma",
 					  "9 mins",
 					  "45 mins",
 					  "54 mins",
@@ -177,7 +185,8 @@ public class RecipeDataSource {
 			  
 			  createRecipeItem(
 					  "Punjabi Chole Masala",
-					  "@drawable/chole",
+					  "Chickpeas in tomatoes, onions and spices.",
+					  "chole",
 					  "50 mins",
 					  "45 mins",
 					  "95 mins",
@@ -195,6 +204,7 @@ public class RecipeDataSource {
 
 	  public RecipeItem createRecipeItem(
 			  String name,
+			  String desc,
 			  String image,
 			  String prepTime,
 			  String cookingTime,
@@ -207,6 +217,7 @@ public class RecipeDataSource {
 		  
 		    ContentValues values = new ContentValues();
 		    values.put(RecipeDataHelper.COLUMN_NAME, name);
+		    values.put(RecipeDataHelper.COLUMN_DESCRIPTION, desc);
 		    values.put(RecipeDataHelper.COLUMN_IMAGE, image);
 		    values.put(RecipeDataHelper.COLUMN_PREP_TIME, prepTime);
 		    values.put(RecipeDataHelper.COLUMN_COOKING_TIME, cookingTime);
@@ -279,11 +290,12 @@ public class RecipeDataSource {
     			cursor.getString(3),
     			cursor.getString(4),
     			cursor.getString(5),
-    			cursor.getFloat(6),
+    			cursor.getString(6),
     			cursor.getFloat(7),
-    			cursor.getString(8),
+    			cursor.getFloat(8),
     			cursor.getString(9),
-    			cursor.getString(10));
+    			cursor.getString(10),
+    			cursor.getString(11));
 
 	    return recipeItem;
 	  }

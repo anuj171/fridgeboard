@@ -56,6 +56,7 @@ public class HomeScreen extends Activity {
         datasource.open();
 
         loadData();
+        loadRecipeData();
         
 		
 		//get reference to the ExpandableListView
@@ -77,6 +78,15 @@ public class HomeScreen extends Activity {
 		//expand all Groups
 		expandAll();
 
+    }
+    
+    private void loadRecipeData()
+    {
+    	DataAccess dataAccess = new DataAccess();
+    	RecipeDataSource datasource = dataAccess.new RecipeDataSource(this);
+        datasource.open();
+        datasource.fillDataIfEmpty();
+        datasource.close();
     }
     
     //method to expand all groups

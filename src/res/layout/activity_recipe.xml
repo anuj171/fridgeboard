@@ -30,28 +30,28 @@
 		    android:background="#222222">
 	
 			<TextView
+			    android:id="@+id/recipe_name"
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
-			    android:text="@string/recipe_name"
 			    android:textColor="#d0d0d0"
 			    android:textSize="18sp"
 			    android:textStyle="bold"/>
 			
 			<TextView
+			    android:id="@+id/recipe_desc"
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content"
-			    android:text="@string/recipe_desc"
 			    android:textColor="#909090"
 			    android:textSize="12sp"
 			    android:textStyle="italic"/>
 		</LinearLayout>
 	
 	<ImageView 
+	    android:id="@+id/recipe_image"
 		android:paddingRight="5dp"
 		android:paddingLeft="5dp"
 		android:layout_width="match_parent"
-		android:layout_height="150dp"
-		android:src="@drawable/punjabirajma"	
+		android:layout_height="150dp"	
 		android:scaleType="fitCenter" />
 		
 	<LinearLayout
