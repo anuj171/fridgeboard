@@ -39,10 +39,6 @@
             android:name="com.fridgeboard.Groceries"
             android:label="@string/title_activity_groceries" >
         </activity>
-        <activity
-            android:name="com.fridgeboard.DatabaseActivity"
-            android:label="DatabaseActivity" >
-        </activity>
     </application>
 
 </manifest>
