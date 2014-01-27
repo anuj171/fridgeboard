@@ -267,8 +267,8 @@ public class HomeScreen extends Activity {
     	
     	for(int i=0;i<mealitems.size();i++){
     		DataAccess.MealItem meal = mealitems.get(i);
-    		if(meal.desc.length()>50){
-    			meal.desc = meal.desc.substring(0,49);
+    		if(meal.desc.length()>35){
+    			meal.desc = meal.desc.substring(0,34);
     		}
     		if(meal.category.equals("BREAKFAST")){
     			breakfasts.add(new Meal(meal.id, R.drawable.ic_launcher, meal.name, meal.desc, meal.timetaken));

@@ -208,14 +208,14 @@ public class MealPlanAdapter extends BaseExpandableListAdapter {
 			switch (position){
 			case 0:
 				removeView.performClick();
-	     	 	Toast.makeText(my_collection.getContext(), "page 1", Toast.LENGTH_SHORT).show();
+//	     	 	Toast.makeText(my_collection.getContext(), "page 1", Toast.LENGTH_SHORT).show();
 	            break;
 			case 1:
-	     	 	Toast.makeText(my_collection.getContext(), "page 2", Toast.LENGTH_SHORT).show();
+//	     	 	Toast.makeText(my_collection.getContext(), "page 2", Toast.LENGTH_SHORT).show();
 				break;
 			case 2:
 				refreshView.performClick();
-				Toast.makeText(my_collection.getContext(), "page 2", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(my_collection.getContext(), "page 2", Toast.LENGTH_SHORT).show();
 				break;
 			}
 			
