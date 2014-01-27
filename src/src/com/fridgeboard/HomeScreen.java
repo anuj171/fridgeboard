@@ -232,7 +232,7 @@ public class HomeScreen extends Activity {
 //		    .show();
 			break;
 		case R.id.action_settings:
-			startActivity(new Intent(this, DatabaseActivity.class));
+//			startActivity(new Intent(this, DatabaseActivity.class));
 //			new AlertDialog.Builder(this)
 //		    .setTitle("Meal Preferences")
 //		    .setMessage("using default settings.")
@@ -253,7 +253,7 @@ public class HomeScreen extends Activity {
 
         List<DataAccess.MealItem> mealitems = datasource.getAllMealItemsForADate(datef.format(rightNow.getTime()));
 		Log.w("HomeScreen","Loading data for "+datef.format(rightNow.getTime())+", matching meals = "+mealitems.size());
-		Toast.makeText(this, "Loading data for "+datef.format(rightNow.getTime())+", matching meals = "+mealitems.size(), Toast.LENGTH_SHORT).show();
+//		Toast.makeText(this, "Loading data for "+datef.format(rightNow.getTime())+", matching meals = "+mealitems.size(), Toast.LENGTH_SHORT).show();
 
         ArrayList<Meal> breakfasts = new ArrayList<Meal>();
     	ArrayList<Meal> lunches = new ArrayList<Meal>();
@@ -280,7 +280,7 @@ public class HomeScreen extends Activity {
     	categoryList.add(new MealCategory("DINNER", dinners));
     	if(others.size() == 0){
     		Log.w("HomeScreen","creating data for "+datef.format(rightNow.getTime())+", matching meals = "+mealitems.size());
-    		Toast.makeText(this, "creating data for "+datef.format(rightNow.getTime())+", matching meals = "+mealitems.size(), Toast.LENGTH_SHORT).show();
+//    		Toast.makeText(this, "creating data for "+datef.format(rightNow.getTime())+", matching meals = "+mealitems.size(), Toast.LENGTH_SHORT).show();
     		createData();
     		loadData();
     	}
