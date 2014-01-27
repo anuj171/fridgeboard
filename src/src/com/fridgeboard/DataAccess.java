@@ -13,21 +13,38 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DataAccess {
+	private static final String DATABASE_NAME = "meals2.db";
+	private static final int DATABASE_VERSION = 3;
 	
 public class RecipeDataHelper extends SQLiteOpenHelper {
 
-	  public static final String TABLE_RECIPES = "recipes";
+	  public static final String TABLE_RECIPE = "recipe";
 	  public static final String COLUMN_ID = "_id";
 	  public static final String COLUMN_NAME = "name";
-
-	  private static final String DATABASE_NAME = "commments.db";
-	  private static final int DATABASE_VERSION = 2;
+	  public static final String COLUMN_IMAGE = "image";
+	  public static final String COLUMN_PREP_TIME = "prep_time";
+	  public static final String COLUMN_COOKING_TIME = "cooking_time";
+	  public static final String COLUMN_TOTAL_TIME = "total_time";
+	  public static final String COLUMN_TASTE_RATING = "taste_rating";
+	  public static final String COLUMN_HEALTH_RATING = "health_rating";
+	  public static final String COLUMN_INGREDIENTS = "ingredients";
+	  public static final String COLUMN_INSTRUCTIONS = "instructions";
+	  public static final String COLUMN_LINKS = "links";
 
 	  // Database creation sql statement
-	  private static final String DATABASE_CREATE = "create table "
-	      + TABLE_RECIPES + "(" + COLUMN_ID
-	      + " integer primary key autoincrement, " + COLUMN_NAME
-	      + " text not null);";
+	  private static final String DATABASE_CREATE = "create table " + TABLE_RECIPE + "(" 
+		  + COLUMN_ID + " integer primary key autoincrement, " 
+		  + COLUMN_NAME + " text not null,"
+	      + COLUMN_IMAGE + " text, "
+	      + COLUMN_PREP_TIME + " text, "
+	      + COLUMN_COOKING_TIME + " text, "
+	      + COLUMN_TOTAL_TIME + " text, "
+	      + COLUMN_TASTE_RATING + " float, "
+	      + COLUMN_HEALTH_RATING + " float, "
+	      + COLUMN_INGREDIENTS + " text, "
+	      + COLUMN_INSTRUCTIONS + " text, "
+	      + COLUMN_LINKS + " links"
+	      + ");";
 
 	  public RecipeDataHelper(Context context) {
 	    super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -43,35 +60,66 @@ public class RecipeDataHelper extends SQLiteOpenHelper {
 	    Log.w(RecipeDataHelper.class.getName(),
 	        "Upgrading database from version " + oldVersion + " to "
 	            + newVersion + ", which will destroy all old data");
-	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
+	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPE);
 	    onCreate(db);
 	  }
 	} 
 
 public class RecipeItem {
-	  private long id;
-	  private String name;
-
-	  public long getId() {
-	    return id;
+	  private long _id;
+	  private String _name;
+	  private String _image;
+	  private String _prepTime;
+	  private String _cookingTime;
+	  private String _totalTime;
+	  private float _tasteRating;
+	  private float _healthRating;
+	  private String _ingredients;
+	  private String _instructions;
+	  private String _links;
+	  
+	  public RecipeItem(
+		  long id,
+		  String name,
+		  String image,
+		  String prepTime,
+		  String cookingTime,
+		  String totalTime,
+		  float tasteRating,
+		  float healthRating,
+		  String ingredients,
+		  String instructions,
+		  String links)
+	  {
+		 _id = id;
+		 _name = name;
+		 _image = image;
+		 _prepTime = prepTime;
+		 _cookingTime = cookingTime;
+		 _totalTime = totalTime;
+		 _tasteRating = tasteRating;
+		 _healthRating = healthRating;
+		 _ingredients = ingredients;
+		 _instructions = instructions;
+		 _links = links;
 	  }
-
-	  public void setId(long id) {
-	    this.id = id;
-	  }
-
-	  public String getName() {
-	    return name;
-	  }
-
-	  public void setName(String name) {
-	    this.name = name;
-	  }
+	  
+	  public long getId() { return _id; }
+	  public String getName() { return _name; }
+	  public String getImage() { return _image; }
+	  public String getPrepTime() { return _prepTime; }
+	  public String getCookingTime() { return _cookingTime; }
+	  public String getTotalTime() { return _totalTime; }
+	  public float getTasteRating() { return _tasteRating; }
+	  public float getHealthRating() { return _healthRating; }
+	  public String getIngredients() { return _ingredients; }
+	  public String getInstructions() { return _instructions; }
+	  public String getLinks() { return _links; }
 
 	  // Will be used by the ArrayAdapter in the ListView
 	  @Override
 	  public String toString() {
-	    return name;
+	    return _name;
 	  }
 	} 
 
@@ -80,8 +128,19 @@ public class RecipeDataSource {
 	  // Database fields
 	  private SQLiteDatabase database;
 	  private RecipeDataHelper dbHelper;
-	  private String[] allColumns = { RecipeDataHelper.COLUMN_ID,
-	      RecipeDataHelper.COLUMN_NAME };
+	  
+	  private String[] allColumns = { 
+			  RecipeDataHelper.COLUMN_ID,
+			  RecipeDataHelper.COLUMN_NAME,
+			  RecipeDataHelper.COLUMN_IMAGE,
+			  RecipeDataHelper.COLUMN_PREP_TIME,
+			  RecipeDataHelper.COLUMN_COOKING_TIME,
+			  RecipeDataHelper.COLUMN_TOTAL_TIME,
+			  RecipeDataHelper.COLUMN_TASTE_RATING,
+			  RecipeDataHelper.COLUMN_HEALTH_RATING,
+			  RecipeDataHelper.COLUMN_INGREDIENTS,
+			  RecipeDataHelper.COLUMN_INSTRUCTIONS,
+			  RecipeDataHelper.COLUMN_LINKS};
 
 	  public RecipeDataSource(Context context) {
 	    dbHelper = new RecipeDataHelper(context);
@@ -95,31 +154,52 @@ public class RecipeDataSource {
 	    dbHelper.close();
 	  }
 
-	  public RecipeItem createRecipeItem(String name) {
-	    ContentValues values = new ContentValues();
-	    values.put(RecipeDataHelper.COLUMN_NAME, name);
-	    long insertId = database.insert(RecipeDataHelper.TABLE_RECIPES, null,
-	        values);
-	    Cursor cursor = database.query(RecipeDataHelper.TABLE_RECIPES,
-	        allColumns, RecipeDataHelper.COLUMN_ID + " = " + insertId, null,
-	        null, null, null);
-	    cursor.moveToFirst();
-	    RecipeItem newRecipeItem = cursorToRecipe(cursor);
-	    cursor.close();
-	    return newRecipeItem;
+	  public RecipeItem createRecipeItem(
+			  String name,
+			  String image,
+			  String prepTime,
+			  String cookingTime,
+			  String totalTime,
+			  float tasteRating,
+			  float healthRating,
+			  String ingredients,
+			  String instructions,
+			  String links) {
+		  
+		    ContentValues values = new ContentValues();
+		    values.put(RecipeDataHelper.COLUMN_NAME, name);
+		    values.put(RecipeDataHelper.COLUMN_IMAGE, image);
+		    values.put(RecipeDataHelper.COLUMN_PREP_TIME, prepTime);
+		    values.put(RecipeDataHelper.COLUMN_COOKING_TIME, cookingTime);
+		    values.put(RecipeDataHelper.COLUMN_TOTAL_TIME, totalTime);
+		    values.put(RecipeDataHelper.COLUMN_TASTE_RATING, tasteRating);
+		    values.put(RecipeDataHelper.COLUMN_HEALTH_RATING, healthRating);
+		    values.put(RecipeDataHelper.COLUMN_INGREDIENTS, ingredients);
+		    values.put(RecipeDataHelper.COLUMN_INSTRUCTIONS, instructions);
+		    values.put(RecipeDataHelper.COLUMN_LINKS, links);
+		    
+		    long insertId = database.insert(RecipeDataHelper.TABLE_RECIPE, null,
+		        values);
+		    Cursor cursor = database.query(RecipeDataHelper.TABLE_RECIPE,
+		        allColumns, RecipeDataHelper.COLUMN_ID + " = " + insertId, null,
+		        null, null, null);
+		    cursor.moveToFirst();
+		    RecipeItem newRecipeItem = cursorToRecipe(cursor);
+		    cursor.close();
+		    return newRecipeItem;
 	  }
 
 	  public void deleteRecipeItem(RecipeItem recipeItem) {
 	    long id = recipeItem.getId();
 	    System.out.println("Recipe deleted with id: " + id);
-	    database.delete(RecipeDataHelper.TABLE_RECIPES, RecipeDataHelper.COLUMN_ID
+	    database.delete(RecipeDataHelper.TABLE_RECIPE, RecipeDataHelper.COLUMN_ID
 	        + " = " + id, null);
 	  }
 
 	  public List<RecipeItem> getAllRecipeItems() {
 	    List<RecipeItem> recipeItems = new ArrayList<RecipeItem>();
 
-	    Cursor cursor = database.query(RecipeDataHelper.TABLE_RECIPES,
+	    Cursor cursor = database.query(RecipeDataHelper.TABLE_RECIPE,
 	        allColumns, null, null, null, null, null);
 
 	    cursor.moveToFirst();
@@ -132,11 +212,40 @@ public class RecipeDataSource {
 	    cursor.close();
 	    return recipeItems;
 	  }
+	  
+
+	  public RecipeItem getRecipeItem(long id) {
+	    Cursor cursor = database.query(RecipeDataHelper.TABLE_RECIPE,
+	        allColumns, RecipeDataHelper.COLUMN_ID + " = " + id, null, null, null, null);
+
+	    cursor.moveToFirst();
+
+	    RecipeItem recipeItem = null;
+		if (!cursor.isAfterLast())
+		{
+	      recipeItem = cursorToRecipe(cursor); 
+	    }
+		
+	    // make sure to close the cursor
+	    cursor.close();
+	    return recipeItem;
+	  }
 
 	  private RecipeItem cursorToRecipe(Cursor cursor) {
-	    RecipeItem recipeItem = new RecipeItem();
-	    recipeItem.setId(cursor.getLong(0));
-	    recipeItem.setName(cursor.getString(1));
+	    RecipeItem recipeItem = 
+	    	new RecipeItem(
+    			cursor.getLong(0),
+    			cursor.getString(1),
+    			cursor.getString(2),
+    			cursor.getString(3),
+    			cursor.getString(4),
+    			cursor.getString(5),
+    			cursor.getFloat(6),
+    			cursor.getFloat(7),
+    			cursor.getString(8),
+    			cursor.getString(9),
+    			cursor.getString(10));
+
 	    return recipeItem;
 	  }
 	} 
@@ -151,14 +260,6 @@ public class MealsDataHelper extends SQLiteOpenHelper {
 	  public static final String COLUMN_DESC = "desc";
 	  public static final String COLUMN_TIMETAKEN = "timetaken";
 	  public static final String COLUMN_RECIPE_ID = "recipe_id";
-
-	  private static final String DATABASE_NAME = "meals2.db";
-	  private static final int DATABASE_VERSION = 2;
-
-//	  private static final String DATABASE_CREATE = "create table "
-//		      + TABLE_RECIPES + "(" + COLUMN_ID
-//		      + " integer primary key autoincrement, " + COLUMN_NAME
-//		      + " text not null);";
 
 	  // Database creation sql statement
 	  private static final String DATABASE_CREATE = "create table " + TABLE_MEALS + "(" 

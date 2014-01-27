@@ -41,11 +41,11 @@ public class DatabaseActivity extends ListActivity {
       DataAccess.RecipeItem comment = null;
       switch (view.getId()) {
       case R.id.add:
-        String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
-        int nextInt = new Random().nextInt(3);
-        // save the new comment to the database
-        comment = datasource.createRecipeItem(comments[nextInt]);
-        adapter.add(comment);
+//        String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
+//        int nextInt = new Random().nextInt(3);
+//        // save the new comment to the database
+//        comment = datasource.createRecipeItem(comments[nextInt]);
+//        adapter.add(comment);
         break;
       case R.id.delete:
         if (getListAdapter().getCount() > 0) {

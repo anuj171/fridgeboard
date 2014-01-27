@@ -23,24 +23,7 @@
     <string name="recipe_desc">Red kidney beans cooked in tomatoes, onions and spices.</string>
     <string name="recipe_img">Recipe Image</string>
     <string name="ingredients_title">INGREDIENTS</string>
-    <string name="ingredients_text">
-Rajma(Red Kidney Bean) - 3/4 cup\n
-Garam Masala powder- 1/4 tsp(optional)\n
-Kasoori Methi - 1 generous pinch\n
-Cream / Milk - 1 tbsp(optional)\n
-Coriander leaves - 2 tsp chopped\n
-Salt - to taste\n
-Oil - 2 tsp\n 
-Jeera - 1/2 tsp\n
-Coriander seeds - 2 tsp\n
-Red Chillies - 2\n
-Onion - 1 medium sized\n
-Tomatoes - 2 medium sized\n
-Garlic - 4 cloves\n
-Ginger - 1/2 inch piece\n
-Cinnamon - 1/4 inch piece\n
-Cloves - 2
-</string>
+    <string name="ingredients_text">Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2</string>
 <string name="instructions_title">INSTRUCTIONS</string>
 <string name="instructions_text">
 1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n
