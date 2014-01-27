@@ -23,6 +23,8 @@ import android.widget.TextView;
  */
 public class Recipe extends Activity {
 
+	public static String RECIPE_ID = "RECIPE_ID";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,6 +36,10 @@ public class Recipe extends Activity {
 
 		long recipeId = 1;
 		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			recipeId = extras.getLong(RECIPE_ID);
+		}
 		LoadView(recipeId);
 	}
 	

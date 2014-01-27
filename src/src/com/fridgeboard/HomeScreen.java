@@ -150,8 +150,13 @@ public class HomeScreen extends Activity {
 	   	int childPosition = tag_array[1];
 
 	   	Toast.makeText(this, "Loading recipe "+listAdapter.categoryList.get(groupPosition).mealList.get(childPosition).title, Toast.LENGTH_SHORT).show();
-    	// Do something in response to button click
-    	startActivity(new Intent(this, Recipe.class));
+    	
+	   	long recipeId = 2; // NOTE: use a valid recipe id here
+	   	
+	   	Intent recipeLaunchIntent = new Intent(this, Recipe.class);
+	   	recipeLaunchIntent.putExtra(Recipe.RECIPE_ID, recipeId);
+	   	
+    	startActivity(recipeLaunchIntent);
 	}
     /** Called when the user touches the button */
     public void addMeal(View view) {
