@@ -14,7 +14,7 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 11;
+	private static final int DATABASE_VERSION = 15;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
@@ -64,9 +64,6 @@ public class DataHelper extends SQLiteOpenHelper {
 	  public static final String MEALS_COLUMN_ID = "_id";
 	  public static final String MEALS_COLUMN_DATE = "date";
 	  public static final String MEALS_COLUMN_CATEGORY = "category";
-	  public static final String MEALS_COLUMN_NAME = "name";
-	  public static final String MEALS_COLUMN_DESC = "desc";
-	  public static final String MEALS_COLUMN_TIMETAKEN = "timetaken";
 	  public static final String MEALS_COLUMN_RECIPE_ID = "recipe_id";
 	  
 	 // Database creation sql statement
@@ -74,10 +71,8 @@ public class DataHelper extends SQLiteOpenHelper {
 	         + MEALS_COLUMN_ID + " integer primary key autoincrement, " 
 	         + MEALS_COLUMN_DATE + " text not null, " 
 	         + MEALS_COLUMN_CATEGORY + " text not null, " 
-	         + MEALS_COLUMN_NAME + " text not null, " 
-	         + MEALS_COLUMN_DESC + " text not null, " 
-	         + MEALS_COLUMN_TIMETAKEN + " text not null, " 
-	         + MEALS_COLUMN_RECIPE_ID + " text not null);";
+	         + MEALS_COLUMN_RECIPE_ID + " INTEGER REFERENCES "+TABLE_RECIPE+" ("+ RECIPE_COLUMN_ID +"));";
+//	         + MEALS_COLUMN_RECIPE_ID + " text not null);";
 	  
 	  public static final String INGREDIENTS_TABLE = "ingredients";
 	  public static final String RECIPE_INGRED_TABLE = "recipe_ingred";
@@ -142,9 +137,6 @@ public class DataSource {
 			  DataHelper.MEALS_COLUMN_ID,
 			  DataHelper.MEALS_COLUMN_DATE,
 			  DataHelper.MEALS_COLUMN_CATEGORY,
-			  DataHelper.MEALS_COLUMN_NAME,
-			  DataHelper.MEALS_COLUMN_DESC,
-			  DataHelper.MEALS_COLUMN_TIMETAKEN,
 			  DataHelper.MEALS_COLUMN_RECIPE_ID,
 	      };
 
@@ -179,6 +171,7 @@ public class DataSource {
 			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (7, 'Milk', 0, 'ml');");
 			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (8, 'Butter', 0, 'gm');");
 			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (9, 'Cheese', 0, 'gm');");
+			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (10, 'Eggs', 0, 'items');");
 
 	  }
 	  
@@ -187,6 +180,14 @@ public class DataSource {
 			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (1, 1, 200);");
 			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (1, 7, 500);");
 			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (2, 1, 300);");
+			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (3, 10, 2);");
+			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (4, 1, 200);");
+			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (4, 7, 500);");
+			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (5, 1, 300);");
+			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (6, 1, 200);");
+			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (6, 7, 500);");
+			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (7, 1, 300);");
+			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (8, 10, 2);");
 	  }
 	  
 	  public void fillRecipe()
@@ -211,6 +212,21 @@ public class DataSource {
 					  );
 			  
 			  createRecipeItem(
+					  "Boiled Eggs",
+					  "Eggs cut into half, sprayed salt & onions",
+					  "ande",
+					  "5 mins",
+					  "15 mins",
+					  "20 mins",
+					  (float)4,
+					  (float)3.5,
+					  "Raw Eggs - 2, Salt & Onion",
+					  "Take two eggs & boil them for 10 mins\n",
+					  "http://www.chow.com/recipes/30267-chole-chana-masala",
+					  RecipeCategory.BreakFast
+					  );
+
+			  createRecipeItem(
 					  "Punjabi Chole Masala",
 					  "Chickpeas in tomatoes, onions and spices.",
 					  "chole",
@@ -227,6 +243,97 @@ public class DataSource {
 					  "http://www.chow.com/recipes/30267-chole-chana-masala",
 					  RecipeCategory.LunchOrDinner
 					  );
+
+			  createRecipeItem(
+					  "Hyderabadi Rajma Masala",
+					  "Red kidney beans cooked in tomatoes, onions and spices.",
+					  "punjabirajma",
+					  "9 mins",
+					  "45 mins",
+					  "54 mins",
+					  (float)4.5,
+					  (float)3.5,
+					  "Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2",
+					  "1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n"
+					  + "2. Cook till raw smell of tomatoes leave and is slightly mushy. Cool down and then transfer it to a mixer.\n"
+					  + "3. Grind it to smooth paste without adding water,set aside. Heat oil in a pan - temper jeera, let it splutter.Then add the onion tomato paste.\n"
+					  + "4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n"
+					  + "5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.",
+					  "http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\nhttp://cooks.ndtv.com/recipe/show/rajma-233367",
+					  RecipeCategory.LunchOrDinner
+					  );
+
+			  createRecipeItem(
+					  "Chole Lazawaab",
+					  "Chickpeas in tomatoes, onions and spices.",
+					  "chole",
+					  "50 mins",
+					  "45 mins",
+					  "95 mins",
+					  (float)4,
+					  (float)3.5,
+					  "2 tablespoons vegetable oil\n1 teaspoon cumin seeds\n1 medium yellow onion, small dice\n4 teaspoons peeled, finely chopped fresh ginger (from about a 2-inch piece)\n4 medium garlic cloves, finely chopped\n2 serrano chiles, stemmed and finely chopped\n1 (28-ounce) can whole peeled tomatoes and their juices\n2 teaspoons garam masala\n1 teaspoon ground coriander\n1 teaspoon kosher salt, plus more for seasoning\n1/2 teaspoon turmeric\n2 (15-ounce) cans chickpeas, also known as garbanzo beans, drained and rinsed\n1/2 cup water",
+					  "1. Heat the oil in a large frying pan over medium heat until shimmering. Add the cumin seeds and cook, stirring occasionally, until fragrant, about 1 minute. Add the onion, ginger, garlic, and chiles and season with kosher salt. Cook, stirring occasionally, until the onions have softened, about 6 minutes.\n"
+					  + "2. Meanwhile, set a fine-mesh strainer over a medium bowl. Strain the tomatoes and reserve the juices. Coarsely chop the tomatoes into 1-inch pieces; set aside.\n"
+					  + "3. When the onions have softened, add the garam masala, coriander, measured salt, and turmeric to the frying pan and stir to coat the onion mixture. Cook, stirring occasionally, until fragrant, about 1 minute.\n"
+					  + "4. Add the chopped tomatoes, their reserved juices, the chickpeas, and the water. Stir to combine, scraping up any browned bits from the bottom of the pan, and bring to a simmer. Reduce the heat to medium low and simmer, stirring occasionally, until the flavors have melded and the sauce has thickened slightly, about 20 minutes.\n",
+					  "http://www.chow.com/recipes/30267-chole-chana-masala",
+					  RecipeCategory.LunchOrDinner
+					  );
+
+			  createRecipeItem(
+					  "Rajma Jabardast",
+					  "Red kidney beans cooked in tomatoes, onions and spices.",
+					  "punjabirajma",
+					  "9 mins",
+					  "45 mins",
+					  "54 mins",
+					  (float)4.5,
+					  (float)3.5,
+					  "Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2",
+					  "1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n"
+					  + "2. Cook till raw smell of tomatoes leave and is slightly mushy. Cool down and then transfer it to a mixer.\n"
+					  + "3. Grind it to smooth paste without adding water,set aside. Heat oil in a pan - temper jeera, let it splutter.Then add the onion tomato paste.\n"
+					  + "4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n"
+					  + "5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.",
+					  "http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\nhttp://cooks.ndtv.com/recipe/show/rajma-233367",
+					  RecipeCategory.LunchOrDinner
+					  );
+
+			  createRecipeItem(
+					  "Chole from Sholey",
+					  "Chickpeas in tomatoes, onions and spices.",
+					  "chole",
+					  "50 mins",
+					  "45 mins",
+					  "95 mins",
+					  (float)4,
+					  (float)3.5,
+					  "2 tablespoons vegetable oil\n1 teaspoon cumin seeds\n1 medium yellow onion, small dice\n4 teaspoons peeled, finely chopped fresh ginger (from about a 2-inch piece)\n4 medium garlic cloves, finely chopped\n2 serrano chiles, stemmed and finely chopped\n1 (28-ounce) can whole peeled tomatoes and their juices\n2 teaspoons garam masala\n1 teaspoon ground coriander\n1 teaspoon kosher salt, plus more for seasoning\n1/2 teaspoon turmeric\n2 (15-ounce) cans chickpeas, also known as garbanzo beans, drained and rinsed\n1/2 cup water",
+					  "1. Heat the oil in a large frying pan over medium heat until shimmering. Add the cumin seeds and cook, stirring occasionally, until fragrant, about 1 minute. Add the onion, ginger, garlic, and chiles and season with kosher salt. Cook, stirring occasionally, until the onions have softened, about 6 minutes.\n"
+					  + "2. Meanwhile, set a fine-mesh strainer over a medium bowl. Strain the tomatoes and reserve the juices. Coarsely chop the tomatoes into 1-inch pieces; set aside.\n"
+					  + "3. When the onions have softened, add the garam masala, coriander, measured salt, and turmeric to the frying pan and stir to coat the onion mixture. Cook, stirring occasionally, until fragrant, about 1 minute.\n"
+					  + "4. Add the chopped tomatoes, their reserved juices, the chickpeas, and the water. Stir to combine, scraping up any browned bits from the bottom of the pan, and bring to a simmer. Reduce the heat to medium low and simmer, stirring occasionally, until the flavors have melded and the sauce has thickened slightly, about 20 minutes.\n",
+					  "http://www.chow.com/recipes/30267-chole-chana-masala",
+					  RecipeCategory.LunchOrDinner
+					  );
+
+			  createRecipeItem(
+					  "Masala Eggs",
+					  "Eggs cut into half, sprayed salt & onions",
+					  "ande",
+					  "5 mins",
+					  "15 mins",
+					  "20 mins",
+					  (float)4,
+					  (float)3.5,
+					  "Raw Eggs - 2, Salt & Onion",
+					  "Take two eggs & boil them for 10 mins\n",
+					  "http://www.chow.com/recipes/30267-chole-chana-masala",
+					  RecipeCategory.BreakFast
+					  );
+
+
 	  }
 
 	  public RecipeItem createRecipeItem(
@@ -369,13 +476,10 @@ public class DataSource {
 	    return recipeItem;
 	  }
 	
-	  public MealItem createMealItem(String date, String category, String name, String desc, String timetaken, String recipe_id) {
+	  public MealItem createMealItem(String date, String category, int recipe_id) {
 		    ContentValues values = new ContentValues();
 		    values.put(DataHelper.MEALS_COLUMN_DATE, date);
 		    values.put(DataHelper.MEALS_COLUMN_CATEGORY, category);
-		    values.put(DataHelper.MEALS_COLUMN_NAME, name);
-		    values.put(DataHelper.MEALS_COLUMN_DESC, desc);
-		    values.put(DataHelper.MEALS_COLUMN_TIMETAKEN, timetaken);
 		    values.put(DataHelper.MEALS_COLUMN_RECIPE_ID, recipe_id);
 		    long insertId = database.insert(DataHelper.TABLE_MEALS, null,
 		        values);
@@ -425,7 +529,7 @@ public class DataSource {
 		  }
 
 		  private MealItem cursorToMeal(Cursor cursor) {
-		    MealItem mealItem = new MealItem(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
+		    MealItem mealItem = new MealItem(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3));
 		    return mealItem;
 		  }
 		  
@@ -523,18 +627,12 @@ public class MealItem {
 	  public long id;
 	  public String date;
 	  public String category;
-	  public String name;
-	  public String desc;
-	  public String timetaken;
-	  public String recipe_id;
+	  public int recipe_id;
 
-	  public MealItem(long id, String date, String category, String name, String desc, String timetaken, String recipe_id) {
+	  public MealItem(long id, String date, String category, int recipe_id) {
 		    this.id = id;
 		    this.date = date;
 		    this.category = category;
-		    this.name = name;
-		    this.desc = desc;
-		    this.timetaken = timetaken;
 		    this.recipe_id = recipe_id;
 		  }
 
@@ -544,13 +642,6 @@ public class MealItem {
 	  public void setId(long id) {
 	    this.id = id;
 	  }
-	} 
-
-public class MealsDataSource {
-
-
-
-	 
 	} 
 
 }
