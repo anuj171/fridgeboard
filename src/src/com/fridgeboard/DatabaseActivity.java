@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 // this is the main activity
 public class DatabaseActivity extends ListActivity {
 
-	private DataAccess.RecipeDataSource datasource;
+	private DataAccess.DataSource datasource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class DatabaseActivity extends ListActivity {
         setContentView(R.layout.activity_database);
         
         DataAccess dataAccess = new DataAccess();
-        datasource = dataAccess.new RecipeDataSource(this);
+        datasource = dataAccess.new DataSource(this);
         datasource.open();
 
         List<DataAccess.RecipeItem> values = datasource.getAllRecipeItems();

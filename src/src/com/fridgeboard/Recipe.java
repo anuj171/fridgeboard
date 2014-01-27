@@ -1,6 +1,6 @@
 package com.fridgeboard;
 
-import com.fridgeboard.DataAccess.RecipeDataSource;
+import com.fridgeboard.DataAccess.DataSource;
 import com.fridgeboard.DataAccess.RecipeItem;
 import com.fridgeboard.util.SystemUiHider;
 
@@ -46,7 +46,7 @@ public class Recipe extends Activity {
 	private void LoadView(long recipeId)
 	{
 		DataAccess dataAccess = new DataAccess();
-    	RecipeDataSource datasource = dataAccess.new RecipeDataSource(this);
+    	DataSource datasource = dataAccess.new DataSource(this);
         datasource.open();
         RecipeItem recipeItem = datasource.getRecipeItem(recipeId);
         datasource.close();

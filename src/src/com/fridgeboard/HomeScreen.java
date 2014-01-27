@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.fridgeboard.DataAccess.RecipeDataSource;
+import com.fridgeboard.DataAccess.DataSource;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 public class HomeScreen extends Activity {
 
-	private DataAccess.MealsDataSource datasource;
+	private DataAccess.DataSource datasource;
 
 	private ArrayList<MealCategory> categoryList = new ArrayList<MealCategory>(); 
 	private MealPlanAdapter listAdapter;
@@ -52,9 +52,8 @@ public class HomeScreen extends Activity {
 		datef = new SimpleDateFormat("EEE, d MMM");
         
     	DataAccess dataAccess = new DataAccess();
-    	loadRecipeData(dataAccess);
-    	
-        datasource = dataAccess.new MealsDataSource(this);
+   	
+        datasource = dataAccess.new DataSource(this);
         datasource.open();
 
         loadData();
@@ -78,14 +77,6 @@ public class HomeScreen extends Activity {
 		//expand all Groups
 		expandAll();
 
-    }
-    
-    private void loadRecipeData(DataAccess dataAccess)
-    {
-    	RecipeDataSource datasource = dataAccess.new RecipeDataSource(this);
-        datasource.open();
-        datasource.fillDataIfEmpty();
-        datasource.close();
     }
     
     //method to expand all groups
@@ -307,5 +298,17 @@ public class HomeScreen extends Activity {
     	datasource.createMealItem(datef.format(rightNow.getTime()), "DINNER", "Biryani", "Hyderabadi delicacy containing rice, chicken & spices", "Time: 30 Min", "biryani");
     	datasource.createMealItem(datef.format(rightNow.getTime()), "DINNER", "Red Wine", "To end a day on high", "Time: 5 Min", "red_wine");
     	datasource.createMealItem(datef.format(rightNow.getTime()), "OTHERS", "dummy", "dummy", "dummy", "dummy_id");
+    }
+    
+    @Override
+    protected void onResume() {
+      datasource.open();
+      super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+      datasource.close();
+      super.onPause();
     }
 }
