@@ -15,7 +15,7 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 15;
+	private static final int DATABASE_VERSION = 17;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
@@ -435,7 +435,7 @@ public class DataSource {
 			  createRecipeItem(
 					  "Naan", 
 					  "Oven baked flatbread", 
-					  "naan", 
+					  "food", 
 					  "30 mins", 
 					  "7 mins", 
 					  "37 mins", 

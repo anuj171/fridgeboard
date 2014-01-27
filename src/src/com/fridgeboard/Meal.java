@@ -7,11 +7,13 @@ public class Meal {
     public String desc;
     public String duration;
     public int recipe_id;
+    public float health_rating;
+    public float taste_rating;
     public Meal(){
         super();
     }
 
-    public Meal(long meal_id, int icon, String title, String desc, String duration, int recipe_id) {
+    public Meal(long meal_id, int icon, String title, String desc, String duration, int recipe_id, float health_rating, float taste_rating) {
         super();
         this.meal_id = meal_id;
         this.icon = icon;
@@ -19,6 +21,8 @@ public class Meal {
         this.desc = desc;
         this.duration = duration;
         this.recipe_id = recipe_id;
+        this.health_rating = health_rating;
+        this.taste_rating = taste_rating;
     }
 
 }

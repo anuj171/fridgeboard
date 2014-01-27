@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,15 +37,12 @@ public class HomeScreen extends Activity {
 	DateFormat datef;
 	
 	private TextView mealPlanHeader;
+	private RatingBar planHealthRating, planTasteRating;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen);
-
-	    Log.w("HomeScreen",
-	    		""+this.getResources().getIdentifier("punjabirajma", "drawable", "com.fridgeboard")+"="+R.drawable.punjabirajma);
-		Toast.makeText(this, "resids: "+this.getResources().getIdentifier("punjabirajma", "drawable", "com.fridgeboard")+"="+R.drawable.punjabirajma, Toast.LENGTH_SHORT).show();
 
         rightNow = Calendar.getInstance();
 		
@@ -68,8 +66,13 @@ public class HomeScreen extends Activity {
         mealPlanHeader = (TextView)header.findViewById(R.id.txtHeader);
         mealPlanHeader.setText(df.format(rightNow.getTime()));
 
+        planHealthRating = (RatingBar)header.findViewById(R.id.planHealthRating);
+        planTasteRating = (RatingBar)header.findViewById(R.id.planTasteRating);
+        mealPlanHeader.setText(df.format(rightNow.getTime()));
+
+        updateRatings();
+
         mealPlanListView.addHeaderView(header);
-        
 		//create the adapter by passing your ArrayList data
 		listAdapter = new MealPlanAdapter(this, categoryList);
 		//attach the adapter to the list
@@ -112,8 +115,9 @@ public class HomeScreen extends Activity {
 
 	   	datasource.deleteMealItem(mealitem_to_be_deleted);
     	listAdapter.categoryList.get(groupPosition).mealList.remove(childPosition);
-	   	listAdapter.categoryList.get(groupPosition).mealList.add(childPosition, new Meal(new_mealitem.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId()));
+	   	listAdapter.categoryList.get(groupPosition).mealList.add(childPosition, new Meal(new_mealitem.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId(), recipe.getHealthRating(), recipe.getTasteRating()));
     	listAdapter.notifyDataSetInvalidated();
+        updateRatings();
 //    	// Do something in response to button click
 //		new AlertDialog.Builder(this)
 //	    .setTitle("Next Day")
@@ -137,7 +141,9 @@ public class HomeScreen extends Activity {
 	   	datasource.deleteMealItem(mealitem_to_be_deleted);
     	listAdapter.categoryList.get(groupPosition).mealList.remove(childPosition);
     	listAdapter.notifyDataSetInvalidated();
-//    	// Do something in response to button click
+        updateRatings();
+
+    	//    	// Do something in response to button click
 //		new AlertDialog.Builder(this)
 //	    .setTitle("Next Day")
 //	    .setMessage(df.format(rightNow.getTime()))
@@ -170,11 +176,20 @@ public class HomeScreen extends Activity {
     	int[] tag_array = (int [])view.getTag();
 	   	int groupPosition = tag_array[0];
 
-	   	DataAccess.MealItem new_mealitem = datasource.createMealItem(datef.format(rightNow.getTime()), listAdapter.categoryList.get(groupPosition).category, 1);
-		DataAccess.RecipeItem recipe = datasource.getRecipeItem(new_mealitem.recipe_id);
-
-	   	listAdapter.categoryList.get(groupPosition).mealList.add(new Meal(new_mealitem.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId()));
+	   	String meal_category = listAdapter.categoryList.get(groupPosition).category;
+	   	List<RecipeItem> recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinner.ordinal());
+	   	if (meal_category.equals("BREAKFAST")){
+	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.BreakFast.ordinal());   	
+	   	} else if(meal_category.equals("LUNCH")){
+	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinner.ordinal());   	
+	   	} else if(meal_category.equals("DINNER")){
+	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinner.ordinal());   	
+	   	}
+    	RecipeItem recipe = recipes.get((new Random()).nextInt(recipes.size()));
+	   	DataAccess.MealItem new_mealitem = datasource.createMealItem(datef.format(rightNow.getTime()), meal_category, (int)recipe.getId());
+	   	listAdapter.categoryList.get(groupPosition).mealList.add(new Meal(new_mealitem.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId(), recipe.getHealthRating(), recipe.getTasteRating()));
     	listAdapter.notifyDataSetInvalidated();
+        updateRatings();
 
     	//    	// Do something in response to button click
 //		new AlertDialog.Builder(this)
@@ -196,6 +211,7 @@ public class HomeScreen extends Activity {
     	
     	loadData();
     	listAdapter.notifyDataSetInvalidated();
+        updateRatings();
 //    	// Do something in response to button click
 //		new AlertDialog.Builder(this)
 //	    .setTitle("Next Day")
@@ -218,6 +234,7 @@ public class HomeScreen extends Activity {
 
     	loadData();
     	listAdapter.notifyDataSetInvalidated();
+        updateRatings();
 //    	// Do something in response to button click
 //		new AlertDialog.Builder(this)
 //	    .setTitle("Previous Day")
@@ -282,21 +299,22 @@ public class HomeScreen extends Activity {
     	ArrayList<Meal> dinners = new ArrayList<Meal>();
     	ArrayList<Meal> others = new ArrayList<Meal>();
     	
+    	
     	for(int i=0;i<mealitems.size();i++){
     		DataAccess.MealItem meal = mealitems.get(i);
     		DataAccess.RecipeItem recipe = datasource.getRecipeItem(meal.recipe_id);
     		String desc = recipe.getDescription();
-    		if(desc.length()>50){
-    			desc = desc.substring(0,49);
+    		if(desc.length()>40){
+    			desc = desc.substring(0,39);
     		}
     		if(meal.category.equals("BREAKFAST")){
-    			breakfasts.add(new Meal(meal.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId()));
+    			breakfasts.add(new Meal(meal.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId(), recipe.getHealthRating(), recipe.getTasteRating()));
     		} else if(meal.category.equals("LUNCH")){
-    			lunches.add(new Meal(meal.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId()));
+    			lunches.add(new Meal(meal.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId(), recipe.getHealthRating(), recipe.getTasteRating()));
     		} else if(meal.category.equals("DINNER")){
-    			dinners.add(new Meal(meal.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId()));
+    			dinners.add(new Meal(meal.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId(), recipe.getHealthRating(), recipe.getTasteRating()));
     		} else {
-    			others.add(new Meal(meal.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId()));
+    			others.add(new Meal(meal.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId(), recipe.getHealthRating(), recipe.getTasteRating()));
     		}
     	}	
     	categoryList.add(new MealCategory("BREAKFAST", breakfasts));
@@ -326,6 +344,27 @@ public class HomeScreen extends Activity {
     	RecipeItem dinner = lunch_dinner_recipes.get(d_id);
     	datasource.createMealItem(datef.format(rightNow.getTime()), "DINNER", (int) dinner.getId());
     	datasource.createMealItem(datef.format(rightNow.getTime()), "OTHERS", 1);
+    }
+    
+    private void updateRatings(){
+    	int meal_count = 0;
+    	float health_avg=0, health_sum = 0;
+    	float taste_avg=0, taste_sum = 0;
+    	for(int i=0;i<categoryList.size();i++){
+    		for(int j=0;j<categoryList.get(i).mealList.size(); j++){
+    			meal_count++;
+    			health_sum += categoryList.get(i).mealList.get(j).health_rating;
+    			taste_sum += categoryList.get(i).mealList.get(j).taste_rating;
+    		}
+    	}
+    	if (meal_count > 0){
+    		health_avg = health_sum/meal_count;
+    		taste_avg = taste_sum/meal_count;
+    	}
+    	planHealthRating.setRating(health_avg);
+    	planHealthRating.invalidate();
+    	planTasteRating.setRating(taste_avg);
+    	planTasteRating.invalidate();
     }
     
     @Override
