@@ -66,15 +66,24 @@ public class DataHelper extends SQLiteOpenHelper {
 	         + MEALS_COLUMN_DESC + " text not null, " 
 	         + MEALS_COLUMN_TIMETAKEN + " text not null, " 
 	         + MEALS_COLUMN_RECIPE_ID + " text not null);";
+	  
+	  DataSource source;
 		  
-	  public DataHelper(Context context) {
+	  public DataHelper(Context context, DataSource src) {
 	    super(context, DATABASE_NAME, null, DATABASE_VERSION);
+	    source = src;
 	  }
 
 	  @Override
 	  public void onCreate(SQLiteDatabase database) {
 	    database.execSQL(RECIPE_DATABASE_CREATE);
 	    database.execSQL(MEALS_DATABASE_CREATE);
+	    
+		database.execSQL("CREATE TABLE ingredients ( id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100) NOT NULL, cat_id INTEGER, unit VARCHAR(30) );");
+
+		database.execSQL("CREATE TABLE recipe_ingred ( rec_id INTEGER REFERENCES recipe (id), ing_id INTEGER REFERENCES Ingredients (id), quantity VARCHAR(30) );");
+
+		source.fillData();
 	  }
 
 	  @Override
@@ -90,10 +99,10 @@ public class DataHelper extends SQLiteOpenHelper {
 	  {
 		  db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPE);
 		  db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEALS);
+		  db.execSQL("DROP TABLE ingredients");
+		  db.execSQL("DROP TABLE recipe_ingred");
 	  }
 	} 
-
-
 
 public class DataSource {
 
@@ -126,29 +135,48 @@ public class DataSource {
 	      };
 
 	  public DataSource(Context context) {
-	    dbHelper = new DataHelper(context);
+	    dbHelper = new DataHelper(context, this);
 	  }
 
 	  public void open() throws SQLException {
 	    database = dbHelper.getWritableDatabase();
-	    fillDataIfEmpty();
+	    fillData();
 	  }
 
 	  public void close() {
 	    dbHelper.close();
 	  }
 	  
-	  public void fillDataIfEmpty()
+	  public void fillData()
 	  {
-		  fillRecipeDataIfEmpty();
+		  fillRecipe();
+		  fillIngredients();
+		  fillRecipeIngrRelation();
 	  }
 	  
-	  public void fillRecipeDataIfEmpty()
+	  public void fillIngredients()
 	  {
-		  List<RecipeItem> list = getAllRecipeItems(); 
-		  
-		  if (list != null && list.size() == 0)
-		  {
+		    database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (1, 'Capsicum', 2, 'gm');");
+			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (2, 'Mushroom', 2, 'gm');");
+			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (3, 'Tomatoes', 2, 'gm');");
+			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (4, 'Potatoes', 2, 'gm');");
+			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (5, 'Onion', 2, 'gm');");
+			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (6, 'French Beans', 2, 'gm');");
+			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (7, 'Milk', 0, 'ml');");
+			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (8, 'Butter', 0, 'gm');");
+			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (9, 'Cheese', 0, 'gm');");
+
+	  }
+	  
+	  public void fillRecipeIngrRelation()
+	  {
+			database.execSQL("INSERT INTO [recipe_ingred] ([rec_id], [ing_id], [quantity]) VALUES (1, 1, 200);");
+			database.execSQL("INSERT INTO [recipe_ingred] ([rec_id], [ing_id], [quantity]) VALUES (1, 7, 500);");
+			database.execSQL("INSERT INTO [recipe_ingred] ([rec_id], [ing_id], [quantity]) VALUES (3, 1, 300);");
+	  }
+	  
+	  public void fillRecipe()
+	  {
 			  createRecipeItem(
 					  "Rajma Masala",
 					  "Red kidney beans cooked in tomatoes, onions and spices.",
@@ -183,7 +211,6 @@ public class DataSource {
 					  + "4. Add the chopped tomatoes, their reserved juices, the chickpeas, and the water. Stir to combine, scraping up any browned bits from the bottom of the pan, and bring to a simmer. Reduce the heat to medium low and simmer, stirring occasionally, until the flavors have melded and the sauce has thickened slightly, about 20 minutes.\n",
 					  "http://www.chow.com/recipes/30267-chole-chana-masala"
 					  );
-		  }
 	  }
 
 	  public RecipeItem createRecipeItem(
@@ -357,7 +384,30 @@ public class DataSource {
 		    MealItem mealItem = new MealItem(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
 		    return mealItem;
 		  }
-} 
+		  
+		  private Cursor execSql(String sql) {
+			  Cursor c = null;
+
+			  try {
+				  c = database.rawQuery(sql, null);		  
+			  }
+			  catch(SQLException e) {
+				  String x = e.toString();
+			  }
+			  return c;
+		  }
+
+		  public Cursor getGroceryItems(int option) {
+			  String sql = "select i.id as _id, i.name as name, sum(m.quantity) || ' ' || i.unit as value, 'used in ' || r.name as desc from recipe r, recipe_ingred m, ingredients i where r.id = m.rec_id and i.id = m.ing_id and i.cat_id = %s group by i.id";
+			  return execSql(String.format(sql, option));
+		  }
+		  	  
+		  public Cursor getAllGroceryItems() {
+			  String sql = "select i.id as _id from Ingredients i";
+			  return execSql(sql);
+		  }
+	} 
+
 
 public class RecipeItem {
 	  private long _id;

@@ -198,6 +198,8 @@ public class Groceries extends FragmentActivity {
 		        	mRemainingLabel.setText(remaining + " items remaining");
 		        }
 		    });
+		    
+		    groceries.close();
 		}
 	}
 }
