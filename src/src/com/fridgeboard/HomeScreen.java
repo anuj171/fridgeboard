@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.fridgeboard.DataAccess.RecipeDataSource;
+import com.fridgeboard.DataAccess.DataSource;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,7 +27,7 @@ import android.widget.Toast;
 
 public class HomeScreen extends Activity {
 
-	private DataAccess.MealsDataSource datasource;
+	private DataAccess.DataSource datasource;
 
 	private ArrayList<MealCategory> categoryList = new ArrayList<MealCategory>(); 
 	private MealPlanAdapter listAdapter;
@@ -52,11 +52,11 @@ public class HomeScreen extends Activity {
 		datef = new SimpleDateFormat("EEE, d MMM");
         
     	DataAccess dataAccess = new DataAccess();
-        datasource = dataAccess.new MealsDataSource(this);
+   	
+        datasource = dataAccess.new DataSource(this);
         datasource.open();
 
         loadData();
-        
 		
 		//get reference to the ExpandableListView
 		mealPlanListView = (ExpandableListView) findViewById(R.id.mealPlanExpandableList);
@@ -140,8 +140,13 @@ public class HomeScreen extends Activity {
 	   	int childPosition = tag_array[1];
 
 	   	Toast.makeText(this, "Loading recipe "+listAdapter.categoryList.get(groupPosition).mealList.get(childPosition).title, Toast.LENGTH_SHORT).show();
-    	// Do something in response to button click
-    	startActivity(new Intent(this, Recipe.class));
+    	
+	   	long recipeId = 2; // NOTE: use a valid recipe id here
+	   	
+	   	Intent recipeLaunchIntent = new Intent(this, Recipe.class);
+	   	recipeLaunchIntent.putExtra(Recipe.RECIPE_ID, recipeId);
+	   	
+    	startActivity(recipeLaunchIntent);
 	}
     /** Called when the user touches the button */
     public void addMeal(View view) {
@@ -293,5 +298,17 @@ public class HomeScreen extends Activity {
     	datasource.createMealItem(datef.format(rightNow.getTime()), "DINNER", "Biryani", "Hyderabadi delicacy containing rice, chicken & spices", "Time: 30 Min", "biryani");
     	datasource.createMealItem(datef.format(rightNow.getTime()), "DINNER", "Red Wine", "To end a day on high", "Time: 5 Min", "red_wine");
     	datasource.createMealItem(datef.format(rightNow.getTime()), "OTHERS", "dummy", "dummy", "dummy", "dummy_id");
+    }
+    
+    @Override
+    protected void onResume() {
+      datasource.open();
+      super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+      datasource.close();
+      super.onPause();
     }
 }

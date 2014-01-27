@@ -1,5 +1,7 @@
 package com.fridgeboard;
 
+import com.fridgeboard.DataAccess.DataSource;
+import com.fridgeboard.DataAccess.RecipeItem;
 import com.fridgeboard.util.SystemUiHider;
 
 import android.annotation.TargetApi;
@@ -9,6 +11,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 /**
@@ -18,34 +22,9 @@ import android.widget.TextView;
  * @see SystemUiHider
  */
 public class Recipe extends Activity {
-	/**
-	 * Whether or not the system UI should be auto-hidden after
-	 * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-	 */
-	//private static final boolean AUTO_HIDE = true;
 
-	/**
-	 * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-	 * user interaction before hiding the system UI.
-	 */
-	//private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
-	/**
-	 * If set, will toggle the system UI visibility upon interaction. Otherwise,
-	 * will show the system UI visibility upon interaction.
-	 */
-	//private static final boolean TOGGLE_ON_CLICK = true;
-
-	/**
-	 * The flags to pass to {@link SystemUiHider#getInstance}.
-	 */
-	//private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
-
-	/**
-	 * The instance of the {@link SystemUiHider} for this activity.
-	 */
-	//private SystemUiHider mSystemUiHider;
-
+	public static String RECIPE_ID = "RECIPE_ID";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,127 +34,69 @@ public class Recipe extends Activity {
 		//final View controlsView = findViewById(R.id.fullscreen_content_controls);
 		final View contentView = findViewById(R.id.fullscreen_content);
 
-		ExpandableTextView ingredientsTextView = (ExpandableTextView) findViewById(R.id.ingredients_text);
-		ingredientsTextView.setText(R.string.ingredients_text);
+		long recipeId = 1;
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			recipeId = extras.getLong(RECIPE_ID);
+		}
+		LoadView(recipeId);
+	}
+	
+	private void LoadView(long recipeId)
+	{
+		DataAccess dataAccess = new DataAccess();
+    	DataSource datasource = dataAccess.new DataSource(this);
+        datasource.open();
+        RecipeItem recipeItem = datasource.getRecipeItem(recipeId);
+        datasource.close();
         
-		ExpandableTextView instructionsTextView = (ExpandableTextView) findViewById(R.id.instructions_text);
-		instructionsTextView.setText(R.string.instructions_text);
-		
-		TextView linksTextView = (TextView) findViewById(R.id.links_text);
-		linksTextView.setText(R.string.links_text);
-		
+        TextView nameView = (TextView) findViewById(R.id.recipe_name);
+        nameView.setText(recipeItem != null ? recipeItem.getName(): "Rajma Masala");
+        
+        TextView descView = (TextView) findViewById(R.id.recipe_desc);
+        descView.setText(recipeItem != null ? recipeItem.getDescription() : "Red kidney beans cooked in tomatoes, onions and spices.");
+        
+        ImageView recipeImageView = (ImageView) findViewById(R.id.recipe_image);
+        recipeImageView.setImageResource(
+        		getResources().getIdentifier(
+    				recipeItem != null ? recipeItem.getImage() : "punjabirajma", 
+    				"drawable", getApplicationContext().getPackageName()));
+        
 		TextView prepsTextView = (TextView) findViewById(R.id.preptime_text);
-		prepsTextView.setText(R.string.preptime_text);
+		prepsTextView.setText(recipeItem != null ? recipeItem.getPrepTime() : "9 mins" );
 		
 		TextView cookTextView = (TextView) findViewById(R.id.cooktime_text);
-		cookTextView.setText(R.string.cooktime_text);
+		cookTextView.setText(recipeItem != null ? recipeItem.getCookingTime() : "45 mins" );
 		
 		TextView totalTextView = (TextView) findViewById(R.id.totaltime_text);
-		totalTextView.setText(R.string.totaltime_text);
+		totalTextView.setText(recipeItem != null ? recipeItem.getTotalTime() : "54 mins" );
 		
-		// Set up an instance of SystemUiHider to control the system UI for
-		// this activity.
-//		mSystemUiHider = SystemUiHider.getInstance(this, contentView,
-//				HIDER_FLAGS);
-//		mSystemUiHider.setup();
-//		mSystemUiHider
-//				.setOnVisibilityChangeListener(new SystemUiHider.OnVisibilityChangeListener() {
-//					// Cached values.
-//					int mControlsHeight;
-//					int mShortAnimTime;
-//
-//					@Override
-//					@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-//					public void onVisibilityChange(boolean visible) {
-//						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-//							// If the ViewPropertyAnimator API is available
-//							// (Honeycomb MR2 and later), use it to animate the
-//							// in-layout UI controls at the bottom of the
-//							// screen.
-//							if (mControlsHeight == 0) {
-//								mControlsHeight = controlsView.getHeight();
-//							}
-//							if (mShortAnimTime == 0) {
-//								mShortAnimTime = getResources().getInteger(
-//										android.R.integer.config_shortAnimTime);
-//							}
-//							controlsView
-//									.animate()
-//									.translationY(visible ? 0 : mControlsHeight)
-//									.setDuration(mShortAnimTime);
-//						} else {
-//							// If the ViewPropertyAnimator APIs aren't
-//							// available, simply show or hide the in-layout UI
-//							// controls.
-//							controlsView.setVisibility(visible ? View.VISIBLE
-//									: View.GONE);
-//						}
-//
-//						if (visible && AUTO_HIDE) {
-//							// Schedule a hide().
-//							delayedHide(AUTO_HIDE_DELAY_MILLIS);
-//						}
-//					}
-//				});
-
-		// Set up the user interaction to manually show or hide the system UI.
-//		contentView.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View view) {
-//				if (TOGGLE_ON_CLICK) {
-//					mSystemUiHider.toggle();
-//				} else {
-//					mSystemUiHider.show();
-//				}
-//			}
-//		});
-//
-//		// Upon interacting with UI controls, delay any scheduled hide()
-//		// operations to prevent the jarring behavior of controls going away
-//		// while interacting with the UI.
-//		findViewById(R.id.dummy_button).setOnTouchListener(
-//				mDelayHideTouchListener);
+		RatingBar tasteRating = (RatingBar) findViewById(R.id.tasteRating);
+		tasteRating.setRating(recipeItem != null ? recipeItem.getTasteRating() : 4);
+		
+		RatingBar healthRating = (RatingBar) findViewById(R.id.healthRating);
+		healthRating.setRating(recipeItem != null ? recipeItem.getHealthRating() : (float)3.5);
+		
+		ExpandableTextView ingredientsTextView = (ExpandableTextView) findViewById(R.id.ingredients_text);
+		ingredientsTextView.setText(recipeItem != null ? recipeItem.getIngredients() : "Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2");
+        
+		ExpandableTextView instructionsTextView = (ExpandableTextView) findViewById(R.id.instructions_text);
+		instructionsTextView.setText(recipeItem != null ? recipeItem.getInstructions()
+				: "1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n"
+				  + "2. Cook till raw smell of tomatoes leave and is slightly mushy. Cool down and then transfer it to a mixer.\n"
+				  + "3. Grind it to smooth paste without adding water,set aside. Heat oil in a pan - temper jeera, let it splutter.Then add the onion tomato paste.\n"
+				  + "4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n"
+				  + "5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.");
+		
+		TextView linksTextView = (TextView) findViewById(R.id.links_text);
+		linksTextView.setText(recipeItem != null ? recipeItem.getLinks() : "http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\nhttp://cooks.ndtv.com/recipe/show/rajma-233367");	
 	}
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 
-		// Trigger the initial hide() shortly after the activity has been
-		// created, to briefly hint to the user that UI controls
-		// are available.
-		//delayedHide(100);
 	}
 
-	/**
-	 * Touch listener to use for in-layout UI controls to delay hiding the
-	 * system UI. This is to prevent the jarring behavior of controls going away
-	 * while interacting with activity UI.
-	 */
-//	View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-//		@Override
-//		public boolean onTouch(View view, MotionEvent motionEvent) {
-//			if (AUTO_HIDE) {
-//				delayedHide(AUTO_HIDE_DELAY_MILLIS);
-//			}
-//			return false;
-//		}
-//	};
-//
-//	Handler mHideHandler = new Handler();
-//	Runnable mHideRunnable = new Runnable() {
-//		@Override
-//		public void run() {
-//			//mSystemUiHider.hide();
-//		}
-//	};
-
-	/**
-	 * Schedules a call to hide() in [delay] milliseconds, canceling any
-	 * previously scheduled calls.
-	 */
-//	private void delayedHide(int delayMillis) {
-//		mHideHandler.removeCallbacks(mHideRunnable);
-//		mHideHandler.postDelayed(mHideRunnable, delayMillis);
-//	}
 }
