@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.location.Criteria;
 import android.util.Log;
 
 public class DataAccess {
@@ -22,6 +23,18 @@ public class DataAccess {
 		  Snacks,
 		  Desserts,
 		  Drinks  
+	  }
+	  
+	  public enum Setting {
+		  NoOfPortions,
+		  SkipBreakfast,
+		  SkipLunch,
+		  SkipDinner,
+		  SkipDrinks,
+		  SkipSnacks,
+		  HealthFactor,
+		  TasteFactor,
+		  CostFactor
 	  }
 	  
 public class DataHelper extends SQLiteOpenHelper {
@@ -40,7 +53,6 @@ public class DataHelper extends SQLiteOpenHelper {
 	  public static final String RECIPE_COLUMN_INSTRUCTIONS = "instructions";
 	  public static final String RECIPE_COLUMN_LINKS = "links";
 	  public static final String RECIPE_COLUMN_CATEGORY = "category";
-	  
 
 
 	  // Database creation sql statement
@@ -76,7 +88,20 @@ public class DataHelper extends SQLiteOpenHelper {
 	  
 	  public static final String INGREDIENTS_TABLE = "ingredients";
 	  public static final String RECIPE_INGRED_TABLE = "recipe_ingred";
+
 	  
+	  public static final String TABLE_SETTINGS = "settings";
+	  public static final String SETTINGS_COLUMN_ID = "id";
+	  public static final String SETTINGS_COLUMN_TYPE = "type";
+	  public static final String SETTINGS_COLUMN_VALUE = "value";
+	  
+	  // Database creation sql statement
+	  private static final String SETTINGS_DATABASE_CREATE = "create table " + TABLE_SETTINGS + "("
+		  + SETTINGS_COLUMN_ID + " integer primary key autoincrement, "
+		  + SETTINGS_COLUMN_TYPE + " integer, "
+		  + SETTINGS_COLUMN_VALUE + " text"
+	      + ");";
+
 	  DataSource source;
 		  
 	  public DataHelper(Context context, DataSource src) {
@@ -90,7 +115,8 @@ public class DataHelper extends SQLiteOpenHelper {
 	    database.execSQL(MEALS_DATABASE_CREATE);
 		database.execSQL("CREATE TABLE "+ INGREDIENTS_TABLE +" ( id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100) NOT NULL, cat_id INTEGER, unit VARCHAR(30) );");
 		database.execSQL("CREATE TABLE "+ RECIPE_INGRED_TABLE +" ( rec_id INTEGER REFERENCES "+TABLE_RECIPE+" ("+ RECIPE_COLUMN_ID +"), ing_id INTEGER REFERENCES Ingredients (id), quantity VARCHAR(30) );");
-
+		database.execSQL(SETTINGS_DATABASE_CREATE);
+		
 		source.fillData(database);
 	  }
 
@@ -109,6 +135,7 @@ public class DataHelper extends SQLiteOpenHelper {
 		  db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEALS);
 		  db.execSQL("DROP TABLE IF EXISTS " + INGREDIENTS_TABLE);
 		  db.execSQL("DROP TABLE IF EXISTS " + RECIPE_INGRED_TABLE);
+		  db.execSQL("DROP TABLE IF EXISTS " + TABLE_SETTINGS);
 	  }
 	} 
 
@@ -139,6 +166,12 @@ public class DataSource {
 			  DataHelper.MEALS_COLUMN_CATEGORY,
 			  DataHelper.MEALS_COLUMN_RECIPE_ID,
 	      };
+	  
+	  private String[] settingsAllColumns = { 
+			  DataHelper.SETTINGS_COLUMN_ID,
+			  DataHelper.SETTINGS_COLUMN_TYPE,
+			  DataHelper.SETTINGS_COLUMN_VALUE,
+	      };  
 
 	  public DataSource(Context context) {
 	    dbHelper = new DataHelper(context, this);
@@ -158,36 +191,102 @@ public class DataSource {
 		  fillRecipe();
 		  fillIngredients();
 		  fillRecipeIngrRelation();
+		  fillSettings();
 	  }
 	  
 	  public void fillIngredients()
 	  {
-		    database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (1, 'Capsicum', 2, 'gm');");
-			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (2, 'Mushroom', 2, 'gm');");
-			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (3, 'Tomatoes', 2, 'gm');");
-			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (4, 'Potatoes', 2, 'gm');");
-			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (5, 'Onion', 2, 'gm');");
-			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (6, 'French Beans', 2, 'gm');");
-			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (7, 'Milk', 0, 'ml');");
-			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (8, 'Butter', 0, 'gm');");
-			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (9, 'Cheese', 0, 'gm');");
-			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (10, 'Eggs', 0, 'items');");
-
+		  int category = 0;
+		  		  
+		  // Vegetables
+		  createIngredient("Onion", category, "gm"); //1
+		  createIngredient("Potatoes", category, "gm");
+		  createIngredient("Capsicum", category, "gm");
+		  createIngredient("Spinach", category, "gm");
+		  createIngredient("Methi Leaves", category, "gm");
+		  createIngredient("Red Carrot", category, "gm"); //6
+		  createIngredient("Tomatoes", category, "gm");
+		  createIngredient("Mushrooms", category, "gm");
+		  createIngredient("Coriander", category, "gm");
+		  createIngredient("Green Chillies", category, "gm");
+		  createIngredient("Cucumber", category, "gm"); //11
+		  createIngredient("Cauliflower", category, "gm");
+		  
+		  // Staples
+		  category = 1;
+		  createIngredient("Garam Masala Powder", category, "gm"); //13
+		  createIngredient("Kasoori methi", category, "gm");
+		  createIngredient("Salt", category, "gm");
+		  createIngredient("Jeera", category, "gm");
+		  createIngredient("Vegetable Oil", category, "lt"); //17
+		  
+		  // Pulses
+		  category = 2;
+		  createIngredient("Rajma", category, "gm"); //18
+		  createIngredient("Tur Daal", category, "gm");
+		  createIngredient("Chhole", category, "gm");
+		  createIngredient("Chane", category, "gm"); //21
+		  createIngredient("Chana Daal", category, "gm");
+		  createIngredient("Urad Daal", category, "gm");
+		  createIngredient("Moong Daal", category, "gm"); //24
+		  
+		  // Dairy
+		  category = 3;
+		  createIngredient("Milk", category, "ml"); //25
+		  createIngredient("Curd", category, "gm");
+		  createIngredient("Paneer", category, "gm");
+		  createIngredient("Cheese", category, "gm");
+		  createIngredient("Butter", category, "gm"); //29
+		  
+		  // Bakery
+		  category = 4;
+		  createIngredient("Wheat Bread", category, "no");
+		  createIngredient("Pav", category, "no");
+		  createIngredient("Biscuits", category, "no");
+		  createIngredient("Bread Sticks", category, "no");
+	  }
+	  
+	  private void createIngredient(String name, int category, String unit) {
+		  ContentValues values = new ContentValues();
+		  values.put("name", name);
+		  values.put("cat_id", category);
+		  values.put("unit", unit);
+		  
+		  database.insert(DataHelper.INGREDIENTS_TABLE, null, values);
 	  }
 	  
 	  public void fillRecipeIngrRelation()
 	  {
-			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (1, 1, 200);");
-			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (1, 7, 500);");
-			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (2, 1, 300);");
-			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (3, 10, 2);");
-			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (4, 1, 200);");
-			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (4, 7, 500);");
-			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (5, 1, 300);");
-			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (6, 1, 200);");
-			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (6, 7, 500);");
-			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (7, 1, 300);");
-			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (8, 10, 2);");
+		  // rajma masala
+		  createRelation(1, 18, 500);
+		  createRelation(1, 13, 100);
+		  createRelation(1, 14, 50);
+		  createRelation(1, 15, 25);
+		  createRelation(1, 16, 25);
+		  createRelation(1, 17, 50);
+		  createRelation(1, 9, 25);
+		  createRelation(1, 10, 10);
+		  createRelation(1, 1, 100);
+		  
+		  // chole
+		  //4 teaspoons peeled, finely chopped fresh ginger (from about a 2-inch piece)\n
+		  //4 medium garlic cloves, finely chopped\n2 serrano chiles, stemmed and finely chopped\n
+		  //1 (28-ounce) can whole peeled tomatoes and their juices\n2 teaspoons garam masala\n1 teaspoon ground coriander\n1 teaspoon kosher salt, plus more for seasoning\n1/2 teaspoon turmeric\n2 (15-ounce) cans chickpeas, also known as garbanzo beans, drained and rinsed\n1/2 cup water",
+		  createRelation(2, 17, 100);
+		  createRelation(2, 1, 200);
+		  createRelation(2, 7, 100);
+		  createRelation(2, 10, 50);
+		  createRelation(2, 9, 25);
+		  createRelation(2, 20, 250);
+	  }
+	  
+	  private void createRelation(int rec_id, int ing_id, int quantity) {
+		  ContentValues values = new ContentValues();
+		  values.put("rec_id", rec_id);
+		  values.put("ing_id", ing_id);
+		  values.put("quantity", quantity);
+		  
+		  database.insert(DataHelper.RECIPE_INGRED_TABLE, null, values);
 	  }
 	  
 	  public void fillRecipe()
@@ -332,8 +431,80 @@ public class DataSource {
 					  "http://www.chow.com/recipes/30267-chole-chana-masala",
 					  RecipeCategory.BreakFast
 					  );
-
-
+			  
+			  createRecipeItem(
+					  "Naan", 
+					  "Oven baked flatbread", 
+					  "naan", 
+					  "30 mins", 
+					  "7 mins", 
+					  "37 mins", 
+					  (float)4, 
+					  (float)2.5, 
+					  "1 (.25 ounce) package active dry yeast \n1 cup warm water \n1/4 cup white sugar \n3 tablespoons milk \n1 egg, beaten \n2 teaspoons salt \n4 1/2 cups bread flour \n2 teaspoons minced garlic (optional) \n1/4 cup butter, melted", 
+					  "1. In a large bowl, dissolve yeast in warm water. Let stand about 10 minutes, until frothy. Stir in sugar, milk, egg, salt, and enough flour to make a soft dough. Knead for 6 to 8 minutes on a lightly floured surface, or until smooth. Place dough in a well oiled bowl, cover with a damp cloth, and set aside to rise. Let it rise 1 hour, until the dough has doubled in volume.\n"
+					  + "2. Punch down dough, and knead in garlic. Pinch off small handfuls of dough about the size of a golf ball. Roll into balls, and place on a tray. Cover with a towel, and allow to rise until doubled in size, about 30 minutes.\n"
+					  + "3. During the second rising, preheat grill to high heat.\n"
+					  + "4. At grill side, roll one ball of dough out into a thin circle. Lightly oil grill. Place dough on grill, and cook for 2 to 3 minutes, or until puffy and lightly browned. Brush uncooked side with butter, and turn over. Brush cooked side with butter, and cook until browned, another 2 to 4 minutes. Remove from grill, and continue the process until all the naan has been prepared.\n", 
+					  "http://allrecipes.com/Recipe/Naan/Detail.aspx", 
+					  RecipeCategory.LunchOrDinner
+					  );
+	  }
+	  
+	  public void fillSettings()
+	  {
+		  setSetting(Setting.NoOfPortions, "2");
+		  setSetting(Setting.SkipBreakfast, "false");
+		  setSetting(Setting.SkipLunch, "false");
+		  setSetting(Setting.SkipDinner, "false");
+		  setSetting(Setting.SkipSnacks, "true");
+		  setSetting(Setting.SkipDrinks, "true");
+		  setSetting(Setting.HealthFactor, "3.5");
+		  setSetting(Setting.TasteFactor, "4");
+		  setSetting(Setting.CostFactor, "1500");
+	  }
+	  
+	  public void setSetting(Setting setting, String value) {
+		  // clear any existing setting first
+		  if (getSetting(setting) != null)
+			  deleteSetting(setting);
+		  
+		  // now add the setting
+		  ContentValues values = new ContentValues();
+		    values.put(DataHelper.SETTINGS_COLUMN_TYPE, setting.ordinal());
+		    values.put(DataHelper.SETTINGS_COLUMN_VALUE, value);
+		    
+		    database.insert(DataHelper.TABLE_SETTINGS, null, values);
+	  }
+	  
+	  public String getSetting(Setting setting) {	  
+		  String value = null;
+		    
+		  try {
+			    Cursor cursor = database.query(DataHelper.TABLE_SETTINGS,
+			    	settingsAllColumns, DataHelper.SETTINGS_COLUMN_TYPE + " = " + setting.ordinal(), null, null, null, null);
+		
+			    cursor.moveToFirst();
+	
+				if (!cursor.isAfterLast())
+				{
+					value = cursor.getString(2); 
+			    }
+				
+			    // make sure to close the cursor
+			    cursor.close();    
+		  }
+		  catch (Exception ex)
+		  {
+			  return null;
+		  }
+		  
+	    return value;
+	 }
+	  
+	  public void deleteSetting(Setting setting) {
+	    database.delete(DataHelper.TABLE_SETTINGS, DataHelper.SETTINGS_COLUMN_TYPE
+	        + " = " + setting.ordinal(), null);
 	  }
 
 	  public RecipeItem createRecipeItem(
