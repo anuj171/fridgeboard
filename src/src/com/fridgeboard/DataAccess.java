@@ -14,8 +14,16 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 8;
+	private static final int DATABASE_VERSION = 11;
 	
+	  public enum RecipeCategory{
+		  BreakFast,
+		  LunchOrDinner,
+		  Snacks,
+		  Desserts,
+		  Drinks  
+	  }
+	  
 public class DataHelper extends SQLiteOpenHelper {
 
 	  public static final String TABLE_RECIPE = "recipe";
@@ -31,6 +39,9 @@ public class DataHelper extends SQLiteOpenHelper {
 	  public static final String RECIPE_COLUMN_INGREDIENTS = "ingredients";
 	  public static final String RECIPE_COLUMN_INSTRUCTIONS = "instructions";
 	  public static final String RECIPE_COLUMN_LINKS = "links";
+	  public static final String RECIPE_COLUMN_CATEGORY = "category";
+	  
+
 
 	  // Database creation sql statement
 	  private static final String RECIPE_DATABASE_CREATE = "create table " + TABLE_RECIPE + "(" 
@@ -45,7 +56,8 @@ public class DataHelper extends SQLiteOpenHelper {
 	      + RECIPE_COLUMN_HEALTH_RATING + " float, "
 	      + RECIPE_COLUMN_INGREDIENTS + " text, "
 	      + RECIPE_COLUMN_INSTRUCTIONS + " text, "
-	      + RECIPE_COLUMN_LINKS + " links"
+	      + RECIPE_COLUMN_LINKS + " text, "
+	      + RECIPE_COLUMN_CATEGORY + " integer "
 	      + ");";
 
 	  public static final String TABLE_MEALS = "meals";
@@ -123,7 +135,8 @@ public class DataSource {
 			  DataHelper.RECIPE_COLUMN_HEALTH_RATING,
 			  DataHelper.RECIPE_COLUMN_INGREDIENTS,
 			  DataHelper.RECIPE_COLUMN_INSTRUCTIONS,
-			  DataHelper.RECIPE_COLUMN_LINKS};
+			  DataHelper.RECIPE_COLUMN_LINKS,
+			  DataHelper.RECIPE_COLUMN_CATEGORY};
 	  
 	  private String[] mealsAllColumns = { 
 			  DataHelper.MEALS_COLUMN_ID,
@@ -193,7 +206,8 @@ public class DataSource {
 					  + "3. Grind it to smooth paste without adding water,set aside. Heat oil in a pan - temper jeera, let it splutter.Then add the onion tomato paste.\n"
 					  + "4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n"
 					  + "5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.",
-					  "http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\nhttp://cooks.ndtv.com/recipe/show/rajma-233367"
+					  "http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\nhttp://cooks.ndtv.com/recipe/show/rajma-233367",
+					  RecipeCategory.LunchOrDinner
 					  );
 			  
 			  createRecipeItem(
@@ -210,7 +224,8 @@ public class DataSource {
 					  + "2. Meanwhile, set a fine-mesh strainer over a medium bowl. Strain the tomatoes and reserve the juices. Coarsely chop the tomatoes into 1-inch pieces; set aside.\n"
 					  + "3. When the onions have softened, add the garam masala, coriander, measured salt, and turmeric to the frying pan and stir to coat the onion mixture. Cook, stirring occasionally, until fragrant, about 1 minute.\n"
 					  + "4. Add the chopped tomatoes, their reserved juices, the chickpeas, and the water. Stir to combine, scraping up any browned bits from the bottom of the pan, and bring to a simmer. Reduce the heat to medium low and simmer, stirring occasionally, until the flavors have melded and the sauce has thickened slightly, about 20 minutes.\n",
-					  "http://www.chow.com/recipes/30267-chole-chana-masala"
+					  "http://www.chow.com/recipes/30267-chole-chana-masala",
+					  RecipeCategory.LunchOrDinner
 					  );
 	  }
 
@@ -225,7 +240,8 @@ public class DataSource {
 			  float healthRating,
 			  String ingredients,
 			  String instructions,
-			  String links) {
+			  String links,
+			  RecipeCategory category) {
 		  
 		    ContentValues values = new ContentValues();
 		    values.put(DataHelper.RECIPE_COLUMN_NAME, name);
@@ -239,6 +255,7 @@ public class DataSource {
 		    values.put(DataHelper.RECIPE_COLUMN_INGREDIENTS, ingredients);
 		    values.put(DataHelper.RECIPE_COLUMN_INSTRUCTIONS, instructions);
 		    values.put(DataHelper.RECIPE_COLUMN_LINKS, links);
+		    values.put(DataHelper.RECIPE_COLUMN_CATEGORY, category.ordinal());
 		    
 		    long insertId = database.insert(DataHelper.TABLE_RECIPE, null,
 		        values);
@@ -258,6 +275,30 @@ public class DataSource {
 	        + " = " + id, null);
 	  }
 
+	  public List<RecipeItem> getRecipesByCriteria(String selectionCriteria) {
+		    List<RecipeItem> recipeItems = new ArrayList<RecipeItem>();
+
+		    try {
+			    Cursor cursor = database.query(DataHelper.TABLE_RECIPE,
+			        recipeAllColumns, selectionCriteria, null, null, null, null);
+		
+			    cursor.moveToFirst();
+			    while (!cursor.isAfterLast()) {
+			      RecipeItem recipeItem = cursorToRecipe(cursor);
+			      recipeItems.add(recipeItem);
+			      cursor.moveToNext();
+			    }
+			    // make sure to close the cursor
+			    cursor.close();
+			 }
+			 catch (Exception ex)
+			 {
+				 return null;
+			 }
+		    return recipeItems;
+		  }
+
+	  
 	  public List<RecipeItem> getAllRecipeItems() {
 	    List<RecipeItem> recipeItems = new ArrayList<RecipeItem>();
 
@@ -321,7 +362,9 @@ public class DataSource {
     			cursor.getFloat(8),
     			cursor.getString(9),
     			cursor.getString(10),
-    			cursor.getString(11));
+    			cursor.getString(11),
+    			RecipeCategory.values()[cursor.getInt(12)]
+    			);
 
 	    return recipeItem;
 	  }
@@ -423,6 +466,7 @@ public class RecipeItem {
 	  private String _ingredients;
 	  private String _instructions;
 	  private String _links;
+	  private RecipeCategory _category;
 	  
 	  public RecipeItem(
 		  long id,
@@ -436,7 +480,8 @@ public class RecipeItem {
 		  float healthRating,
 		  String ingredients,
 		  String instructions,
-		  String links)
+		  String links,
+		  RecipeCategory category)
 	  {
 		 _id = id;
 		 _name = name;
@@ -450,6 +495,7 @@ public class RecipeItem {
 		 _ingredients = ingredients;
 		 _instructions = instructions;
 		 _links = links;
+		 _category = category;
 	  }
 	  
 	  public long getId() { return _id; }
@@ -464,6 +510,7 @@ public class RecipeItem {
 	  public String getIngredients() { return _ingredients; }
 	  public String getInstructions() { return _instructions; }
 	  public String getLinks() { return _links; }
+	  public RecipeCategory getCategory() { return _category; }
 
 	  // Will be used by the ArrayAdapter in the ListView
 	  @Override

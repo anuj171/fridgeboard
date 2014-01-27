@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.fridgeboard.DataAccess.DataHelper;
 import com.fridgeboard.DataAccess.DataSource;
+import com.fridgeboard.DataAccess.RecipeCategory;
+import com.fridgeboard.DataAccess.RecipeItem;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -298,6 +301,8 @@ public class HomeScreen extends Activity {
     	datasource.createMealItem(datef.format(rightNow.getTime()), "DINNER", "Biryani", "Hyderabadi delicacy containing rice, chicken & spices", "Time: 30 Min", "biryani");
     	datasource.createMealItem(datef.format(rightNow.getTime()), "DINNER", "Red Wine", "To end a day on high", "Time: 5 Min", "red_wine");
     	datasource.createMealItem(datef.format(rightNow.getTime()), "OTHERS", "dummy", "dummy", "dummy", "dummy_id");
+    	
+    	List<RecipeItem> recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinner.ordinal());   	
     }
     
     @Override
