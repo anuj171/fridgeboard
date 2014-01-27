@@ -2,7 +2,7 @@
     <group android:id="@+id/group1">
         <item 
             android:id="@+id/action_groceries" 
-            android:icon="@drawable/groceries"
+            android:icon="@drawable/ic_grocery_list"
             android:showAsAction="always"
             android:title="@string/action_groceries">            
         </item>
