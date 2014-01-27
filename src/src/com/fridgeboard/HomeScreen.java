@@ -303,10 +303,6 @@ public class HomeScreen extends Activity {
     	for(int i=0;i<mealitems.size();i++){
     		DataAccess.MealItem meal = mealitems.get(i);
     		DataAccess.RecipeItem recipe = datasource.getRecipeItem(meal.recipe_id);
-    		String desc = recipe.getDescription();
-    		if(desc.length()>40){
-    			desc = desc.substring(0,39);
-    		}
     		if(meal.category.equals("BREAKFAST")){
     			breakfasts.add(new Meal(meal.id, this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), recipe.getName(), recipe.getDescription(), recipe.getTotalTime(), (int) recipe.getId(), recipe.getHealthRating(), recipe.getTasteRating()));
     		} else if(meal.category.equals("LUNCH")){
