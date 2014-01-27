@@ -103,7 +103,7 @@ public class DataHelper extends SQLiteOpenHelper {
 	  private static final String SETTINGS_DATABASE_CREATE = "create table " + TABLE_SETTINGS + "("
 		  + SETTINGS_COLUMN_ID + " integer primary key autoincrement, "
 		  + SETTINGS_COLUMN_TYPE + " integer, "
-		  + SETTINGS_COLUMN_VALUE + " text, "
+		  + SETTINGS_COLUMN_VALUE + " text"
 	      + ");";
 
 	  DataSource source;
