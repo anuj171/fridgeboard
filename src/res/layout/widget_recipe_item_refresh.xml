@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+	    android:orientation="horizontal" 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:gravity="center"
+	   	android:padding="10dp"
+	    >
+	     <TextView android:id="@+id/refreshView"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_weight="1"
+	        android:textStyle="bold"
+	        android:textSize="22dp"
+	        android:textColor="#FFFFFF"
+	        android:padding="10dp"
+	    	android:gravity="left"
+	        android:text="SUGGEST NEW MEAL"
+	        android:onClick="refreshMeal"
+	        android:background="#007700" />
+           
+</LinearLayout>

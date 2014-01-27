@@ -5,7 +5,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -23,7 +25,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -139,7 +143,7 @@ public class Groceries extends FragmentActivity {
 			return Categories[position].toUpperCase(l);
 		}
 	}
-
+	
 	/**
 	 * A dummy fragment representing a section of the app, but that simply
 	 * displays dummy text.
@@ -156,28 +160,39 @@ public class Groceries extends FragmentActivity {
 
 		static int total;
 		
+		@SuppressWarnings("deprecation")
 		@Override
 		public void onActivityCreated(Bundle savedInstanceState) {
 		    super.onActivityCreated(savedInstanceState);
 
 		    int option = getArguments().getInt(ARG_CATEGORY);
 
-		    GroceriesData groceries = new GroceriesData();
-		    List<String> list = groceries.getListForRecipesAndCategory(null, option);
+		    GroceriesData groceries = new GroceriesData(getActivity());
+		    Cursor list = groceries.getListForCategory(option);
+		    getActivity().startManagingCursor(list);
 		    
 		    total = groceries.getTotalCount();
 
 		    mRemainingLabel.setText(total + " items remaining");
-		    
-		    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-		        android.R.layout.simple_list_item_checked, list);
-		    
-		    setListAdapter(adapter);
+ 
+            String[] columns = new String[] { "name", "value", "desc" };
+            int[] to = new int[] { R.id.grocery_name, R.id.grocery_value, R.id.grocery_desc};
+ 
+            try {
+            	SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.groceries_item, list, columns, to);
+            	setListAdapter(adapter);
+            }
+            catch(Exception e) {
+            	String x = e.toString();
+            }            
 		    
 		    getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		    getListView().setOnItemClickListener(new OnItemClickListener() {
 		        @Override
 		        public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
+		        	CheckedTextView cb = (CheckedTextView) view.findViewById(R.id.grocery_namecb);
+		        	cb.setChecked(!cb.isChecked());
+		        	
 		        	int x = getListView().getCheckedItemCount();
 		        	int remaining = total - x;
 		        	mRemainingLabel.setText(remaining + " items remaining");
