@@ -14,7 +14,7 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 11;
+	private static final int DATABASE_VERSION = 12;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
@@ -22,6 +22,18 @@ public class DataAccess {
 		  Snacks,
 		  Desserts,
 		  Drinks  
+	  }
+	  
+	  public enum Setting {
+		  NoOfPortions,
+		  SkipBreakfast,
+		  SkipLunch,
+		  SkipDinner,
+		  SkipDrinks,
+		  SkipSnacks,
+		  HealthFactor,
+		  TasteFactor,
+		  CostFactor
 	  }
 	  
 public class DataHelper extends SQLiteOpenHelper {
@@ -40,7 +52,6 @@ public class DataHelper extends SQLiteOpenHelper {
 	  public static final String RECIPE_COLUMN_INSTRUCTIONS = "instructions";
 	  public static final String RECIPE_COLUMN_LINKS = "links";
 	  public static final String RECIPE_COLUMN_CATEGORY = "category";
-	  
 
 
 	  // Database creation sql statement
@@ -81,7 +92,20 @@ public class DataHelper extends SQLiteOpenHelper {
 	  
 	  public static final String INGREDIENTS_TABLE = "ingredients";
 	  public static final String RECIPE_INGRED_TABLE = "recipe_ingred";
+
 	  
+	  public static final String TABLE_SETTINGS = "settings";
+	  public static final String SETTINGS_COLUMN_ID = "id";
+	  public static final String SETTINGS_COLUMN_TYPE = "type";
+	  public static final String SETTINGS_COLUMN_VALUE = "value";
+	  
+	  // Database creation sql statement
+	  private static final String SETTINGS_DATABASE_CREATE = "create table " + TABLE_SETTINGS + "("
+		  + SETTINGS_COLUMN_ID + " integer primary key autoincrement, "
+		  + SETTINGS_COLUMN_TYPE + " integer, "
+		  + SETTINGS_COLUMN_VALUE + " text, "
+	      + ");";
+
 	  DataSource source;
 		  
 	  public DataHelper(Context context, DataSource src) {
@@ -95,7 +119,8 @@ public class DataHelper extends SQLiteOpenHelper {
 	    database.execSQL(MEALS_DATABASE_CREATE);
 		database.execSQL("CREATE TABLE "+ INGREDIENTS_TABLE +" ( id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100) NOT NULL, cat_id INTEGER, unit VARCHAR(30) );");
 		database.execSQL("CREATE TABLE "+ RECIPE_INGRED_TABLE +" ( rec_id INTEGER REFERENCES "+TABLE_RECIPE+" ("+ RECIPE_COLUMN_ID +"), ing_id INTEGER REFERENCES Ingredients (id), quantity VARCHAR(30) );");
-
+		database.execSQL(SETTINGS_DATABASE_CREATE);
+		
 		source.fillData(database);
 	  }
 
@@ -147,6 +172,12 @@ public class DataSource {
 			  DataHelper.MEALS_COLUMN_TIMETAKEN,
 			  DataHelper.MEALS_COLUMN_RECIPE_ID,
 	      };
+	  
+	  private String[] settingsAllColumns = { 
+			  DataHelper.SETTINGS_COLUMN_ID,
+			  DataHelper.SETTINGS_COLUMN_TYPE,
+			  DataHelper.SETTINGS_COLUMN_VALUE,
+	      };  
 
 	  public DataSource(Context context) {
 	    dbHelper = new DataHelper(context, this);
@@ -166,6 +197,7 @@ public class DataSource {
 		  fillRecipe();
 		  fillIngredients();
 		  fillRecipeIngrRelation();
+		  fillSettings();
 	  }
 	  
 	  public void fillIngredients()
@@ -179,7 +211,6 @@ public class DataSource {
 			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (7, 'Milk', 0, 'ml');");
 			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (8, 'Butter', 0, 'gm');");
 			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (9, 'Cheese', 0, 'gm');");
-
 	  }
 	  
 	  public void fillRecipeIngrRelation()
@@ -227,6 +258,62 @@ public class DataSource {
 					  "http://www.chow.com/recipes/30267-chole-chana-masala",
 					  RecipeCategory.LunchOrDinner
 					  );
+	  }
+	  
+	  public void fillSettings()
+	  {
+		  setSetting(Setting.NoOfPortions, "2");
+		  setSetting(Setting.SkipBreakfast, "false");
+		  setSetting(Setting.SkipLunch, "false");
+		  setSetting(Setting.SkipDinner, "false");
+		  setSetting(Setting.SkipSnacks, "true");
+		  setSetting(Setting.SkipDrinks, "true");
+		  setSetting(Setting.HealthFactor, "3.5");
+		  setSetting(Setting.TasteFactor, "4");
+		  setSetting(Setting.CostFactor, "1500");
+	  }
+	  
+	  public void setSetting(Setting setting, String value) {
+		  // clear any existing setting first
+		  if (getSetting(setting) != null)
+			  deleteSetting(setting);
+		  
+		  // now add the setting
+		  ContentValues values = new ContentValues();
+		    values.put(DataHelper.SETTINGS_COLUMN_TYPE, setting.ordinal());
+		    values.put(DataHelper.SETTINGS_COLUMN_VALUE, value);
+		    
+		    database.insert(DataHelper.TABLE_SETTINGS, null, values);
+	  }
+	  
+	  public String getSetting(Setting setting) {	  
+		  String value = null;
+		    
+		  try {
+			    Cursor cursor = database.query(DataHelper.TABLE_SETTINGS,
+			    	settingsAllColumns, DataHelper.SETTINGS_COLUMN_TYPE + " = " + setting.ordinal(), null, null, null, null);
+		
+			    cursor.moveToFirst();
+	
+				if (!cursor.isAfterLast())
+				{
+					value = cursor.getString(2); 
+			    }
+				
+			    // make sure to close the cursor
+			    cursor.close();    
+		  }
+		  catch (Exception ex)
+		  {
+			  return null;
+		  }
+		  
+	    return value;
+	 }
+	  
+	  public void deleteSetting(Setting setting) {
+	    database.delete(DataHelper.TABLE_SETTINGS, DataHelper.SETTINGS_COLUMN_TYPE
+	        + " = " + setting.ordinal(), null);
 	  }
 
 	  public RecipeItem createRecipeItem(
