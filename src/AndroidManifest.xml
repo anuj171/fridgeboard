@@ -24,27 +24,24 @@
         </activity>
         <activity
             android:name="com.fridgeboard.Recipe"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_recipe"
-            android:theme="@style/FullscreenTheme" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="@string/title_activity_recipe" >
         </activity>
         <activity
             android:name="com.fridgeboard.SearchRecipeActivity"
             android:label="@string/title_activity_search_recipe" >
-        </activity>
-        <activity
-            android:name="com.fridgeboard.Groceries"
-            android:label="@string/title_activity_groceries" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.fridgeboard.Groceries"
+            android:label="@string/title_activity_groceries" >
+        </activity>
+        <activity
+            android:name="com.fridgeboard.DatabaseActivity"
+            android:label="DatabaseActivity" >
         </activity>
     </application>
 
