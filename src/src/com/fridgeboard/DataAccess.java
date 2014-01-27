@@ -14,7 +14,7 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 8;
 	
 public class DataHelper extends SQLiteOpenHelper {
 
@@ -67,6 +67,9 @@ public class DataHelper extends SQLiteOpenHelper {
 	         + MEALS_COLUMN_TIMETAKEN + " text not null, " 
 	         + MEALS_COLUMN_RECIPE_ID + " text not null);";
 	  
+	  public static final String INGREDIENTS_TABLE = "ingredients";
+	  public static final String RECIPE_INGRED_TABLE = "recipe_ingred";
+	  
 	  DataSource source;
 		  
 	  public DataHelper(Context context, DataSource src) {
@@ -78,12 +81,10 @@ public class DataHelper extends SQLiteOpenHelper {
 	  public void onCreate(SQLiteDatabase database) {
 	    database.execSQL(RECIPE_DATABASE_CREATE);
 	    database.execSQL(MEALS_DATABASE_CREATE);
-	    
-		database.execSQL("CREATE TABLE ingredients ( id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100) NOT NULL, cat_id INTEGER, unit VARCHAR(30) );");
+		database.execSQL("CREATE TABLE "+ INGREDIENTS_TABLE +" ( id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100) NOT NULL, cat_id INTEGER, unit VARCHAR(30) );");
+		database.execSQL("CREATE TABLE "+ RECIPE_INGRED_TABLE +" ( rec_id INTEGER REFERENCES "+TABLE_RECIPE+" ("+ RECIPE_COLUMN_ID +"), ing_id INTEGER REFERENCES Ingredients (id), quantity VARCHAR(30) );");
 
-		database.execSQL("CREATE TABLE recipe_ingred ( rec_id INTEGER REFERENCES recipe (id), ing_id INTEGER REFERENCES Ingredients (id), quantity VARCHAR(30) );");
-
-		source.fillData();
+		source.fillData(database);
 	  }
 
 	  @Override
@@ -99,8 +100,8 @@ public class DataHelper extends SQLiteOpenHelper {
 	  {
 		  db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPE);
 		  db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEALS);
-		  db.execSQL("DROP TABLE ingredients");
-		  db.execSQL("DROP TABLE recipe_ingred");
+		  db.execSQL("DROP TABLE IF EXISTS " + INGREDIENTS_TABLE);
+		  db.execSQL("DROP TABLE IF EXISTS " + RECIPE_INGRED_TABLE);
 	  }
 	} 
 
@@ -140,15 +141,15 @@ public class DataSource {
 
 	  public void open() throws SQLException {
 	    database = dbHelper.getWritableDatabase();
-	    fillData();
 	  }
 
 	  public void close() {
 	    dbHelper.close();
 	  }
 	  
-	  public void fillData()
+	  public void fillData(SQLiteDatabase databse)
 	  {
+		  database = databse;
 		  fillRecipe();
 		  fillIngredients();
 		  fillRecipeIngrRelation();
@@ -156,23 +157,23 @@ public class DataSource {
 	  
 	  public void fillIngredients()
 	  {
-		    database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (1, 'Capsicum', 2, 'gm');");
-			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (2, 'Mushroom', 2, 'gm');");
-			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (3, 'Tomatoes', 2, 'gm');");
-			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (4, 'Potatoes', 2, 'gm');");
-			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (5, 'Onion', 2, 'gm');");
-			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (6, 'French Beans', 2, 'gm');");
-			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (7, 'Milk', 0, 'ml');");
-			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (8, 'Butter', 0, 'gm');");
-			database.execSQL("INSERT INTO [ingredients] ([id], [name], [cat_id], [unit]) VALUES (9, 'Cheese', 0, 'gm');");
+		    database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (1, 'Capsicum', 2, 'gm');");
+			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (2, 'Mushroom', 2, 'gm');");
+			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (3, 'Tomatoes', 2, 'gm');");
+			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (4, 'Potatoes', 2, 'gm');");
+			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (5, 'Onion', 2, 'gm');");
+			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (6, 'French Beans', 2, 'gm');");
+			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (7, 'Milk', 0, 'ml');");
+			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (8, 'Butter', 0, 'gm');");
+			database.execSQL("INSERT INTO ["+DataHelper.INGREDIENTS_TABLE+"] ([id], [name], [cat_id], [unit]) VALUES (9, 'Cheese', 0, 'gm');");
 
 	  }
 	  
 	  public void fillRecipeIngrRelation()
 	  {
-			database.execSQL("INSERT INTO [recipe_ingred] ([rec_id], [ing_id], [quantity]) VALUES (1, 1, 200);");
-			database.execSQL("INSERT INTO [recipe_ingred] ([rec_id], [ing_id], [quantity]) VALUES (1, 7, 500);");
-			database.execSQL("INSERT INTO [recipe_ingred] ([rec_id], [ing_id], [quantity]) VALUES (3, 1, 300);");
+			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (1, 1, 200);");
+			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (1, 7, 500);");
+			database.execSQL("INSERT INTO ["+DataHelper.RECIPE_INGRED_TABLE+"] ([rec_id], [ing_id], [quantity]) VALUES (2, 1, 300);");
 	  }
 	  
 	  public void fillRecipe()
@@ -398,12 +399,12 @@ public class DataSource {
 		  }
 
 		  public Cursor getGroceryItems(int option) {
-			  String sql = "select i.id as _id, i.name as name, sum(m.quantity) || ' ' || i.unit as value, 'used in ' || r.name as desc from recipe r, recipe_ingred m, ingredients i where r.id = m.rec_id and i.id = m.ing_id and i.cat_id = %s group by i.id";
+			  String sql = "select i.id as _id, i.name as name, sum(m.quantity) || ' ' || i.unit as value, 'used in ' || r.name as desc from "+DataHelper.TABLE_RECIPE+" r, "+DataHelper.RECIPE_INGRED_TABLE+" m, "+DataHelper.INGREDIENTS_TABLE+" i where r."+DataHelper.RECIPE_COLUMN_ID+" = m.rec_id and i.id = m.ing_id and i.cat_id = %s group by i.id";
 			  return execSql(String.format(sql, option));
 		  }
 		  	  
 		  public Cursor getAllGroceryItems() {
-			  String sql = "select i.id as _id from Ingredients i";
+			  String sql = "select i.id as _id from ingredients i";
 			  return execSql(sql);
 		  }
 	} 
