@@ -13,10 +13,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DataAccess {
-	private static final String DATABASE_NAME = "meals2.db";
-	private static final int DATABASE_VERSION = 4;
+	private static final String DATABASE_NAME = "meals1.db";
+	private static final int DATABASE_VERSION = 1;
 	
-public class RecipeDataHelper extends SQLiteOpenHelper {
+public class RecipesDataHelper extends SQLiteOpenHelper {
 
 	  public static final String TABLE_RECIPE = "recipe";
 	  public static final String COLUMN_ID = "_id";
@@ -48,7 +48,7 @@ public class RecipeDataHelper extends SQLiteOpenHelper {
 	      + COLUMN_LINKS + " links"
 	      + ");";
 
-	  public RecipeDataHelper(Context context) {
+	  public RecipesDataHelper(Context context) {
 	    super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	  }
 
@@ -59,7 +59,7 @@ public class RecipeDataHelper extends SQLiteOpenHelper {
 
 	  @Override
 	  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-	    Log.w(RecipeDataHelper.class.getName(),
+	    Log.w(RecipesDataHelper.class.getName(),
 	        "Upgrading database from version " + oldVersion + " to "
 	            + newVersion + ", which will destroy all old data");
 	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPE);
@@ -133,24 +133,24 @@ public class RecipeDataSource {
 
 	  // Database fields
 	  private SQLiteDatabase database;
-	  private RecipeDataHelper dbHelper;
+	  private RecipesDataHelper dbHelper;
 	  
 	  private String[] allColumns = { 
-			  RecipeDataHelper.COLUMN_ID,
-			  RecipeDataHelper.COLUMN_NAME,
-			  RecipeDataHelper.COLUMN_DESCRIPTION,
-			  RecipeDataHelper.COLUMN_IMAGE,
-			  RecipeDataHelper.COLUMN_PREP_TIME,
-			  RecipeDataHelper.COLUMN_COOKING_TIME,
-			  RecipeDataHelper.COLUMN_TOTAL_TIME,
-			  RecipeDataHelper.COLUMN_TASTE_RATING,
-			  RecipeDataHelper.COLUMN_HEALTH_RATING,
-			  RecipeDataHelper.COLUMN_INGREDIENTS,
-			  RecipeDataHelper.COLUMN_INSTRUCTIONS,
-			  RecipeDataHelper.COLUMN_LINKS};
+			  RecipesDataHelper.COLUMN_ID,
+			  RecipesDataHelper.COLUMN_NAME,
+			  RecipesDataHelper.COLUMN_DESCRIPTION,
+			  RecipesDataHelper.COLUMN_IMAGE,
+			  RecipesDataHelper.COLUMN_PREP_TIME,
+			  RecipesDataHelper.COLUMN_COOKING_TIME,
+			  RecipesDataHelper.COLUMN_TOTAL_TIME,
+			  RecipesDataHelper.COLUMN_TASTE_RATING,
+			  RecipesDataHelper.COLUMN_HEALTH_RATING,
+			  RecipesDataHelper.COLUMN_INGREDIENTS,
+			  RecipesDataHelper.COLUMN_INSTRUCTIONS,
+			  RecipesDataHelper.COLUMN_LINKS};
 
 	  public RecipeDataSource(Context context) {
-	    dbHelper = new RecipeDataHelper(context);
+	    dbHelper = new RecipesDataHelper(context);
 	  }
 
 	  public void open() throws SQLException {
@@ -163,7 +163,9 @@ public class RecipeDataSource {
 	  
 	  public void fillDataIfEmpty()
 	  {
-		  if (getAllRecipeItems().size() == 0)
+		  List<RecipeItem> list = getAllRecipeItems(); 
+		  
+		  if (list != null && list.size() == 0)
 		  {
 			  createRecipeItem(
 					  "Rajma Masala",
@@ -216,22 +218,22 @@ public class RecipeDataSource {
 			  String links) {
 		  
 		    ContentValues values = new ContentValues();
-		    values.put(RecipeDataHelper.COLUMN_NAME, name);
-		    values.put(RecipeDataHelper.COLUMN_DESCRIPTION, desc);
-		    values.put(RecipeDataHelper.COLUMN_IMAGE, image);
-		    values.put(RecipeDataHelper.COLUMN_PREP_TIME, prepTime);
-		    values.put(RecipeDataHelper.COLUMN_COOKING_TIME, cookingTime);
-		    values.put(RecipeDataHelper.COLUMN_TOTAL_TIME, totalTime);
-		    values.put(RecipeDataHelper.COLUMN_TASTE_RATING, tasteRating);
-		    values.put(RecipeDataHelper.COLUMN_HEALTH_RATING, healthRating);
-		    values.put(RecipeDataHelper.COLUMN_INGREDIENTS, ingredients);
-		    values.put(RecipeDataHelper.COLUMN_INSTRUCTIONS, instructions);
-		    values.put(RecipeDataHelper.COLUMN_LINKS, links);
+		    values.put(RecipesDataHelper.COLUMN_NAME, name);
+		    values.put(RecipesDataHelper.COLUMN_DESCRIPTION, desc);
+		    values.put(RecipesDataHelper.COLUMN_IMAGE, image);
+		    values.put(RecipesDataHelper.COLUMN_PREP_TIME, prepTime);
+		    values.put(RecipesDataHelper.COLUMN_COOKING_TIME, cookingTime);
+		    values.put(RecipesDataHelper.COLUMN_TOTAL_TIME, totalTime);
+		    values.put(RecipesDataHelper.COLUMN_TASTE_RATING, tasteRating);
+		    values.put(RecipesDataHelper.COLUMN_HEALTH_RATING, healthRating);
+		    values.put(RecipesDataHelper.COLUMN_INGREDIENTS, ingredients);
+		    values.put(RecipesDataHelper.COLUMN_INSTRUCTIONS, instructions);
+		    values.put(RecipesDataHelper.COLUMN_LINKS, links);
 		    
-		    long insertId = database.insert(RecipeDataHelper.TABLE_RECIPE, null,
+		    long insertId = database.insert(RecipesDataHelper.TABLE_RECIPE, null,
 		        values);
-		    Cursor cursor = database.query(RecipeDataHelper.TABLE_RECIPE,
-		        allColumns, RecipeDataHelper.COLUMN_ID + " = " + insertId, null,
+		    Cursor cursor = database.query(RecipesDataHelper.TABLE_RECIPE,
+		        allColumns, RecipesDataHelper.COLUMN_ID + " = " + insertId, null,
 		        null, null, null);
 		    cursor.moveToFirst();
 		    RecipeItem newRecipeItem = cursorToRecipe(cursor);
@@ -242,42 +244,56 @@ public class RecipeDataSource {
 	  public void deleteRecipeItem(RecipeItem recipeItem) {
 	    long id = recipeItem.getId();
 	    System.out.println("Recipe deleted with id: " + id);
-	    database.delete(RecipeDataHelper.TABLE_RECIPE, RecipeDataHelper.COLUMN_ID
+	    database.delete(RecipesDataHelper.TABLE_RECIPE, RecipesDataHelper.COLUMN_ID
 	        + " = " + id, null);
 	  }
 
 	  public List<RecipeItem> getAllRecipeItems() {
 	    List<RecipeItem> recipeItems = new ArrayList<RecipeItem>();
 
-	    Cursor cursor = database.query(RecipeDataHelper.TABLE_RECIPE,
-	        allColumns, null, null, null, null, null);
-
-	    cursor.moveToFirst();
-	    while (!cursor.isAfterLast()) {
-	      RecipeItem recipeItem = cursorToRecipe(cursor);
-	      recipeItems.add(recipeItem);
-	      cursor.moveToNext();
-	    }
-	    // make sure to close the cursor
-	    cursor.close();
+	    try {
+		    Cursor cursor = database.query(RecipesDataHelper.TABLE_RECIPE,
+		        allColumns, null, null, null, null, null);
+	
+		    cursor.moveToFirst();
+		    while (!cursor.isAfterLast()) {
+		      RecipeItem recipeItem = cursorToRecipe(cursor);
+		      recipeItems.add(recipeItem);
+		      cursor.moveToNext();
+		    }
+		    // make sure to close the cursor
+		    cursor.close();
+		 }
+		 catch (Exception ex)
+		 {
+			 return null;
+		 }
 	    return recipeItems;
 	  }
 	  
 
 	  public RecipeItem getRecipeItem(long id) {
-	    Cursor cursor = database.query(RecipeDataHelper.TABLE_RECIPE,
-	        allColumns, RecipeDataHelper.COLUMN_ID + " = " + id, null, null, null, null);
-
-	    cursor.moveToFirst();
-
-	    RecipeItem recipeItem = null;
-		if (!cursor.isAfterLast())
-		{
-	      recipeItem = cursorToRecipe(cursor); 
-	    }
+		  RecipeItem recipeItem = null;
+		    
+		  try {
+			    Cursor cursor = database.query(RecipesDataHelper.TABLE_RECIPE,
+			        allColumns, RecipesDataHelper.COLUMN_ID + " = " + id, null, null, null, null);
 		
-	    // make sure to close the cursor
-	    cursor.close();
+			    cursor.moveToFirst();
+	
+				if (!cursor.isAfterLast())
+				{
+			      recipeItem = cursorToRecipe(cursor); 
+			    }
+				
+			    // make sure to close the cursor
+			    cursor.close();    
+		  }
+		  catch (Exception ex)
+		  {
+			  return null;
+		  }
+		  
 	    return recipeItem;
 	  }
 
@@ -332,7 +348,7 @@ public class MealsDataHelper extends SQLiteOpenHelper {
 
 	  @Override
 	  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-	    Log.w(RecipeDataHelper.class.getName(),
+	    Log.w(RecipesDataHelper.class.getName(),
 	        "Upgrading database from version " + oldVersion + " to "
 	            + newVersion + ", which will destroy all old data");
 	    db.execSQL("DROP TABLE IF EXISTS " + TABLE_MEALS);

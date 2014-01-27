@@ -52,12 +52,12 @@ public class HomeScreen extends Activity {
 		datef = new SimpleDateFormat("EEE, d MMM");
         
     	DataAccess dataAccess = new DataAccess();
+    	loadRecipeData(dataAccess);
+    	
         datasource = dataAccess.new MealsDataSource(this);
         datasource.open();
 
         loadData();
-        loadRecipeData();
-        
 		
 		//get reference to the ExpandableListView
 		mealPlanListView = (ExpandableListView) findViewById(R.id.mealPlanExpandableList);
@@ -80,9 +80,8 @@ public class HomeScreen extends Activity {
 
     }
     
-    private void loadRecipeData()
+    private void loadRecipeData(DataAccess dataAccess)
     {
-    	DataAccess dataAccess = new DataAccess();
     	RecipeDataSource datasource = dataAccess.new RecipeDataSource(this);
         datasource.open();
         datasource.fillDataIfEmpty();
