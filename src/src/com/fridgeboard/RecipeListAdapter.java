@@ -59,7 +59,8 @@ public class RecipeListAdapter extends ArrayAdapter<RecipeItem> {
 
         holder.title.setText(item.getName());
         holder.desc.setText(item.getDescription());
-        holder.duration.setText(item.getTotalTime());
+        holder.duration.setText("Time: "+ item.getTotalTime());
+        holder.nutrition.setText(item.getNutrition());
         holder.image.setImageResource(
         		context.getResources().getIdentifier(
     				item.getImage(), 
