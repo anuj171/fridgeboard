@@ -31,7 +31,7 @@ public class SearchRecipeActivity extends Activity {
         datasource.close();
         
 		ListView recipeListView = (ListView)findViewById(R.id.listView1);
-		RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this,R.layout.activity_search_recipe, recipeList);
+		RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this,R.layout.widget_recipe_item_one, recipeList);
 		recipeListAdapter.dummyItem = dummyItem;
 		recipeListView.setAdapter(recipeListAdapter);
 	}
