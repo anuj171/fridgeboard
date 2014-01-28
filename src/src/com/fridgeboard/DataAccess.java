@@ -13,7 +13,7 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 21;
+	private static final int DATABASE_VERSION = 22;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
@@ -42,6 +42,7 @@ public class DataHelper extends SQLiteOpenHelper {
 	  public static final String RECIPE_COLUMN_ID = "_id";
 	  public static final String RECIPE_COLUMN_NAME = "name";
 	  public static final String RECIPE_COLUMN_DESCRIPTION = "desc";
+	  public static final String RECIPE_COLUMN_NUTRITION = "nutrition";
 	  public static final String RECIPE_COLUMN_IMAGE = "image";
 	  public static final String RECIPE_COLUMN_PREP_TIME = "prep_time";
 	  public static final String RECIPE_COLUMN_COOKING_TIME = "cooking_time";
@@ -60,6 +61,7 @@ public class DataHelper extends SQLiteOpenHelper {
 		  + RECIPE_COLUMN_ID + " integer primary key autoincrement, " 
 		  + RECIPE_COLUMN_NAME + " text not null, "
 		  + RECIPE_COLUMN_DESCRIPTION + " text, "
+		  + RECIPE_COLUMN_NUTRITION + " text, "
 	      + RECIPE_COLUMN_IMAGE + " text, "
 	      + RECIPE_COLUMN_PREP_TIME + " text, "
 	      + RECIPE_COLUMN_COOKING_TIME + " text, "
@@ -150,6 +152,7 @@ public class DataSource {
 			  DataHelper.RECIPE_COLUMN_ID,
 			  DataHelper.RECIPE_COLUMN_NAME,
 			  DataHelper.RECIPE_COLUMN_DESCRIPTION,
+			  DataHelper.RECIPE_COLUMN_NUTRITION,
 			  DataHelper.RECIPE_COLUMN_IMAGE,
 			  DataHelper.RECIPE_COLUMN_PREP_TIME,
 			  DataHelper.RECIPE_COLUMN_COOKING_TIME,
@@ -296,6 +299,7 @@ public class DataSource {
 			  createRecipeItem(
 					  "Rajma Masala",
 					  "Red kidney beans cooked in tomatoes, onions and spices.",
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g",
 					  "punjabirajma",
 					  "9 mins",
 					  "45 mins",
@@ -316,6 +320,7 @@ public class DataSource {
 			  createRecipeItem(
 					  "Boiled Eggs",
 					  "Eggs cut into half, sprayed salt & onions",
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g",
 					  "ande",
 					  "5 mins",
 					  "15 mins",
@@ -332,6 +337,7 @@ public class DataSource {
 			  createRecipeItem(
 					  "Punjabi Chole Masala",
 					  "Chickpeas in tomatoes, onions and spices.",
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g",
 					  "chole",
 					  "50 mins",
 					  "45 mins",
@@ -351,6 +357,7 @@ public class DataSource {
 			  createRecipeItem(
 					  "Hyderabadi Rajma Masala",
 					  "Red kidney beans cooked in tomatoes, onions and spices.",
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g",
 					  "punjabirajma",
 					  "9 mins",
 					  "45 mins",
@@ -371,6 +378,7 @@ public class DataSource {
 			  createRecipeItem(
 					  "Chole Lazawaab",
 					  "Chickpeas in tomatoes, onions and spices.",
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g",
 					  "chole",
 					  "50 mins",
 					  "45 mins",
@@ -390,6 +398,7 @@ public class DataSource {
 			  createRecipeItem(
 					  "Rajma Jabardast",
 					  "Red kidney beans cooked in tomatoes, onions and spices.",
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g",
 					  "punjabirajma",
 					  "9 mins",
 					  "45 mins",
@@ -410,6 +419,7 @@ public class DataSource {
 			  createRecipeItem(
 					  "Chole from Sholey",
 					  "Chickpeas in tomatoes, onions and spices.",
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g",
 					  "chole",
 					  "50 mins",
 					  "45 mins",
@@ -429,6 +439,7 @@ public class DataSource {
 			  createRecipeItem(
 					  "Masala Eggs",
 					  "Eggs cut into half, sprayed salt & onions",
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g",
 					  "ande",
 					  "5 mins",
 					  "15 mins",
@@ -445,6 +456,7 @@ public class DataSource {
 			  createRecipeItem(
 					  "Naan", 
 					  "Oven baked flatbread", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g",
 					  "food", 
 					  "30 mins", 
 					  "7 mins", 
@@ -521,6 +533,7 @@ public class DataSource {
 	  public RecipeItem createRecipeItem(
 			  String name,
 			  String desc,
+			  String nutrition,
 			  String image,
 			  String prepTime,
 			  String cookingTime,
@@ -536,6 +549,7 @@ public class DataSource {
 		    ContentValues values = new ContentValues();
 		    values.put(DataHelper.RECIPE_COLUMN_NAME, name);
 		    values.put(DataHelper.RECIPE_COLUMN_DESCRIPTION, desc);
+		    values.put(DataHelper.RECIPE_COLUMN_NUTRITION, nutrition);
 		    values.put(DataHelper.RECIPE_COLUMN_IMAGE, image);
 		    values.put(DataHelper.RECIPE_COLUMN_PREP_TIME, prepTime);
 		    values.put(DataHelper.RECIPE_COLUMN_COOKING_TIME, cookingTime);
@@ -649,13 +663,14 @@ public class DataSource {
     			cursor.getString(4),
     			cursor.getString(5),
     			cursor.getString(6),
-    			cursor.getFloat(7),
+    			cursor.getString(7),
     			cursor.getFloat(8),
     			cursor.getFloat(9),
-    			cursor.getString(10),
+    			cursor.getFloat(10),
     			cursor.getString(11),
     			cursor.getString(12),
-    			RecipeCategory.values()[cursor.getInt(13)]
+    			cursor.getString(13),
+    			RecipeCategory.values()[cursor.getInt(14)]
     			);
 
 	    return recipeItem;
@@ -746,6 +761,7 @@ public class RecipeItem {
 	  private long _id;
 	  private String _name;
 	  private String _desc;
+	  private String _nutrition;
 	  private String _image;
 	  private String _prepTime;
 	  private String _cookingTime;
@@ -762,6 +778,7 @@ public class RecipeItem {
 		  long id,
 		  String name,
 		  String desc,
+		  String nutrition,
 		  String image,
 		  String prepTime,
 		  String cookingTime,
@@ -777,6 +794,7 @@ public class RecipeItem {
 		 _id = id;
 		 _name = name;
 		 _desc = desc;
+		 _nutrition = nutrition;
 		 _image = image;
 		 _prepTime = prepTime;
 		 _cookingTime = cookingTime;
@@ -793,6 +811,7 @@ public class RecipeItem {
 	  public long getId() { return _id; }
 	  public String getName() { return _name; }
 	  public String getDescription() { return _desc; }
+	  public String getNutrition() { return _nutrition; }
 	  public String getImage() { return _image; }
 	  public String getPrepTime() { return _prepTime; }
 	  public String getCookingTime() { return _cookingTime; }

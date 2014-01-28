@@ -299,6 +299,7 @@ public class HomeScreen extends Activity {
 					this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), 
 					recipe.getName(), 
 					recipe.getDescription(), 
+					recipe.getNutrition(), 
 					recipe.getTotalTime(), 
 					(int) recipe.getId(), 
 					recipe.getHealthRating(), 
