@@ -391,6 +391,11 @@ public class DataSource {
 		  createRelation(15, 3, 150);
 		  createRelation(15, 27, 250);
 		  
+		  // chapati
+		  createRelation(16, 35, 100);
+		  createRelation(16, 15, 10);
+		  createRelation(16, 17, 10);
+		  
 		  
 	  }
 	  	  
@@ -570,6 +575,17 @@ public class DataSource {
 					  "Heat the oil in a large skillet over medium heat. Cook the onion and garlic in the hot oil until the onions are soft and golden brown, about 5 minutes. Sprinkle the cumin, coriander, turmeric, and chili powder over the onion and garlic; continue cooking until the seasonings are fragrant, about 30 seconds.\nPour the pureed tomatoes into the skillet; cook until the excess liquid evaporates and the oil separates, 3 to 5 minutes. Add the paneer, water, sugar, and salt to the mixture; stir gently so the paneer does not break apart. Cook until the paneer begins to absorb some of the liquid, about 10 minutes. Stir the cream into the mixture and simmer another 5 minutes. Garnish with cilantro to serve.", 
 					  "http://allrecipes.com/Recipe/Shahi-Paneer/Detail.aspx", 
 					  RecipeCategory.LunchOrDinnerMainDish);
+			  
+			  // 16
+			  createRecipeItem(
+					  "Chapati", "Indian flat bread", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "chapati", 
+					  "10 mins", "5 mins", "15 mins",
+					  (float) 3, (float) 4, (float) 2, 
+					  "2 cups wholewheat flour \nWater (Using yoghurt or milk will give you super soft Chapatis! See tip below) \nSalt to taste \n2 tbsps vegetable/ canola/ sunflower cooking oil", 
+					  "In a large bowl, stir together the whole wheat flour, all-purpose flour and salt. Use a wooden spoon to stir in the olive oil and enough water to make a soft dough that is elastic but not sticky. Knead the dough on a lightly floured surface until it is smooth. Divide into 10 parts, or less if you want bigger breads. Roll each piece into a ball. Let rest for a few minutes. \nHeat a skillet over medium heat until hot, and grease lightly. On a lightly floured surface, use a floured rolling pin to roll out the balls of dough until very thin like a tortilla. When the pan starts smoking, put a chapati on it. Cook until the underside has brown spots, about 30 seconds, then flip and cook on the other side. Continue with remaining dough.", 
+					  "http://allrecipes.com/Recipe/Indian-Chapati-Bread/Detail.aspx", 
+					  RecipeCategory.LunchOrDinnerSideDish);
 }
 	  
 	  private void createIngredient(String name, int category, String unit) {
