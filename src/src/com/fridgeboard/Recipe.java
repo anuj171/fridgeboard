@@ -5,6 +5,7 @@ import com.fridgeboard.DataAccess.RecipeItem;
 import com.fridgeboard.util.SystemUiHider;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,11 +31,12 @@ public class Recipe extends Activity {
 		super.onCreate(savedInstanceState);
 
 		getActionBar().setDisplayShowHomeEnabled(false);
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
+        getActionBar().setCustomView(R.layout.actionbar);
+        TextView titleText = (TextView) findViewById(R.id.titletext);
+        titleText.setText(R.string.title_activity_recipe);
 		
 		setContentView(R.layout.activity_recipe);
-
-		//final View controlsView = findViewById(R.id.fullscreen_content_controls);
-		final View contentView = findViewById(R.id.fullscreen_content);
 
 		long recipeId = 1;
 		
