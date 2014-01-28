@@ -8,6 +8,7 @@ import com.fridgeboard.DataAccess.RecipeItem;
 import com.fridgeboard.RecipeListAdapter.RecipeHolder;
 
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class SearchRecipeActivity extends Activity {
 
@@ -27,6 +29,10 @@ public class SearchRecipeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		getActionBar().setDisplayShowHomeEnabled(false);
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
+        getActionBar().setCustomView(R.layout.actionbar);
+        TextView titleText = (TextView) findViewById(R.id.titletext);
+        titleText.setText(R.string.title_activity_search_recipe);
 		
 		setContentView(R.layout.activity_search_recipe);
 		

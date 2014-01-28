@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -60,6 +61,10 @@ public class Groceries extends FragmentActivity {
 		setContentView(R.layout.activity_groceries);
 		
         getActionBar().setDisplayShowHomeEnabled(false);
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
+        getActionBar().setCustomView(R.layout.actionbar);
+        TextView titleText = (TextView) findViewById(R.id.titletext);
+        titleText.setText(R.string.title_activity_groceries);
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
