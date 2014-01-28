@@ -131,7 +131,6 @@ public class MealPlanAdapter extends BaseExpandableListAdapter {
                 View view = null;
                 switch (position) {
                 case 0:
-                    // Create an initial view to display; must be a subclass of FrameLayout.
                     view = inflater.inflate (R.layout.widget_recipe_item_remove, null);
                     
 	               	 removeView = (TextView) view.findViewById(R.id.removeView);
@@ -142,7 +141,6 @@ public class MealPlanAdapter extends BaseExpandableListAdapter {
                         break;
 
                 case 1:
-                    // Create an initial view to display; must be a subclass of FrameLayout.
                     view = inflater.inflate (R.layout.widget_recipe_item_one, null);
                     TextView txtTitle = (TextView)view.findViewById(R.id.txtTitle);
                	 	txtTitle.setText(meal.title);
@@ -208,14 +206,14 @@ public class MealPlanAdapter extends BaseExpandableListAdapter {
 			switch (position){
 			case 0:
 				removeView.performClick();
-	     	 	Toast.makeText(my_collection.getContext(), "page 1", Toast.LENGTH_SHORT).show();
+//	     	 	Toast.makeText(my_collection.getContext(), "page 1", Toast.LENGTH_SHORT).show();
 	            break;
 			case 1:
-	     	 	Toast.makeText(my_collection.getContext(), "page 2", Toast.LENGTH_SHORT).show();
+//	     	 	Toast.makeText(my_collection.getContext(), "page 2", Toast.LENGTH_SHORT).show();
 				break;
 			case 2:
 				refreshView.performClick();
-				Toast.makeText(my_collection.getContext(), "page 2", Toast.LENGTH_SHORT).show();
+//				Toast.makeText(my_collection.getContext(), "page 2", Toast.LENGTH_SHORT).show();
 				break;
 			}
 			

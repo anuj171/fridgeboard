@@ -39,7 +39,7 @@
     <CheckedTextView 
 	    android:id="@+id/grocery_namecb"
 	    android:layout_width="fill_parent"
-	    android:layout_height="?android:attr/listPreferredItemHeight"
+	    android:layout_height="?android:attr/listPreferredItemHeightSmall"
 	    android:gravity="right|center_vertical"
 	    android:checkMark="?android:attr/textCheckMark"
 	    android:paddingLeft="6dip"

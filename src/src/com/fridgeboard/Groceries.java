@@ -52,7 +52,7 @@ public class Groceries extends FragmentActivity {
 	
 	static TextView mRemainingLabel;
 
-	public static String[] Categories = {"Dairy", "Bakery", "Vegetables", "Cereals", "Pulses"};
+	public static String[] Categories = {"Vegetables", "Staples", "Pulses", "Dairy", "Bakery"};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
