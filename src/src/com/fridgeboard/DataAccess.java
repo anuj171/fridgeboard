@@ -1,6 +1,5 @@
 package com.fridgeboard;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +9,11 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.location.Criteria;
 import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 20;
+	private static final int DATABASE_VERSION = 25;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
@@ -44,12 +42,14 @@ public class DataHelper extends SQLiteOpenHelper {
 	  public static final String RECIPE_COLUMN_ID = "_id";
 	  public static final String RECIPE_COLUMN_NAME = "name";
 	  public static final String RECIPE_COLUMN_DESCRIPTION = "desc";
+	  public static final String RECIPE_COLUMN_NUTRITION = "nutrition";
 	  public static final String RECIPE_COLUMN_IMAGE = "image";
 	  public static final String RECIPE_COLUMN_PREP_TIME = "prep_time";
 	  public static final String RECIPE_COLUMN_COOKING_TIME = "cooking_time";
 	  public static final String RECIPE_COLUMN_TOTAL_TIME = "total_time";
 	  public static final String RECIPE_COLUMN_TASTE_RATING = "taste_rating";
 	  public static final String RECIPE_COLUMN_HEALTH_RATING = "health_rating";
+	  public static final String RECIPE_COLUMN_COST_RATING = "cost_rating";
 	  public static final String RECIPE_COLUMN_INGREDIENTS = "ingredients";
 	  public static final String RECIPE_COLUMN_INSTRUCTIONS = "instructions";
 	  public static final String RECIPE_COLUMN_LINKS = "links";
@@ -61,12 +61,14 @@ public class DataHelper extends SQLiteOpenHelper {
 		  + RECIPE_COLUMN_ID + " integer primary key autoincrement, " 
 		  + RECIPE_COLUMN_NAME + " text not null, "
 		  + RECIPE_COLUMN_DESCRIPTION + " text, "
+		  + RECIPE_COLUMN_NUTRITION + " text, "
 	      + RECIPE_COLUMN_IMAGE + " text, "
 	      + RECIPE_COLUMN_PREP_TIME + " text, "
 	      + RECIPE_COLUMN_COOKING_TIME + " text, "
 	      + RECIPE_COLUMN_TOTAL_TIME + " text, "
 	      + RECIPE_COLUMN_TASTE_RATING + " float, "
 	      + RECIPE_COLUMN_HEALTH_RATING + " float, "
+	      + RECIPE_COLUMN_COST_RATING + " float, "
 	      + RECIPE_COLUMN_INGREDIENTS + " text, "
 	      + RECIPE_COLUMN_INSTRUCTIONS + " text, "
 	      + RECIPE_COLUMN_LINKS + " text, "
@@ -150,12 +152,14 @@ public class DataSource {
 			  DataHelper.RECIPE_COLUMN_ID,
 			  DataHelper.RECIPE_COLUMN_NAME,
 			  DataHelper.RECIPE_COLUMN_DESCRIPTION,
+			  DataHelper.RECIPE_COLUMN_NUTRITION,
 			  DataHelper.RECIPE_COLUMN_IMAGE,
 			  DataHelper.RECIPE_COLUMN_PREP_TIME,
 			  DataHelper.RECIPE_COLUMN_COOKING_TIME,
 			  DataHelper.RECIPE_COLUMN_TOTAL_TIME,
 			  DataHelper.RECIPE_COLUMN_TASTE_RATING,
 			  DataHelper.RECIPE_COLUMN_HEALTH_RATING,
+			  DataHelper.RECIPE_COLUMN_COST_RATING,
 			  DataHelper.RECIPE_COLUMN_INGREDIENTS,
 			  DataHelper.RECIPE_COLUMN_INSTRUCTIONS,
 			  DataHelper.RECIPE_COLUMN_LINKS,
@@ -185,6 +189,7 @@ public class DataSource {
 	  public void close() {
 	    dbHelper.close();
 	  }
+	  public RecipeItem dummyItem;
 	  
 	  public void fillData(SQLiteDatabase databse)
 	  {
@@ -369,9 +374,9 @@ public class DataSource {
 		  	  // 1 Rajma Masala
 			  createRecipeItem(
 					  "Rajma Masala", "Red kidney beans cooked in tomatoes, onions and spices.",
-					  "punjabirajma",
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "punjabirajma",
 					  "9 mins", "45 mins", "54 mins",
-					  (float)4.5, (float)3.5,
+					  (float)4.5, (float)3.5, (float) 3,
 					  "Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2",
 					  "1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n"
 					  + "2. Cook till raw smell of tomatoes leave and is slightly mushy. Cool down and then transfer it to a mixer.\n"
@@ -385,8 +390,8 @@ public class DataSource {
 			  // 2 Chole
 			  createRecipeItem(
 					  "Punjabi Chole Masala", "Chickpeas in tomatoes, onions and spices.",
-					  "chole", "50 mins", "45 mins", "95 mins",
-					  (float)4, (float)3.5,
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "chole", "50 mins", "45 mins", "95 mins",
+					  (float)4, (float)3.5, (float) 3,
 					  "2 tablespoons vegetable oil\n1 teaspoon cumin seeds\n1 medium yellow onion, small dice\n4 teaspoons peeled, finely chopped fresh ginger (from about a 2-inch piece)\n4 medium garlic cloves, finely chopped\n2 serrano chiles, stemmed and finely chopped\n1 (28-ounce) can whole peeled tomatoes and their juices\n2 teaspoons garam masala\n1 teaspoon ground coriander\n1 teaspoon kosher salt, plus more for seasoning\n1/2 teaspoon turmeric\n2 (15-ounce) cans chickpeas, also known as garbanzo beans, drained and rinsed\n1/2 cup water",
 					  "1. Heat the oil in a large frying pan over medium heat until shimmering. Add the cumin seeds and cook, stirring occasionally, until fragrant, about 1 minute. Add the onion, ginger, garlic, and chiles and season with kosher salt. Cook, stirring occasionally, until the onions have softened, about 6 minutes.\n"
 					  + "2. Meanwhile, set a fine-mesh strainer over a medium bowl. Strain the tomatoes and reserve the juices. Coarsely chop the tomatoes into 1-inch pieces; set aside.\n"
@@ -397,9 +402,10 @@ public class DataSource {
 
 			  // 3
 			  createRecipeItem(
-					  "Naan", "Oven baked flatbread", "naan", 
+					  "Naan", "Oven baked flatbread", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "naan", 
 					  "30 mins", "7 mins", "37 mins", 
-					  (float)4, (float)2, 
+					  (float)4, (float)2, (float) 3, 
 					  "1 (.25 ounce) package active dry yeast \n1 cup warm water \n1/4 cup white sugar \n3 tablespoons milk \n1 egg, beaten \n2 teaspoons salt \n4 1/2 cups bread flour \n2 teaspoons minced garlic (optional) \n1/4 cup butter, melted", 
 					  "1. In a large bowl, dissolve yeast in warm water. Let stand about 10 minutes, until frothy. Stir in sugar, milk, egg, salt, and enough flour to make a soft dough. Knead for 6 to 8 minutes on a lightly floured surface, or until smooth. Place dough in a well oiled bowl, cover with a damp cloth, and set aside to rise. Let it rise 1 hour, until the dough has doubled in volume.\n"
 					  + "2. Punch down dough, and knead in garlic. Pinch off small handfuls of dough about the size of a golf ball. Roll into balls, and place on a tray. Cover with a towel, and allow to rise until doubled in size, about 30 minutes.\n"
@@ -410,9 +416,10 @@ public class DataSource {
 			  
 			  // 4	
 			  createRecipeItem(
-					  "Boiled Eggs", "Eggs cut into half, with salt & onions", "eggs",
+					  "Boiled Eggs", "Eggs cut into half, with salt & onions", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "eggs",
 					  "1 mins", "9 mins", "10 mins",
-					  (float)3, (float)4,
+					  (float)3, (float)4, (float) 3,
 					  "Eggs - 2\nSalt & Onion to taste",
 					  "1. Place eggs in saucepan large enough to hold them in single layer. Add cold water to cover eggs by 1 inch. Heat over high heat just to boiling. Remove from burner. Cover pan.\n 2. Let eggs stand in hot water about 12 minutes for large eggs (9 minutes for medium eggs; 15 minutes for extra large).\n 3. Drain immediately and serve warm. Or, cool completely under cold running water or in bowl of ice water, then refrigerate.\n",
 					  "http://www.incredibleegg.org/recipes/recipe/easy-hard-boiled-eggs",
@@ -420,9 +427,10 @@ public class DataSource {
 			  
 			  // 5
 			  createRecipeItem(
-					  "Jeera Rice", "Rice with cumin", "jeerarice", 
+					  "Jeera Rice", "Rice with cumin", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "jeerarice", 
 					  "5 mins", "15 mins", "20 mins", 
-					  (float)3, (float)3,
+					  (float)3, (float)3, (float) 3,
 					  "1 cup Basmati rice (a long grain Indian rice) \n3 cups water \nSalt to taste \n2 tbsps vegtable, sunflower or canola oil/ghee \n1 large onion chopped fine \n2 tsps cumin seeds \n1/2 cup water \nCoriander leaves to garnish", 
 					  "Wash the Basmati rice well in running water. \nAdd the 3 cups of water and salt to taste to the rice and set it up to boil. \nOnce the rice is almost cooked (test a few grains often to check - they will feel soft on the outside but very slightly hard on the inside), remove from fire and drain the water by straining the rice through a sieve or colander. Set aside. \nIn another pan, heat the oil/ghee till hot and add onions. \nFry till light brown and then add the cumin seeds. The seeds will splutter and sizzle to show they are done. \nNow add the rice and stir well. \nAdd 1/2 a cup of water to the rice and cover. \nSimmer till all the water dries up. \nAllow the rice to stand for another 2-3 minutes and then serve garnished with coriander leaves.", 
 					  "http://indianfood.about.com/od/ricerecipes/r/jeerarice.htm", 
@@ -430,9 +438,10 @@ public class DataSource {
 
 			  // 6
 			  createRecipeItem(
-					  "Aloo Paratha", "One of the most popular paratha recipe from punjab", "alooparatha", 
+					  "Aloo Paratha", "One of the most popular paratha recipe from punjab", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "alooparatha",
 					  "10 mins", "30 mins", "40 mins", 
-					  (float)4, (float)2.5, 
+					  (float)4, (float)2.5, (float) 3, 
 					  "2 cups atta / whole wheat flour \nJust over 1/2 cup water \n1 tsp salt (or to taste) \nA few drops of oil \n2 medium sized potatoes \n1 tsp red chilli powder \n1/2 tsp jeera / cumin powder \n1/4 tsp ajwain / omam / carom seeds \n1/2 tsp chaat masala (or garam masala) \n1/2 tsp salt \nA handful of coriander leaves, chopped fine", 
 					  "Sieve the flours with the salt. \nAdd the ghee and mix well. Add enough water and make a semi-soft dough. Keep aside. \nMash the potatoes coarsely or cut into very small pieces. Keep aside. \nHeat the ghee in a vessel, add the cumin seeds and onion; and fry for at least 3 minutes. \nAdd the green chillies and fry again for 1 minute. \nAdd the potatoes, salt, coriander, chilli powder and amchur powder. Mix well and cook for 1 minute. \nCook the mixture. Keep aside. \nKnead the dough and divide into 10 portions. \nRoll out one portion of the dough into a circle of 125 mm. diameter. \nPlace one portion of the prepared filling in the center of the dough circle. \nBring togeather all the sides in the center and seal tightly. \nRoll out again into a circle of 125 mm. diameter with the help of a little flour. \nCook the paratha on a tava (griddle), using a little ghee until both sides are golden brown. \nRepeat with the remaining dough and filling to make more parathas. \nServe hot.", 
 					  "http://www.cookingandme.com/2011/02/aloo-paratha-step-by-step-recipe.html", 
@@ -440,9 +449,10 @@ public class DataSource {
 			  
 			  // 7
 			  createRecipeItem(
-					  "Mix Vegetable", "mix vegetables cooked in indian style", "mixveg",
+					  "Mix Vegetable", "mix vegetables cooked in indian style", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "mixveg", 
 					  "20 mins", "30 mins", "50 mins",
-					  (float) 4, (float) 4, 
+					  (float) 4, (float) 4, (float) 3, 
 					  "2 cups of mix chopped veggies – cauliflower, carrots, potatoes, french beans, capsicum, peas. \n1 onion chopped finely \n2 tomatoes chopped finely \n1 green chili chopped finely \n1 tsp ginger-garlic paste \n2 tsp coriander powder \n1/2 tsp turmeric powder \n1/4 tsp chilli powder (use more if you want it to be spicy) \n1/2 tsp garam masala powder \n1 tsp cumin seeds \n8-10 paneer cubes (optional) \n2 cups water \n2 tbsp cream or malai \n2 tbsp oil \na few sprigs of cilantro/coriander leaves chopped \nsalt as per taste", 
 					  "In a kadhai or thick bottomed pan, heat oil. \nAdd cumin seeds. Once they splutter, add the chopped onions. \nFry the onions till they become transparent. \nAdd the ginger-garlic paste. Fry for a minute or till the raw smell disappears. \nAdd the tomatoes. Keep on stirring till the tomatoes become soft and pulpy. When the mixture becomes smooth and one, then add all the spice powders mentioned above. \nThe process of frying the tomatoes takes a little longer. If you want to quicken the process, add some salt to the onion-tomato mixture. Fry the tomatoes on a low flame as you don’t want the tomatoes to get burnt. \nNow add all the spice powders one by one. \nStir the spice powders with the onion-tomato mixture. Add the green chili. \nMix in the chopped veggies, salt and water. \nCover and let the veggies cook. \nOnce the veggies are semi cooked…… that is they are half cooked. Add the cream. \nGive a stir. \nCover again and simmer the veggies till they are done. \nDon’t forget to check the veggies after occasionally. \nAdd more water if the water dries up and if the veggies are still to be cooked. \nIf using paneer, then add the paneer once the veggies are cooked. Simmer without the lid for 2 minutes. \nYou can also garnish mix vegetable dish with fried paneer cubes. Otherwise simply garnish with chopped coriander leaves. \nServe mix vegetables dish hot with pooris, parathas, kulcha or chapatis.", 
 					  "http://www.vegrecipesofindia.com/mix-veg-recipe-indian/", 
@@ -450,9 +460,10 @@ public class DataSource {
 			  
 			  // 8
 			  createRecipeItem(
-					  "Bread Omelette", "easy, Indian breakfast menu", "breadomelette",
+					  "Bread Omelette", "easy, Indian breakfast menu", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "breadomelette",
 					  "2 mins", "8 mins", "10 mins",
-					  (float) 4, (float) 4,
+					  (float) 4, (float) 4, (float) 3,
 					  "Bread - 2 slices \nEgg - 1 or 2 nos,\nPepper powder - as needed \nSalt - to taste \nOnion - 1 tbsp, finely chopped \nOil - 1/2 tsp",
 					  "Make sure you have everything set near your stove top. \nBreak the egg in a bowl and whisk well. Add the chopped onion, a pinch of pepper powder and a pinch of salt. Whisk together again until it combines well. \nHeat 1/2 of oil in a dosa pan or any wide pan for 10 sec and pour the egg mixture in the middle. \nSlightly tilt the pan to spread the egg and immediately take one bread and place it on top of the egg mixture on the left side. Again take one more slice and place on the top on the right side. \nCook for 10 sec and flip the omelette along with the bread. Now, the bread slices should be facing the heat and the omelette will be facing up. Cook for few more sec so that the bread gets nicely toasted and flip again. Fold the bread slices on top of one another and serve hot.",
 					  "http://www.kitchensecretsandsnippets.com/2013/05/bread-omelette-toast.html", 
@@ -460,9 +471,10 @@ public class DataSource {
 			  
 			  // 9
 			  createRecipeItem(
-					  "Poha", "typical western India breakfast item made of flattened rice", "poha",
+					  "Poha", "typical western India breakfast item made of flattened rice", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "poha",
 					  "5 mins", "5 mins", "10 mins",
-					  (float) 3, (float) 2.5, 
+					  (float) 3, (float) 2.5,  (float) 3,
 					  "2-3 cups (when dry) Poha (flattened rice) \n1 teaspoon mustard seeds \n1-2 green chillies (chopped small) \n1 onion (small dice) \n1 potato (small diced) \n1/2 cup peanuts or cashews \n3/4 teaspoon turmeric \n4-5 curry leaves \nSalt to taste \n1/2 cup fresh cilantro (chopped) for garnish \nFresh lemon (to squeeze at end)",
 					  "Soak the Poha for 5 mins then drain in a colander (there's a thick and a thin Poha - this recipe is for the thick Poha). Heat oil in a pan (Devesh uses a wok). Season with asafoetida, then mustard seeds. As soon as they crackle, add diced onion and green chilies. Fry until translucent. \nIn parallel, heat diced potatoes in microwave for ~2 minutes to partly cook them. Add turmeric and curry leaves to hot oil once onions are done. Add nuts. Add heated potatoes. Sauté until potatoes are done. Add Poha and salt and mix thoroughly. Cook for 3-4 minutes. \nTransfer to serving bowl and sprinkle with fresh chopped cilantro and lemon juice (or lime juice) before serving.",
 					  "http://www.thekitchn.com/recipe-breakfast-poha-47062",
@@ -470,9 +482,10 @@ public class DataSource {
 			  
 			  // 10
 			  createRecipeItem(
-					  "Chicken Biryani", "Rice cooked overnight with chicken", "chickenbiryani", 
+					  "Chicken Biryani", "Rice cooked overnight with chicken", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "chickenbiryani", 
 					  "30 mins", "60 mins", "90 mins",
-					  (float) 4, (float) 2,
+					  (float) 4, (float) 2, (float) 3,
 					  "1/2 kg Basmati Rice (semi-cooked) \n1 kg Boneless Meat (washed and chopped into square pieces) \n500 gm Curd \n4-6 tsp Ginger-Garlic Paste \n4-6 Green Chilli \n8-10 Big Onions (sliced) \n1/4 cup Lime Juice \n1/2 tsp Red Chilli Powder \n1/2 A pinch of Caraway Seeds (Shahi Zeera) \n5-6 twigs Coriander Leaves (chopped) \n5-6 twigs Mint Leaves (chopped) \n2-4 pinch Saffron,pods Cardamom, Cinnamon \n2-3 drops Saffron Color \n1-2 pods Clove \n2 cup Oil \n2 tsp Ghee \nSalt to taste", 
 					  "Smear the pieces of meat with ginger-garlic paste. Keep them to marinate for an hour.\n In the meanwhile, fry the sliced onions in a heated pan on low flame till light brown. Let the onions cool down and crush them. Now add crushed fried onion (only three-fourth), curd, red chilli powder, cinnamon, green chilli paste, cardamom, shahi zeera, coriander leaves, clove, saffron water, mint leaves and salt to the marinated meat. Leave the meat as it is for 1 hour.\n Make the mixture of aromatic water by adding salt (one tsp), cinnamon, clove, cardamom, mint leaves and coriander leaves in a little water. Now spread a layer of semi-cooked rice in a heavy bottomed vessel. Add saffron color, limejuice, ghee and the remaining crushed onions over the layer of rice. Spread a layer of marinated meat over this, and again spread the remaining semi-cooked rice. Now add the aromatic water in a circular motion over the rice layer. Now tightly cover the vessel with a lid. Keep it on a low flame on tawa.\n Remove the vessel from the flame exactly after 15 minutes. Shahi Nawabi Biryani is ready to eat. Serve hot. Garnish with Coriander and mint leaves and small piece of Lemon. ",
 					  "http://allrecipes.co.in/recipe/11825/shahi-nawabi-biryani.aspx", 
@@ -480,9 +493,10 @@ public class DataSource {
 			  
 			  // 11
 			  createRecipeItem(
-					  "Vegetable Biryani", "traditional mughlai main course item loaded with chopped vegetables, spices, saffron and dry fruits", "vegbiryani", 
+					  "Vegetable Biryani", "traditional mughlai main course item loaded with chopped vegetables, spices, saffron and dry fruits", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "vegbiryani", 
 					  "15 mins", "40 mins", "55 mins",
-					  (float) 3.5, (float) 3,
+					  (float) 3.5, (float) 3, (float) 3,
 					  "2 cups long grained rice (basmati) , soaked and drained \n1 bayleaf (tejpatta) \n25 mm  piece cinnamon (dalchini) \n1 clove (laung / lavang) \n1 cardamom (elaichi) \n2 cups chopped and boiled mixed vegetables (carrots , peas , cauliflower , french beans and potatoes) \n2 tbsp oil \n1/2 tsp cumin seeds (jeera) \n3/4 cup finely chopped onions \n2 tsp ginger-green chilli paste \n1/4 tsp turmeric powder (haldi) \n2 tsp coriander (dhania) powder \n1 tsp chilli powder \n1/2 tsp garam masala \n1 cup roughly chopped tomatoes \n1/4 cup paneer (cottage cheese) cubes \nsalt to taste \n1/4 cup milk \na pinch of sugar \n1/4 cup fresh curds (dahi) \n1/4 cup finely chopped coriander (dhania) \na few drops of edible saffron colour \n2 tbsp ghee",
 					  "For the rice \nCombine 4 cups of water, bayleaf, cinnamon, clove, cardamom, rice and salt in a deep non-stick pan, cover with a lid and cook on a medium flame for 10 to 12 minutes or till the rice is cooked. \nStrain the rice using a strainer and keep aside. \n \nFor the vegetable gravy \nHeat the oil in a deep non-stick pan and add the cumin seeds. \nWhen the seeds crackle, add the onions and sauté on a medium flame for 1 to 2 minutes or till the onions turn translucent. \nAdd the ginger-green chilli paste, turmeric powder, coriander powder, chilli powder and garam masala and sauté on a medium flame for a few seconds. \nAdd the tomatoes and 2 tbsp of water, mix well and cook on a medium flame for 4 to 5 minutes. \nAdd the mixed vegetables, paneer, salt and milk and cook on a medium flame for another 2 to 3 minutes, while stirring occasionally. \nAdd the sugar, mix well and cook on a medium flame for 1 more minute. \n \nHow to proceed \nCombine the curds, coriander and saffron colour in a bowl and mix well. \nAdd the prepared rice mixture and mix well. \nTransfer 1 of the rice mixture in a handi and spread it evenly with the back of a spoon. \nAdd all the prepared vegetable gravy on it and spread it evenly. \nTop it with the remaining ½ of the rice mixture and spread it evenly. \nPour the ghee evenly over it and cover it with a lid. \nPlace the handi on a non-stick tava (griddle) and cook on a slow flame for 25 to 30 minutes. \nServe immediately.",
 					  "http://www.tarladalal.com/Vegetable-Biryani-1551r",
@@ -566,12 +580,14 @@ public class DataSource {
 	  public RecipeItem createRecipeItem(
 			  String name,
 			  String desc,
+			  String nutrition,
 			  String image,
 			  String prepTime,
 			  String cookingTime,
 			  String totalTime,
 			  float tasteRating,
 			  float healthRating,
+			  float costRating,
 			  String ingredients,
 			  String instructions,
 			  String links,
@@ -580,12 +596,14 @@ public class DataSource {
 		    ContentValues values = new ContentValues();
 		    values.put(DataHelper.RECIPE_COLUMN_NAME, name);
 		    values.put(DataHelper.RECIPE_COLUMN_DESCRIPTION, desc);
+		    values.put(DataHelper.RECIPE_COLUMN_NUTRITION, nutrition);
 		    values.put(DataHelper.RECIPE_COLUMN_IMAGE, image);
 		    values.put(DataHelper.RECIPE_COLUMN_PREP_TIME, prepTime);
 		    values.put(DataHelper.RECIPE_COLUMN_COOKING_TIME, cookingTime);
 		    values.put(DataHelper.RECIPE_COLUMN_TOTAL_TIME, totalTime);
 		    values.put(DataHelper.RECIPE_COLUMN_TASTE_RATING, tasteRating);
 		    values.put(DataHelper.RECIPE_COLUMN_HEALTH_RATING, healthRating);
+		    values.put(DataHelper.RECIPE_COLUMN_COST_RATING, costRating);
 		    values.put(DataHelper.RECIPE_COLUMN_INGREDIENTS, ingredients);
 		    values.put(DataHelper.RECIPE_COLUMN_INSTRUCTIONS, instructions);
 		    values.put(DataHelper.RECIPE_COLUMN_LINKS, links);
@@ -692,12 +710,14 @@ public class DataSource {
     			cursor.getString(4),
     			cursor.getString(5),
     			cursor.getString(6),
-    			cursor.getFloat(7),
+    			cursor.getString(7),
     			cursor.getFloat(8),
-    			cursor.getString(9),
-    			cursor.getString(10),
+    			cursor.getFloat(9),
+    			cursor.getFloat(10),
     			cursor.getString(11),
-    			RecipeCategory.values()[cursor.getInt(12)]
+    			cursor.getString(12),
+    			cursor.getString(13),
+    			RecipeCategory.values()[cursor.getInt(14)]
     			);
 
 	    return recipeItem;
@@ -788,12 +808,14 @@ public class RecipeItem {
 	  private long _id;
 	  private String _name;
 	  private String _desc;
+	  private String _nutrition;
 	  private String _image;
 	  private String _prepTime;
 	  private String _cookingTime;
 	  private String _totalTime;
 	  private float _tasteRating;
 	  private float _healthRating;
+	  private float _costRating;
 	  private String _ingredients;
 	  private String _instructions;
 	  private String _links;
@@ -803,12 +825,14 @@ public class RecipeItem {
 		  long id,
 		  String name,
 		  String desc,
+		  String nutrition,
 		  String image,
 		  String prepTime,
 		  String cookingTime,
 		  String totalTime,
 		  float tasteRating,
 		  float healthRating,
+		  float costRating,
 		  String ingredients,
 		  String instructions,
 		  String links,
@@ -817,12 +841,14 @@ public class RecipeItem {
 		 _id = id;
 		 _name = name;
 		 _desc = desc;
+		 _nutrition = nutrition;
 		 _image = image;
 		 _prepTime = prepTime;
 		 _cookingTime = cookingTime;
 		 _totalTime = totalTime;
 		 _tasteRating = tasteRating;
 		 _healthRating = healthRating;
+		 _costRating = healthRating;
 		 _ingredients = ingredients;
 		 _instructions = instructions;
 		 _links = links;
@@ -832,12 +858,14 @@ public class RecipeItem {
 	  public long getId() { return _id; }
 	  public String getName() { return _name; }
 	  public String getDescription() { return _desc; }
+	  public String getNutrition() { return _nutrition; }
 	  public String getImage() { return _image; }
 	  public String getPrepTime() { return _prepTime; }
 	  public String getCookingTime() { return _cookingTime; }
 	  public String getTotalTime() { return _totalTime; }
 	  public float getTasteRating() { return _tasteRating; }
 	  public float getHealthRating() { return _healthRating; }
+	  public float getCostRating() { return _costRating; }
 	  public String getIngredients() { return _ingredients; }
 	  public String getInstructions() { return _instructions; }
 	  public String getLinks() { return _links; }

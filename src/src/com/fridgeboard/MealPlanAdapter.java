@@ -151,6 +151,7 @@ public class MealPlanAdapter extends BaseExpandableListAdapter {
 	               	 tagT_array[1] = childPosition;
 	               	 midLayout.setTag(tagT_array);
 	               	 ((TextView)view.findViewById(R.id.txtDesc)).setText(meal.desc);
+	               	 ((TextView)view.findViewById(R.id.txtNutrition)).setText(meal.nutrition);
 	               	 ((TextView)view.findViewById(R.id.txtDuration)).setText(meal.duration);
 	               	 ImageView imgIcon = (ImageView)view.findViewById(R.id.imgIcon);
 	               	 imgIcon.setImageResource(meal.icon);
