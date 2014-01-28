@@ -12,12 +12,16 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SearchRecipeActivity extends Activity {
 
@@ -58,6 +62,14 @@ public class SearchRecipeActivity extends Activity {
 		      }
 		    });
 		
+		AutoCompleteTextView edtTitle = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView1);
+        edtTitle.setOnKeyListener(new OnKeyListener() {
+
+            @Override
+            public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
+                    return true;
+                }
+        });
 		//recipeListAdapter.notifyDataSetChanged();
 	}
 
