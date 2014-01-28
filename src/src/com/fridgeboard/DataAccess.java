@@ -248,10 +248,14 @@ public class DataSource {
 		  
 		  // Bakery
 		  category = 4;
-		  createIngredient("Wheat Bread", category, "no");
+		  createIngredient("Wheat Bread", category, "no"); //30
 		  createIngredient("Pav", category, "no");
 		  createIngredient("Biscuits", category, "no");
 		  createIngredient("Bread Sticks", category, "no");
+		  
+		  
+		  createIngredient("Sugar", 1, "gm"); //34
+		  createIngredient("Wheat Flour", 1, "gm");
 	  }
 	  
 	  private void createIngredient(String name, int category, String unit) {
@@ -277,15 +281,17 @@ public class DataSource {
 		  createRelation(1, 1, 100);
 		  
 		  // chole
-		  //4 teaspoons peeled, finely chopped fresh ginger (from about a 2-inch piece)\n
-		  //4 medium garlic cloves, finely chopped\n2 serrano chiles, stemmed and finely chopped\n
-		  //1 (28-ounce) can whole peeled tomatoes and their juices\n2 teaspoons garam masala\n1 teaspoon ground coriander\n1 teaspoon kosher salt, plus more for seasoning\n1/2 teaspoon turmeric\n2 (15-ounce) cans chickpeas, also known as garbanzo beans, drained and rinsed\n1/2 cup water",
 		  createRelation(2, 17, 100);
 		  createRelation(2, 1, 200);
 		  createRelation(2, 7, 100);
 		  createRelation(2, 10, 50);
 		  createRelation(2, 9, 25);
 		  createRelation(2, 20, 250);
+		  
+		  // naan
+		  createRelation(3, 34, 50);
+		  createRelation(3, 35, 500);
+		  createRelation(3, 15, 50);		  
 	  }
 	  
 	  private void createRelation(int rec_id, int ing_id, int quantity) {
