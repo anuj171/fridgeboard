@@ -13,7 +13,7 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 24;
+	private static final int DATABASE_VERSION = 26;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
@@ -477,15 +477,15 @@ public class DataSource {
 	  
 	  public void fillSettings()
 	  {
-		  setSetting(Setting.NoOfPortions, "2");
+		  setSetting(Setting.NoOfPortions, "4");
 		  setSetting(Setting.SkipBreakfast, "false");
 		  setSetting(Setting.SkipLunch, "false");
 		  setSetting(Setting.SkipDinner, "false");
 		  setSetting(Setting.SkipSnacks, "true");
 		  setSetting(Setting.SkipDrinks, "true");
-		  setSetting(Setting.HealthFactor, "3.5");
-		  setSetting(Setting.TasteFactor, "4");
-		  setSetting(Setting.CostFactor, "1500");
+		  setSetting(Setting.HealthFactor, "4");
+		  setSetting(Setting.TasteFactor, "5");
+		  setSetting(Setting.CostFactor, "3");
 	  }
 	  
 	  public void setSetting(Setting setting, String value) {
