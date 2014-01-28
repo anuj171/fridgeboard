@@ -13,7 +13,8 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 22;
+	private static final int DATABASE_VERSION = 23;
+
 	
 	  public enum RecipeCategory{
 		  BreakFast,
@@ -48,6 +49,7 @@ public class DataHelper extends SQLiteOpenHelper {
 	  public static final String RECIPE_COLUMN_TOTAL_TIME = "total_time";
 	  public static final String RECIPE_COLUMN_TASTE_RATING = "taste_rating";
 	  public static final String RECIPE_COLUMN_HEALTH_RATING = "health_rating";
+	  public static final String RECIPE_COLUMN_COST_RATING = "cost_rating";
 	  public static final String RECIPE_COLUMN_INGREDIENTS = "ingredients";
 	  public static final String RECIPE_COLUMN_INSTRUCTIONS = "instructions";
 	  public static final String RECIPE_COLUMN_LINKS = "links";
@@ -65,6 +67,7 @@ public class DataHelper extends SQLiteOpenHelper {
 	      + RECIPE_COLUMN_TOTAL_TIME + " text, "
 	      + RECIPE_COLUMN_TASTE_RATING + " float, "
 	      + RECIPE_COLUMN_HEALTH_RATING + " float, "
+	      + RECIPE_COLUMN_COST_RATING + " float, "
 	      + RECIPE_COLUMN_INGREDIENTS + " text, "
 	      + RECIPE_COLUMN_INSTRUCTIONS + " text, "
 	      + RECIPE_COLUMN_LINKS + " text, "
@@ -154,6 +157,7 @@ public class DataSource {
 			  DataHelper.RECIPE_COLUMN_TOTAL_TIME,
 			  DataHelper.RECIPE_COLUMN_TASTE_RATING,
 			  DataHelper.RECIPE_COLUMN_HEALTH_RATING,
+			  DataHelper.RECIPE_COLUMN_COST_RATING,
 			  DataHelper.RECIPE_COLUMN_INGREDIENTS,
 			  DataHelper.RECIPE_COLUMN_INSTRUCTIONS,
 			  DataHelper.RECIPE_COLUMN_LINKS,
@@ -299,6 +303,7 @@ public class DataSource {
 					  "54 mins",
 					  (float)4.5,
 					  (float)3.5,
+					  (float)1.5,
 					  "Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2",
 					  "1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n"
 					  + "2. Cook till raw smell of tomatoes leave and is slightly mushy. Cool down and then transfer it to a mixer.\n"
@@ -318,6 +323,7 @@ public class DataSource {
 					  "20 mins",
 					  (float)4,
 					  (float)3.5,
+					  (float)1.5,
 					  "Raw Eggs - 2, Salt & Onion",
 					  "Take two eggs & boil them for 10 mins\n",
 					  "http://www.chow.com/recipes/30267-chole-chana-masala",
@@ -333,6 +339,7 @@ public class DataSource {
 					  "95 mins",
 					  (float)4,
 					  (float)3.5,
+					  (float)1.5,
 					  "2 tablespoons vegetable oil\n1 teaspoon cumin seeds\n1 medium yellow onion, small dice\n4 teaspoons peeled, finely chopped fresh ginger (from about a 2-inch piece)\n4 medium garlic cloves, finely chopped\n2 serrano chiles, stemmed and finely chopped\n1 (28-ounce) can whole peeled tomatoes and their juices\n2 teaspoons garam masala\n1 teaspoon ground coriander\n1 teaspoon kosher salt, plus more for seasoning\n1/2 teaspoon turmeric\n2 (15-ounce) cans chickpeas, also known as garbanzo beans, drained and rinsed\n1/2 cup water",
 					  "1. Heat the oil in a large frying pan over medium heat until shimmering. Add the cumin seeds and cook, stirring occasionally, until fragrant, about 1 minute. Add the onion, ginger, garlic, and chiles and season with kosher salt. Cook, stirring occasionally, until the onions have softened, about 6 minutes.\n"
 					  + "2. Meanwhile, set a fine-mesh strainer over a medium bowl. Strain the tomatoes and reserve the juices. Coarsely chop the tomatoes into 1-inch pieces; set aside.\n"
@@ -351,6 +358,7 @@ public class DataSource {
 					  "54 mins",
 					  (float)4.5,
 					  (float)3.5,
+					  (float)1.5,
 					  "Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2",
 					  "1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n"
 					  + "2. Cook till raw smell of tomatoes leave and is slightly mushy. Cool down and then transfer it to a mixer.\n"
@@ -370,6 +378,7 @@ public class DataSource {
 					  "95 mins",
 					  (float)4,
 					  (float)3.5,
+					  (float)1.5,
 					  "2 tablespoons vegetable oil\n1 teaspoon cumin seeds\n1 medium yellow onion, small dice\n4 teaspoons peeled, finely chopped fresh ginger (from about a 2-inch piece)\n4 medium garlic cloves, finely chopped\n2 serrano chiles, stemmed and finely chopped\n1 (28-ounce) can whole peeled tomatoes and their juices\n2 teaspoons garam masala\n1 teaspoon ground coriander\n1 teaspoon kosher salt, plus more for seasoning\n1/2 teaspoon turmeric\n2 (15-ounce) cans chickpeas, also known as garbanzo beans, drained and rinsed\n1/2 cup water",
 					  "1. Heat the oil in a large frying pan over medium heat until shimmering. Add the cumin seeds and cook, stirring occasionally, until fragrant, about 1 minute. Add the onion, ginger, garlic, and chiles and season with kosher salt. Cook, stirring occasionally, until the onions have softened, about 6 minutes.\n"
 					  + "2. Meanwhile, set a fine-mesh strainer over a medium bowl. Strain the tomatoes and reserve the juices. Coarsely chop the tomatoes into 1-inch pieces; set aside.\n"
@@ -388,6 +397,7 @@ public class DataSource {
 					  "54 mins",
 					  (float)4.5,
 					  (float)3.5,
+					  (float)1.5,
 					  "Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2",
 					  "1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n"
 					  + "2. Cook till raw smell of tomatoes leave and is slightly mushy. Cool down and then transfer it to a mixer.\n"
@@ -407,6 +417,7 @@ public class DataSource {
 					  "95 mins",
 					  (float)4,
 					  (float)3.5,
+					  (float)1.5,
 					  "2 tablespoons vegetable oil\n1 teaspoon cumin seeds\n1 medium yellow onion, small dice\n4 teaspoons peeled, finely chopped fresh ginger (from about a 2-inch piece)\n4 medium garlic cloves, finely chopped\n2 serrano chiles, stemmed and finely chopped\n1 (28-ounce) can whole peeled tomatoes and their juices\n2 teaspoons garam masala\n1 teaspoon ground coriander\n1 teaspoon kosher salt, plus more for seasoning\n1/2 teaspoon turmeric\n2 (15-ounce) cans chickpeas, also known as garbanzo beans, drained and rinsed\n1/2 cup water",
 					  "1. Heat the oil in a large frying pan over medium heat until shimmering. Add the cumin seeds and cook, stirring occasionally, until fragrant, about 1 minute. Add the onion, ginger, garlic, and chiles and season with kosher salt. Cook, stirring occasionally, until the onions have softened, about 6 minutes.\n"
 					  + "2. Meanwhile, set a fine-mesh strainer over a medium bowl. Strain the tomatoes and reserve the juices. Coarsely chop the tomatoes into 1-inch pieces; set aside.\n"
@@ -425,6 +436,7 @@ public class DataSource {
 					  "20 mins",
 					  (float)4,
 					  (float)3.5,
+					  (float)1.5,
 					  "Raw Eggs - 2, Salt & Onion",
 					  "Take two eggs & boil them for 10 mins\n",
 					  "http://www.chow.com/recipes/30267-chole-chana-masala",
@@ -440,6 +452,7 @@ public class DataSource {
 					  "37 mins", 
 					  (float)4, 
 					  (float)2.5, 
+					  (float)1.5,
 					  "1 (.25 ounce) package active dry yeast \n1 cup warm water \n1/4 cup white sugar \n3 tablespoons milk \n1 egg, beaten \n2 teaspoons salt \n4 1/2 cups bread flour \n2 teaspoons minced garlic (optional) \n1/4 cup butter, melted", 
 					  "1. In a large bowl, dissolve yeast in warm water. Let stand about 10 minutes, until frothy. Stir in sugar, milk, egg, salt, and enough flour to make a soft dough. Knead for 6 to 8 minutes on a lightly floured surface, or until smooth. Place dough in a well oiled bowl, cover with a damp cloth, and set aside to rise. Let it rise 1 hour, until the dough has doubled in volume.\n"
 					  + "2. Punch down dough, and knead in garlic. Pinch off small handfuls of dough about the size of a golf ball. Roll into balls, and place on a tray. Cover with a towel, and allow to rise until doubled in size, about 30 minutes.\n"
@@ -515,6 +528,7 @@ public class DataSource {
 			  String totalTime,
 			  float tasteRating,
 			  float healthRating,
+			  float costRating,
 			  String ingredients,
 			  String instructions,
 			  String links,
@@ -529,6 +543,7 @@ public class DataSource {
 		    values.put(DataHelper.RECIPE_COLUMN_TOTAL_TIME, totalTime);
 		    values.put(DataHelper.RECIPE_COLUMN_TASTE_RATING, tasteRating);
 		    values.put(DataHelper.RECIPE_COLUMN_HEALTH_RATING, healthRating);
+		    values.put(DataHelper.RECIPE_COLUMN_COST_RATING, costRating);
 		    values.put(DataHelper.RECIPE_COLUMN_INGREDIENTS, ingredients);
 		    values.put(DataHelper.RECIPE_COLUMN_INSTRUCTIONS, instructions);
 		    values.put(DataHelper.RECIPE_COLUMN_LINKS, links);
@@ -637,10 +652,11 @@ public class DataSource {
     			cursor.getString(6),
     			cursor.getFloat(7),
     			cursor.getFloat(8),
-    			cursor.getString(9),
+    			cursor.getFloat(9),
     			cursor.getString(10),
     			cursor.getString(11),
-    			RecipeCategory.values()[cursor.getInt(12)]
+    			cursor.getString(12),
+    			RecipeCategory.values()[cursor.getInt(13)]
     			);
 
 	    return recipeItem;
@@ -737,6 +753,7 @@ public class RecipeItem {
 	  private String _totalTime;
 	  private float _tasteRating;
 	  private float _healthRating;
+	  private float _costRating;
 	  private String _ingredients;
 	  private String _instructions;
 	  private String _links;
@@ -752,6 +769,7 @@ public class RecipeItem {
 		  String totalTime,
 		  float tasteRating,
 		  float healthRating,
+		  float costRating,
 		  String ingredients,
 		  String instructions,
 		  String links,
@@ -766,6 +784,7 @@ public class RecipeItem {
 		 _totalTime = totalTime;
 		 _tasteRating = tasteRating;
 		 _healthRating = healthRating;
+		 _costRating = healthRating;
 		 _ingredients = ingredients;
 		 _instructions = instructions;
 		 _links = links;
@@ -781,6 +800,7 @@ public class RecipeItem {
 	  public String getTotalTime() { return _totalTime; }
 	  public float getTasteRating() { return _tasteRating; }
 	  public float getHealthRating() { return _healthRating; }
+	  public float getCostRating() { return _costRating; }
 	  public String getIngredients() { return _ingredients; }
 	  public String getInstructions() { return _instructions; }
 	  public String getLinks() { return _links; }
