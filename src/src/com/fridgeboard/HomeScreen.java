@@ -39,7 +39,7 @@ public class HomeScreen extends Activity {
 	DateFormat datef;
 	
 	private TextView mealPlanHeader;
-	private RatingBar planHealthRating, planTasteRating;
+	private RatingBar planHealthRating, planTasteRating, planCostRating;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,7 @@ public class HomeScreen extends Activity {
 
         planHealthRating = (RatingBar)header.findViewById(R.id.planHealthRating);
         planTasteRating = (RatingBar)header.findViewById(R.id.planTasteRating);
+        planCostRating = (RatingBar)header.findViewById(R.id.planCostRating);
         mealPlanHeader.setText(df.format(rightNow.getTime()));
 
         updateRatings();
@@ -104,10 +105,7 @@ public class HomeScreen extends Activity {
 	   	DataAccess.MealItem mealitem_to_be_deleted = datasource.getMealItemByID(meal_id_to_delete);
 	   	RecipeItem recipeItem = datasource.getRecipeItem(mealitem_to_be_deleted.recipe_id);
 	   	
-	   	List<Long> recipeIdsToAvoid= new ArrayList<Long>();
-	   	recipeIdsToAvoid.add(recipeItem.getId());
-	   	
-	   	Meal mealToAdd = addMealToCategory(mealitem_to_be_deleted.category, recipeItem.getCategory() == RecipeCategory.LunchOrDinnerSideDish, recipeIdsToAvoid);
+	   	Meal mealToAdd = addMealToCategory(mealitem_to_be_deleted.category, recipeItem.getCategory() == RecipeCategory.LunchOrDinnerSideDish);
 
 	   	datasource.deleteMealItem(mealitem_to_be_deleted);
     	listAdapter.categoryList.get(groupPosition).mealList.remove(childPosition);
@@ -150,7 +148,7 @@ public class HomeScreen extends Activity {
 
 	   	String meal_category = listAdapter.categoryList.get(groupPosition).category;
 	   	
-	   	List<Meal> meals = addMealsToCategory(meal_category, null);
+	   	List<Meal> meals = addMealsToCategory(meal_category);
 	   	
 	   	if (meals.size() > 0)
 	   	{
@@ -164,19 +162,19 @@ public class HomeScreen extends Activity {
 	   	}
     }
     
-    public List<Meal> addMealsToCategory(String meal_category, List<Long> recipeIdsToAvoid) {
+    public List<Meal> addMealsToCategory(String meal_category) {
     	List<Meal> meals = new ArrayList<Meal>();
     	
-    	meals.add(addMealToCategory(meal_category, false, recipeIdsToAvoid));
+    	meals.add(addMealToCategory(meal_category, false));
     	
     	if(meal_category.equals("LUNCH") || meal_category.equals("DINNER")){
-    		meals.add(addMealToCategory(meal_category, true, recipeIdsToAvoid));
+    		meals.add(addMealToCategory(meal_category, true));
     	}
     	
     	return meals;
     }
     
-	public Meal addMealToCategory(String meal_category, boolean isLunchOrDinnerSideDish, List<Long> recipeIdsToAvoid) {
+	public Meal addMealToCategory(String meal_category, boolean isLunchOrDinnerSideDish) {
 	   	List<RecipeItem> recipes = null;
 	   	if (meal_category.equals("BREAKFAST")){
 	   		recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.BreakFast.ordinal());   	
@@ -188,15 +186,18 @@ public class HomeScreen extends Activity {
 	   	}
 	   	 	
 	   	if (recipes != null)
-	   		return addRecipeItemToMeal(meal_category, recipes, recipeIdsToAvoid);
+	   		return addRecipeItemToMeal(meal_category, recipes);
 	   	
 	   	return null;
 	}
 
-	private Meal addRecipeItemToMeal(String meal_category, List<RecipeItem> recipes, List<Long> recipeIdsToAvoid) {
+	private Meal addRecipeItemToMeal(String meal_category, List<RecipeItem> recipes) {
 		
 		int recipeId = (new Random()).nextInt(recipes.size());
-		int count = 10;
+		
+		List<Long> recipeIdsToAvoid = generateAvoidList();
+		
+		int count = 5;
 		while (count-- >= 0 && recipeIdsToAvoid != null)
 		{
 			if (!recipeIdsToAvoid.contains(recipes.get(recipeId).getId()))
@@ -210,6 +211,30 @@ public class HomeScreen extends Activity {
 		DataAccess.MealItem new_mealitem = datasource.createMealItem(datef.format(rightNow.getTime()), meal_category, (int)recipe.getId());
 		
 		return CreateMealItem(new_mealitem, recipe);
+	}
+	
+	private List<Long> generateAvoidList()
+	{
+		List<Long> recipeIdsToAvoid = new ArrayList<Long>();
+		List<DataAccess.MealItem> mealItemsToday = datasource.getAllMealItemsForADate(datef.format(rightNow.getTime()));
+		
+		rightNow.add(Calendar.DAY_OF_MONTH, -1);
+		
+		List<DataAccess.MealItem> mealItemsYesterday = datasource.getAllMealItemsForADate(datef.format(rightNow.getTime()));
+		
+		rightNow.add(Calendar.DAY_OF_MONTH, 1);
+		
+		for (int i = 0; i < mealItemsToday.size(); ++i)
+		{
+			recipeIdsToAvoid.add((long)mealItemsToday.get(i).recipe_id);
+		}
+		
+		for (int i = 0; i < mealItemsYesterday.size(); ++i)
+		{
+			recipeIdsToAvoid.add((long)mealItemsYesterday.get(i).recipe_id);
+		}
+		
+		return recipeIdsToAvoid;
 	}
 
     /** Called when the user touches the button */
@@ -298,24 +323,20 @@ public class HomeScreen extends Activity {
 					this.getResources().getIdentifier(recipe.getImage(), "drawable", "com.fridgeboard"), 
 					recipe.getName(), 
 					recipe.getDescription(), 
+					recipe.getNutrition(), 
 					recipe.getTotalTime(), 
 					(int) recipe.getId(), 
 					recipe.getHealthRating(), 
 					recipe.getTasteRating(),
+					recipe.getCostRating(),
 					recipe.getCategory() == RecipeCategory.LunchOrDinnerSideDish);
 	}    
     
     private void createData() {
     	
-    	addMealsToCategory("BREAKFAST", null);
-    	List<Meal> lunch = addMealsToCategory("LUNCH", null);
-
-    	List<Long> recipeIdsToAvoid = new ArrayList<Long>();
-    	for (int i = 0; i < lunch.size(); ++i)
-    	{
-    		recipeIdsToAvoid.add((long)lunch.get(i).recipe_id);
-    	}
-    	addMealsToCategory("DINNER", recipeIdsToAvoid);
+    	addMealsToCategory("BREAKFAST");
+    	addMealsToCategory("LUNCH");
+    	addMealsToCategory("DINNER");
     	
     	datasource.createMealItem(datef.format(rightNow.getTime()), "OTHERS", 1);
     }
@@ -323,22 +344,27 @@ public class HomeScreen extends Activity {
     private void updateRatings(){
     	int meal_count = 0;
     	float health_avg=0, health_sum = 0;
+    	float cost_avg=0, cost_sum = 0;
     	float taste_avg=0, taste_sum = 0;
     	for(int i=0;i<categoryList.size();i++){
     		for(int j=0;j<categoryList.get(i).mealList.size(); j++){
     			meal_count++;
     			health_sum += categoryList.get(i).mealList.get(j).health_rating;
     			taste_sum += categoryList.get(i).mealList.get(j).taste_rating;
+    			cost_sum += categoryList.get(i).mealList.get(j).cost_rating;
     		}
     	}
     	if (meal_count > 0){
     		health_avg = health_sum/meal_count;
     		taste_avg = taste_sum/meal_count;
+    		cost_avg = cost_sum/meal_count;
     	}
     	planHealthRating.setRating(health_avg);
     	planHealthRating.invalidate();
     	planTasteRating.setRating(taste_avg);
     	planTasteRating.invalidate();
+    	planCostRating.setRating(cost_avg);
+    	planCostRating.invalidate();
     }
     
     @Override
@@ -357,7 +383,7 @@ class ActivitySwipeDetector implements View.OnTouchListener {
 
 static final String logTag = "ActivitySwipeDetector";
 private HomeScreen activity;
-static final int MIN_DISTANCE = 100;
+static final int MIN_DISTANCE = 10;
 private float downX, downY, upX, upY;
 
 public ActivitySwipeDetector(HomeScreen activity){
