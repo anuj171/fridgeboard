@@ -127,7 +127,6 @@ public class HomeScreen extends Activity {
         
 		//get reference to the ExpandableListView
 		mealPlanListView = (ExpandableListView) findViewById(R.id.mealPlanExpandableList);
-		
         
         View header = (View)getLayoutInflater().inflate(R.layout.home_screen_header, null);
         ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
