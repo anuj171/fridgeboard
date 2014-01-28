@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.fridgeboard.DataAccess.RecipeItem;
 
 public class RecipeListAdapter extends ArrayAdapter<RecipeItem> {
-	List<RecipeItem> recipeItems = null;
+	public List<RecipeItem> recipeItems = null;
 	public RecipeItem dummyItem;
 	int layoutResourceId;
 	Context context;
