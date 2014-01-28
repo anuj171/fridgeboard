@@ -15,14 +15,15 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 17;
+	private static final int DATABASE_VERSION = 18;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
-		  LunchOrDinner,
+		  LunchOrDinnerMainDish,
 		  Snacks,
 		  Desserts,
-		  Drinks  
+		  Drinks,
+		  LunchOrDinnerSideDish,
 	  }
 	  
 	  public enum Setting {
@@ -307,7 +308,7 @@ public class DataSource {
 					  + "4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n"
 					  + "5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.",
 					  "http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\nhttp://cooks.ndtv.com/recipe/show/rajma-233367",
-					  RecipeCategory.LunchOrDinner
+					  RecipeCategory.LunchOrDinnerMainDish
 					  );
 			  
 			  createRecipeItem(
@@ -340,7 +341,7 @@ public class DataSource {
 					  + "3. When the onions have softened, add the garam masala, coriander, measured salt, and turmeric to the frying pan and stir to coat the onion mixture. Cook, stirring occasionally, until fragrant, about 1 minute.\n"
 					  + "4. Add the chopped tomatoes, their reserved juices, the chickpeas, and the water. Stir to combine, scraping up any browned bits from the bottom of the pan, and bring to a simmer. Reduce the heat to medium low and simmer, stirring occasionally, until the flavors have melded and the sauce has thickened slightly, about 20 minutes.\n",
 					  "http://www.chow.com/recipes/30267-chole-chana-masala",
-					  RecipeCategory.LunchOrDinner
+					  RecipeCategory.LunchOrDinnerMainDish
 					  );
 
 			  createRecipeItem(
@@ -359,7 +360,7 @@ public class DataSource {
 					  + "4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n"
 					  + "5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.",
 					  "http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\nhttp://cooks.ndtv.com/recipe/show/rajma-233367",
-					  RecipeCategory.LunchOrDinner
+					  RecipeCategory.LunchOrDinnerMainDish
 					  );
 
 			  createRecipeItem(
@@ -377,7 +378,7 @@ public class DataSource {
 					  + "3. When the onions have softened, add the garam masala, coriander, measured salt, and turmeric to the frying pan and stir to coat the onion mixture. Cook, stirring occasionally, until fragrant, about 1 minute.\n"
 					  + "4. Add the chopped tomatoes, their reserved juices, the chickpeas, and the water. Stir to combine, scraping up any browned bits from the bottom of the pan, and bring to a simmer. Reduce the heat to medium low and simmer, stirring occasionally, until the flavors have melded and the sauce has thickened slightly, about 20 minutes.\n",
 					  "http://www.chow.com/recipes/30267-chole-chana-masala",
-					  RecipeCategory.LunchOrDinner
+					  RecipeCategory.LunchOrDinnerMainDish
 					  );
 
 			  createRecipeItem(
@@ -396,7 +397,7 @@ public class DataSource {
 					  + "4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n"
 					  + "5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.",
 					  "http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\nhttp://cooks.ndtv.com/recipe/show/rajma-233367",
-					  RecipeCategory.LunchOrDinner
+					  RecipeCategory.LunchOrDinnerMainDish
 					  );
 
 			  createRecipeItem(
@@ -414,7 +415,7 @@ public class DataSource {
 					  + "3. When the onions have softened, add the garam masala, coriander, measured salt, and turmeric to the frying pan and stir to coat the onion mixture. Cook, stirring occasionally, until fragrant, about 1 minute.\n"
 					  + "4. Add the chopped tomatoes, their reserved juices, the chickpeas, and the water. Stir to combine, scraping up any browned bits from the bottom of the pan, and bring to a simmer. Reduce the heat to medium low and simmer, stirring occasionally, until the flavors have melded and the sauce has thickened slightly, about 20 minutes.\n",
 					  "http://www.chow.com/recipes/30267-chole-chana-masala",
-					  RecipeCategory.LunchOrDinner
+					  RecipeCategory.LunchOrDinnerMainDish
 					  );
 
 			  createRecipeItem(
@@ -447,7 +448,7 @@ public class DataSource {
 					  + "3. During the second rising, preheat grill to high heat.\n"
 					  + "4. At grill side, roll one ball of dough out into a thin circle. Lightly oil grill. Place dough on grill, and cook for 2 to 3 minutes, or until puffy and lightly browned. Brush uncooked side with butter, and turn over. Brush cooked side with butter, and cook until browned, another 2 to 4 minutes. Remove from grill, and continue the process until all the naan has been prepared.\n", 
 					  "http://allrecipes.com/Recipe/Naan/Detail.aspx", 
-					  RecipeCategory.LunchOrDinner
+					  RecipeCategory.LunchOrDinnerSideDish
 					  );
 	  }
 	  
