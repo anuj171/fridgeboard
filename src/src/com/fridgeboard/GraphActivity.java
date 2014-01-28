@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GraphActivity extends Activity {
 
@@ -30,8 +31,11 @@ public class GraphActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.graph, menu);
 		return true;
 	}
 
+    public void onShareClicked(View v)
+    {
+    	Toast.makeText(this, R.string.share, Toast.LENGTH_LONG).show();
+    }
 }
