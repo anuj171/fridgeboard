@@ -524,12 +524,12 @@ public ActivitySwipeDetector(HomeScreen activity){
 
 public void onRightToLeftSwipe(){
     Log.i(logTag, "RightToLeftSwipe!");
-    activity.previousDay(null);
+    activity.nextDay(null);
 }
 
 public void onLeftToRightSwipe(){
     Log.i(logTag, "LeftToRightSwipe!");
-    activity.nextDay(null);
+    activity.previousDay(null); 
 }
 
 public void onTopToBottomSwipe(){
