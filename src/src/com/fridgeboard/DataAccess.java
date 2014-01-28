@@ -15,7 +15,7 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 18;
+	private static final int DATABASE_VERSION = 19;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
@@ -239,7 +239,7 @@ public class DataSource {
 		  createIngredient("Cheese", category, "gm");
 		  createIngredient("Butter", category, "gm"); //29
 		  
-		  // Bakery
+		  // Other
 		  category = 4;
 		  createIngredient("Wheat Bread", category, "no"); //30
 		  createIngredient("Pav", category, "no");
@@ -249,15 +249,11 @@ public class DataSource {
 		  
 		  createIngredient("Sugar", 1, "gm"); //34
 		  createIngredient("Wheat Flour", 1, "gm");
-	  }
-	  
-	  private void createIngredient(String name, int category, String unit) {
-		  ContentValues values = new ContentValues();
-		  values.put("name", name);
-		  values.put("cat_id", category);
-		  values.put("unit", unit);
-		  
-		  database.insert(DataHelper.INGREDIENTS_TABLE, null, values);
+		  createIngredient("Eggs", 4, "no");
+		  createIngredient("Basmati Rice", 1, "gm"); //37
+		  createIngredient("Wheat Flour", 1, "gm");
+		  createIngredient("French Beans", 0, "gm");
+		  createIngredient("Green Peas", 0, "gm");
 	  }
 	  
 	  public void fillRecipeIngrRelation()
@@ -284,7 +280,136 @@ public class DataSource {
 		  // naan
 		  createRelation(3, 34, 50);
 		  createRelation(3, 35, 500);
-		  createRelation(3, 15, 50);		  
+		  createRelation(3, 15, 50);		
+		  
+		  // eggs
+		  createRelation(4, 36, 2);
+		  createRelation(4, 1, 50);
+		  
+		  // jeera rice
+		  createRelation(5, 37, 200);
+		  createRelation(5, 17, 50);
+		  createRelation(5, 1, 50);
+		  createRelation(5, 16, 50);
+		  createRelation(5, 9, 10);
+		  
+		  // aloo paratha
+		  createRelation(6, 38, 200);
+		  createRelation(6, 15, 20);
+		  createRelation(6, 17, 50);
+		  createRelation(6, 2, 100);
+		  createRelation(6, 16, 10);
+		  createRelation(6, 13, 20);
+		  createRelation(6, 9, 50);
+		  
+		  // mixveg
+		  createRelation(7, 12, 100);
+		  createRelation(7, 6, 50);
+		  createRelation(7, 2, 100);
+		  createRelation(7, 39, 50);
+		  createRelation(7, 3, 50);
+		  createRelation(7, 40, 100);
+		  createRelation(7, 1, 50);
+		  createRelation(7, 10, 20);
+		  createRelation(7, 9, 20);
+		  createRelation(7, 13, 20);
+		  createRelation(7, 16, 20);
+		  createRelation(7, 7, 50);
+		  createRelation(7, 27, 50);
+	  }
+	  	  
+	  public void fillRecipe()
+	  {
+		  	  // 1 Rajma Masala
+			  createRecipeItem(
+					  "Rajma Masala", "Red kidney beans cooked in tomatoes, onions and spices.",
+					  "punjabirajma",
+					  "9 mins", "45 mins", "54 mins",
+					  (float)4.5, (float)3.5,
+					  "Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2",
+					  "1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n"
+					  + "2. Cook till raw smell of tomatoes leave and is slightly mushy. Cool down and then transfer it to a mixer.\n"
+					  + "3. Grind it to smooth paste without adding water,set aside. Heat oil in a pan - temper jeera, let it splutter.Then add the onion tomato paste.\n"
+					  + "4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n"
+					  + "5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.",
+					  "http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\nhttp://cooks.ndtv.com/recipe/show/rajma-233367",
+					  RecipeCategory.LunchOrDinnerMainDish
+					  );
+			  
+			  // 2 Chole
+			  createRecipeItem(
+					  "Punjabi Chole Masala", "Chickpeas in tomatoes, onions and spices.",
+					  "chole", "50 mins", "45 mins", "95 mins",
+					  (float)4, (float)3.5,
+					  "2 tablespoons vegetable oil\n1 teaspoon cumin seeds\n1 medium yellow onion, small dice\n4 teaspoons peeled, finely chopped fresh ginger (from about a 2-inch piece)\n4 medium garlic cloves, finely chopped\n2 serrano chiles, stemmed and finely chopped\n1 (28-ounce) can whole peeled tomatoes and their juices\n2 teaspoons garam masala\n1 teaspoon ground coriander\n1 teaspoon kosher salt, plus more for seasoning\n1/2 teaspoon turmeric\n2 (15-ounce) cans chickpeas, also known as garbanzo beans, drained and rinsed\n1/2 cup water",
+					  "1. Heat the oil in a large frying pan over medium heat until shimmering. Add the cumin seeds and cook, stirring occasionally, until fragrant, about 1 minute. Add the onion, ginger, garlic, and chiles and season with kosher salt. Cook, stirring occasionally, until the onions have softened, about 6 minutes.\n"
+					  + "2. Meanwhile, set a fine-mesh strainer over a medium bowl. Strain the tomatoes and reserve the juices. Coarsely chop the tomatoes into 1-inch pieces; set aside.\n"
+					  + "3. When the onions have softened, add the garam masala, coriander, measured salt, and turmeric to the frying pan and stir to coat the onion mixture. Cook, stirring occasionally, until fragrant, about 1 minute.\n"
+					  + "4. Add the chopped tomatoes, their reserved juices, the chickpeas, and the water. Stir to combine, scraping up any browned bits from the bottom of the pan, and bring to a simmer. Reduce the heat to medium low and simmer, stirring occasionally, until the flavors have melded and the sauce has thickened slightly, about 20 minutes.\n",
+					  "http://www.chow.com/recipes/30267-chole-chana-masala",
+					  RecipeCategory.LunchOrDinnerMainDish);
+
+			  // 3
+			  createRecipeItem(
+					  "Naan", "Oven baked flatbread", "naan", 
+					  "30 mins", "7 mins", "37 mins", 
+					  (float)4, (float)2, 
+					  "1 (.25 ounce) package active dry yeast \n1 cup warm water \n1/4 cup white sugar \n3 tablespoons milk \n1 egg, beaten \n2 teaspoons salt \n4 1/2 cups bread flour \n2 teaspoons minced garlic (optional) \n1/4 cup butter, melted", 
+					  "1. In a large bowl, dissolve yeast in warm water. Let stand about 10 minutes, until frothy. Stir in sugar, milk, egg, salt, and enough flour to make a soft dough. Knead for 6 to 8 minutes on a lightly floured surface, or until smooth. Place dough in a well oiled bowl, cover with a damp cloth, and set aside to rise. Let it rise 1 hour, until the dough has doubled in volume.\n"
+					  + "2. Punch down dough, and knead in garlic. Pinch off small handfuls of dough about the size of a golf ball. Roll into balls, and place on a tray. Cover with a towel, and allow to rise until doubled in size, about 30 minutes.\n"
+					  + "3. During the second rising, preheat grill to high heat.\n"
+					  + "4. At grill side, roll one ball of dough out into a thin circle. Lightly oil grill. Place dough on grill, and cook for 2 to 3 minutes, or until puffy and lightly browned. Brush uncooked side with butter, and turn over. Brush cooked side with butter, and cook until browned, another 2 to 4 minutes. Remove from grill, and continue the process until all the naan has been prepared.\n", 
+					  "http://allrecipes.com/Recipe/Naan/Detail.aspx", 
+					  RecipeCategory.LunchOrDinnerSideDish);
+			  
+			  // 4	
+			  createRecipeItem(
+					  "Boiled Eggs", "Eggs cut into half, with salt & onions", "eggs",
+					  "1 mins", "9 mins", "10 mins",
+					  (float)3, (float)4,
+					  "Eggs - 2\nSalt & Onion to taste",
+					  "1. Place eggs in saucepan large enough to hold them in single layer. Add cold water to cover eggs by 1 inch. Heat over high heat just to boiling. Remove from burner. Cover pan.\n 2. Let eggs stand in hot water about 12 minutes for large eggs (9 minutes for medium eggs; 15 minutes for extra large).\n 3. Drain immediately and serve warm. Or, cool completely under cold running water or in bowl of ice water, then refrigerate.\n",
+					  "http://www.incredibleegg.org/recipes/recipe/easy-hard-boiled-eggs",
+					  RecipeCategory.BreakFast);
+			  
+			  // 5
+			  createRecipeItem(
+					  "Jeera Rice", "Rice with cumin", "jeerarice", 
+					  "5 mins", "15 mins", "20 mins", 
+					  (float)3, (float)3,
+					  "1 cup Basmati rice (a long grain Indian rice) \n3 cups water \nSalt to taste \n2 tbsps vegtable, sunflower or canola oil/ghee \n1 large onion chopped fine \n2 tsps cumin seeds \n1/2 cup water \nCoriander leaves to garnish", 
+					  "Wash the Basmati rice well in running water. \nAdd the 3 cups of water and salt to taste to the rice and set it up to boil. \nOnce the rice is almost cooked (test a few grains often to check - they will feel soft on the outside but very slightly hard on the inside), remove from fire and drain the water by straining the rice through a sieve or colander. Set aside. \nIn another pan, heat the oil/ghee till hot and add onions. \nFry till light brown and then add the cumin seeds. The seeds will splutter and sizzle to show they are done. \nNow add the rice and stir well. \nAdd 1/2 a cup of water to the rice and cover. \nSimmer till all the water dries up. \nAllow the rice to stand for another 2-3 minutes and then serve garnished with coriander leaves.", 
+					  "http://indianfood.about.com/od/ricerecipes/r/jeerarice.htm", 
+					  RecipeCategory.LunchOrDinnerSideDish);
+
+			  // 6
+			  createRecipeItem(
+					  "Aloo Paratha", "One of the most popular paratha recipe from punjab", "alooparatha", 
+					  "10 mins", "30 mins", "40 mins", 
+					  (float)4, (float)2.5, 
+					  "2 cups atta / whole wheat flour \nJust over 1/2 cup water \n1 tsp salt (or to taste) \nA few drops of oil \n2 medium sized potatoes \n1 tsp red chilli powder \n1/2 tsp jeera / cumin powder \n1/4 tsp ajwain / omam / carom seeds \n1/2 tsp chaat masala (or garam masala) \n1/2 tsp salt \nA handful of coriander leaves, chopped fine", 
+					  "Sieve the flours with the salt. \nAdd the ghee and mix well. Add enough water and make a semi-soft dough. Keep aside. \nMash the potatoes coarsely or cut into very small pieces. Keep aside. \nHeat the ghee in a vessel, add the cumin seeds and onion; and fry for at least 3 minutes. \nAdd the green chillies and fry again for 1 minute. \nAdd the potatoes, salt, coriander, chilli powder and amchur powder. Mix well and cook for 1 minute. \nCook the mixture. Keep aside. \nKnead the dough and divide into 10 portions. \nRoll out one portion of the dough into a circle of 125 mm. diameter. \nPlace one portion of the prepared filling in the center of the dough circle. \nBring togeather all the sides in the center and seal tightly. \nRoll out again into a circle of 125 mm. diameter with the help of a little flour. \nCook the paratha on a tava (griddle), using a little ghee until both sides are golden brown. \nRepeat with the remaining dough and filling to make more parathas. \nServe hot.", 
+					  "http://www.cookingandme.com/2011/02/aloo-paratha-step-by-step-recipe.html", 
+					  RecipeCategory.BreakFast);
+			  
+			  // 7
+			  createRecipeItem(
+					  "Mix Vegetable", "mix vegetables cooked in indian style", "mixveg",
+					  "20 mins", "30 mins", "50 mins",
+					  (float) 4, (float) 4, 
+					  "2 cups of mix chopped veggies – cauliflower, carrots, potatoes, french beans, capsicum, peas. \n1 onion chopped finely \n2 tomatoes chopped finely \n1 green chili chopped finely \n1 tsp ginger-garlic paste \n2 tsp coriander powder \n1/2 tsp turmeric powder \n1/4 tsp chilli powder (use more if you want it to be spicy) \n1/2 tsp garam masala powder \n1 tsp cumin seeds \n8-10 paneer cubes (optional) \n2 cups water \n2 tbsp cream or malai \n2 tbsp oil \na few sprigs of cilantro/coriander leaves chopped \nsalt as per taste", 
+					  "In a kadhai or thick bottomed pan, heat oil. \nAdd cumin seeds. Once they splutter, add the chopped onions. \nFry the onions till they become transparent. \nAdd the ginger-garlic paste. Fry for a minute or till the raw smell disappears. \nAdd the tomatoes. Keep on stirring till the tomatoes become soft and pulpy. When the mixture becomes smooth and one, then add all the spice powders mentioned above. \nThe process of frying the tomatoes takes a little longer. If you want to quicken the process, add some salt to the onion-tomato mixture. Fry the tomatoes on a low flame as you don’t want the tomatoes to get burnt. \nNow add all the spice powders one by one. \nStir the spice powders with the onion-tomato mixture. Add the green chili. \nMix in the chopped veggies, salt and water. \nCover and let the veggies cook. \nOnce the veggies are semi cooked…… that is they are half cooked. Add the cream. \nGive a stir. \nCover again and simmer the veggies till they are done. \nDon’t forget to check the veggies after occasionally. \nAdd more water if the water dries up and if the veggies are still to be cooked. \nIf using paneer, then add the paneer once the veggies are cooked. Simmer without the lid for 2 minutes. \nYou can also garnish mix vegetable dish with fried paneer cubes. Otherwise simply garnish with chopped coriander leaves. \nServe mix vegetables dish hot with pooris, parathas, kulcha or chapatis.", 
+					  "http://www.vegrecipesofindia.com/mix-veg-recipe-indian/", 
+					  RecipeCategory.LunchOrDinnerMainDish);
+	  }
+	  
+	  private void createIngredient(String name, int category, String unit) {
+		  ContentValues values = new ContentValues();
+		  values.put("name", name);
+		  values.put("cat_id", category);
+		  values.put("unit", unit);
+		  
+		  database.insert(DataHelper.INGREDIENTS_TABLE, null, values);
 	  }
 	  
 	  private void createRelation(int rec_id, int ing_id, int quantity) {
@@ -295,169 +420,7 @@ public class DataSource {
 		  
 		  database.insert(DataHelper.RECIPE_INGRED_TABLE, null, values);
 	  }
-	  
-	  public void fillRecipe()
-	  {
-			  createRecipeItem(
-					  "Rajma Masala",
-					  "Red kidney beans cooked in tomatoes, onions and spices.",
-					  "punjabirajma",
-					  "9 mins",
-					  "45 mins",
-					  "54 mins",
-					  (float)4.5,
-					  (float)3.5,
-					  "Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2",
-					  "1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n"
-					  + "2. Cook till raw smell of tomatoes leave and is slightly mushy. Cool down and then transfer it to a mixer.\n"
-					  + "3. Grind it to smooth paste without adding water,set aside. Heat oil in a pan - temper jeera, let it splutter.Then add the onion tomato paste.\n"
-					  + "4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n"
-					  + "5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.",
-					  "http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\nhttp://cooks.ndtv.com/recipe/show/rajma-233367",
-					  RecipeCategory.LunchOrDinnerMainDish
-					  );
-			  
-			  createRecipeItem(
-					  "Boiled Eggs",
-					  "Eggs cut into half, sprayed salt & onions",
-					  "ande",
-					  "5 mins",
-					  "15 mins",
-					  "20 mins",
-					  (float)4,
-					  (float)3.5,
-					  "Raw Eggs - 2, Salt & Onion",
-					  "Take two eggs & boil them for 10 mins\n",
-					  "http://www.chow.com/recipes/30267-chole-chana-masala",
-					  RecipeCategory.BreakFast
-					  );
 
-			  createRecipeItem(
-					  "Punjabi Chole Masala",
-					  "Chickpeas in tomatoes, onions and spices.",
-					  "chole",
-					  "50 mins",
-					  "45 mins",
-					  "95 mins",
-					  (float)4,
-					  (float)3.5,
-					  "2 tablespoons vegetable oil\n1 teaspoon cumin seeds\n1 medium yellow onion, small dice\n4 teaspoons peeled, finely chopped fresh ginger (from about a 2-inch piece)\n4 medium garlic cloves, finely chopped\n2 serrano chiles, stemmed and finely chopped\n1 (28-ounce) can whole peeled tomatoes and their juices\n2 teaspoons garam masala\n1 teaspoon ground coriander\n1 teaspoon kosher salt, plus more for seasoning\n1/2 teaspoon turmeric\n2 (15-ounce) cans chickpeas, also known as garbanzo beans, drained and rinsed\n1/2 cup water",
-					  "1. Heat the oil in a large frying pan over medium heat until shimmering. Add the cumin seeds and cook, stirring occasionally, until fragrant, about 1 minute. Add the onion, ginger, garlic, and chiles and season with kosher salt. Cook, stirring occasionally, until the onions have softened, about 6 minutes.\n"
-					  + "2. Meanwhile, set a fine-mesh strainer over a medium bowl. Strain the tomatoes and reserve the juices. Coarsely chop the tomatoes into 1-inch pieces; set aside.\n"
-					  + "3. When the onions have softened, add the garam masala, coriander, measured salt, and turmeric to the frying pan and stir to coat the onion mixture. Cook, stirring occasionally, until fragrant, about 1 minute.\n"
-					  + "4. Add the chopped tomatoes, their reserved juices, the chickpeas, and the water. Stir to combine, scraping up any browned bits from the bottom of the pan, and bring to a simmer. Reduce the heat to medium low and simmer, stirring occasionally, until the flavors have melded and the sauce has thickened slightly, about 20 minutes.\n",
-					  "http://www.chow.com/recipes/30267-chole-chana-masala",
-					  RecipeCategory.LunchOrDinnerMainDish
-					  );
-
-			  createRecipeItem(
-					  "Hyderabadi Rajma Masala",
-					  "Red kidney beans cooked in tomatoes, onions and spices.",
-					  "punjabirajma",
-					  "9 mins",
-					  "45 mins",
-					  "54 mins",
-					  (float)4.5,
-					  (float)3.5,
-					  "Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2",
-					  "1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n"
-					  + "2. Cook till raw smell of tomatoes leave and is slightly mushy. Cool down and then transfer it to a mixer.\n"
-					  + "3. Grind it to smooth paste without adding water,set aside. Heat oil in a pan - temper jeera, let it splutter.Then add the onion tomato paste.\n"
-					  + "4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n"
-					  + "5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.",
-					  "http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\nhttp://cooks.ndtv.com/recipe/show/rajma-233367",
-					  RecipeCategory.LunchOrDinnerMainDish
-					  );
-
-			  createRecipeItem(
-					  "Chole Lazawaab",
-					  "Chickpeas in tomatoes, onions and spices.",
-					  "chole",
-					  "50 mins",
-					  "45 mins",
-					  "95 mins",
-					  (float)4,
-					  (float)3.5,
-					  "2 tablespoons vegetable oil\n1 teaspoon cumin seeds\n1 medium yellow onion, small dice\n4 teaspoons peeled, finely chopped fresh ginger (from about a 2-inch piece)\n4 medium garlic cloves, finely chopped\n2 serrano chiles, stemmed and finely chopped\n1 (28-ounce) can whole peeled tomatoes and their juices\n2 teaspoons garam masala\n1 teaspoon ground coriander\n1 teaspoon kosher salt, plus more for seasoning\n1/2 teaspoon turmeric\n2 (15-ounce) cans chickpeas, also known as garbanzo beans, drained and rinsed\n1/2 cup water",
-					  "1. Heat the oil in a large frying pan over medium heat until shimmering. Add the cumin seeds and cook, stirring occasionally, until fragrant, about 1 minute. Add the onion, ginger, garlic, and chiles and season with kosher salt. Cook, stirring occasionally, until the onions have softened, about 6 minutes.\n"
-					  + "2. Meanwhile, set a fine-mesh strainer over a medium bowl. Strain the tomatoes and reserve the juices. Coarsely chop the tomatoes into 1-inch pieces; set aside.\n"
-					  + "3. When the onions have softened, add the garam masala, coriander, measured salt, and turmeric to the frying pan and stir to coat the onion mixture. Cook, stirring occasionally, until fragrant, about 1 minute.\n"
-					  + "4. Add the chopped tomatoes, their reserved juices, the chickpeas, and the water. Stir to combine, scraping up any browned bits from the bottom of the pan, and bring to a simmer. Reduce the heat to medium low and simmer, stirring occasionally, until the flavors have melded and the sauce has thickened slightly, about 20 minutes.\n",
-					  "http://www.chow.com/recipes/30267-chole-chana-masala",
-					  RecipeCategory.LunchOrDinnerMainDish
-					  );
-
-			  createRecipeItem(
-					  "Rajma Jabardast",
-					  "Red kidney beans cooked in tomatoes, onions and spices.",
-					  "punjabirajma",
-					  "9 mins",
-					  "45 mins",
-					  "54 mins",
-					  (float)4.5,
-					  (float)3.5,
-					  "Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2",
-					  "1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n"
-					  + "2. Cook till raw smell of tomatoes leave and is slightly mushy. Cool down and then transfer it to a mixer.\n"
-					  + "3. Grind it to smooth paste without adding water,set aside. Heat oil in a pan - temper jeera, let it splutter.Then add the onion tomato paste.\n"
-					  + "4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n"
-					  + "5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.",
-					  "http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\nhttp://cooks.ndtv.com/recipe/show/rajma-233367",
-					  RecipeCategory.LunchOrDinnerMainDish
-					  );
-
-			  createRecipeItem(
-					  "Chole from Sholey",
-					  "Chickpeas in tomatoes, onions and spices.",
-					  "chole",
-					  "50 mins",
-					  "45 mins",
-					  "95 mins",
-					  (float)4,
-					  (float)3.5,
-					  "2 tablespoons vegetable oil\n1 teaspoon cumin seeds\n1 medium yellow onion, small dice\n4 teaspoons peeled, finely chopped fresh ginger (from about a 2-inch piece)\n4 medium garlic cloves, finely chopped\n2 serrano chiles, stemmed and finely chopped\n1 (28-ounce) can whole peeled tomatoes and their juices\n2 teaspoons garam masala\n1 teaspoon ground coriander\n1 teaspoon kosher salt, plus more for seasoning\n1/2 teaspoon turmeric\n2 (15-ounce) cans chickpeas, also known as garbanzo beans, drained and rinsed\n1/2 cup water",
-					  "1. Heat the oil in a large frying pan over medium heat until shimmering. Add the cumin seeds and cook, stirring occasionally, until fragrant, about 1 minute. Add the onion, ginger, garlic, and chiles and season with kosher salt. Cook, stirring occasionally, until the onions have softened, about 6 minutes.\n"
-					  + "2. Meanwhile, set a fine-mesh strainer over a medium bowl. Strain the tomatoes and reserve the juices. Coarsely chop the tomatoes into 1-inch pieces; set aside.\n"
-					  + "3. When the onions have softened, add the garam masala, coriander, measured salt, and turmeric to the frying pan and stir to coat the onion mixture. Cook, stirring occasionally, until fragrant, about 1 minute.\n"
-					  + "4. Add the chopped tomatoes, their reserved juices, the chickpeas, and the water. Stir to combine, scraping up any browned bits from the bottom of the pan, and bring to a simmer. Reduce the heat to medium low and simmer, stirring occasionally, until the flavors have melded and the sauce has thickened slightly, about 20 minutes.\n",
-					  "http://www.chow.com/recipes/30267-chole-chana-masala",
-					  RecipeCategory.LunchOrDinnerMainDish
-					  );
-
-			  createRecipeItem(
-					  "Masala Eggs",
-					  "Eggs cut into half, sprayed salt & onions",
-					  "ande",
-					  "5 mins",
-					  "15 mins",
-					  "20 mins",
-					  (float)4,
-					  (float)3.5,
-					  "Raw Eggs - 2, Salt & Onion",
-					  "Take two eggs & boil them for 10 mins\n",
-					  "http://www.chow.com/recipes/30267-chole-chana-masala",
-					  RecipeCategory.BreakFast
-					  );
-			  
-			  createRecipeItem(
-					  "Naan", 
-					  "Oven baked flatbread", 
-					  "food", 
-					  "30 mins", 
-					  "7 mins", 
-					  "37 mins", 
-					  (float)4, 
-					  (float)2.5, 
-					  "1 (.25 ounce) package active dry yeast \n1 cup warm water \n1/4 cup white sugar \n3 tablespoons milk \n1 egg, beaten \n2 teaspoons salt \n4 1/2 cups bread flour \n2 teaspoons minced garlic (optional) \n1/4 cup butter, melted", 
-					  "1. In a large bowl, dissolve yeast in warm water. Let stand about 10 minutes, until frothy. Stir in sugar, milk, egg, salt, and enough flour to make a soft dough. Knead for 6 to 8 minutes on a lightly floured surface, or until smooth. Place dough in a well oiled bowl, cover with a damp cloth, and set aside to rise. Let it rise 1 hour, until the dough has doubled in volume.\n"
-					  + "2. Punch down dough, and knead in garlic. Pinch off small handfuls of dough about the size of a golf ball. Roll into balls, and place on a tray. Cover with a towel, and allow to rise until doubled in size, about 30 minutes.\n"
-					  + "3. During the second rising, preheat grill to high heat.\n"
-					  + "4. At grill side, roll one ball of dough out into a thin circle. Lightly oil grill. Place dough on grill, and cook for 2 to 3 minutes, or until puffy and lightly browned. Brush uncooked side with butter, and turn over. Brush cooked side with butter, and cook until browned, another 2 to 4 minutes. Remove from grill, and continue the process until all the naan has been prepared.\n", 
-					  "http://allrecipes.com/Recipe/Naan/Detail.aspx", 
-					  RecipeCategory.LunchOrDinnerSideDish
-					  );
-	  }
-	  
 	  public void fillSettings()
 	  {
 		  setSetting(Setting.NoOfPortions, "2");
