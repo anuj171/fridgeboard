@@ -15,7 +15,6 @@ public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
 	private static final int DATABASE_VERSION = 23;
 
-	
 	  public enum RecipeCategory{
 		  BreakFast,
 		  LunchOrDinnerMainDish,

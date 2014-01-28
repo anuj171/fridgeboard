@@ -7,10 +7,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-import com.fridgeboard.DataAccess.DataHelper;
-import com.fridgeboard.DataAccess.RecipeCategory;
-import com.fridgeboard.DataAccess.RecipeItem;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,13 +16,17 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.fridgeboard.DataAccess.DataHelper;
+import com.fridgeboard.DataAccess.RecipeCategory;
+import com.fridgeboard.DataAccess.RecipeItem;
 
 public class HomeScreen extends Activity {
 
+	private ListView drawerListView;
 	private DataAccess.DataSource datasource;
 
 	private ArrayList<MealCategory> categoryList = new ArrayList<MealCategory>(); 
@@ -85,6 +85,10 @@ public class HomeScreen extends Activity {
 		 
 		//expand all Groups
 		expandAll();
+		
+        // get ListView defined in activity_main.xml
+        drawerListView = (ListView) findViewById(R.id.left_drawer);
+        
 
     }
     
