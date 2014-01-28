@@ -7,26 +7,52 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-import com.fridgeboard.DataAccess.DataHelper;
-import com.fridgeboard.DataAccess.RecipeCategory;
-import com.fridgeboard.DataAccess.RecipeItem;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class HomeScreen extends Activity {
+import com.fridgeboard.DataAccess.DataHelper;
+import com.fridgeboard.DataAccess.RecipeCategory;
+import com.fridgeboard.DataAccess.RecipeItem;
 
+public class HomeScreen extends Activity {
+	
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
+			Toast.makeText(HomeScreen.this, ((TextView)view).getText(), Toast.LENGTH_LONG).show();
+            
+			if (position == 0)
+			{
+	    	   	Intent intent = new Intent(HomeScreen.this, MealSettingsActivity.class);
+	        	startActivity(intent);
+			}
+        	
+            drawerLayout.closeDrawer(drawerListView); 
+		}
+    }
+
+    private String[] drawerListViewItems;
+    private DrawerLayout drawerLayout;
+    private ListView drawerListView;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    
 	private DataAccess.DataSource datasource;
 
 	private ArrayList<MealCategory> categoryList = new ArrayList<MealCategory>(); 
@@ -36,10 +62,12 @@ public class HomeScreen extends Activity {
     Calendar rightNow;
     Calendar olderRightNow;
 	DateFormat df;
+	DateFormat dfday;
+	DateFormat dfdate;
 	DateFormat dayf;
 	DateFormat datef;
 	
-	private TextView mealPlanHeader;
+	private TextView mealPlanHeaderDay, mealPlanHeaderDate;
 	private RatingBar planHealthRating, planTasteRating, planCostRating;
 	
 	private long AddSearchedRecipeId;
@@ -53,6 +81,8 @@ public class HomeScreen extends Activity {
         rightNow = Calendar.getInstance();
 		
 		df = new SimpleDateFormat("EEE, d MMM");
+		dfday = new SimpleDateFormat("EEEE");
+		dfdate = new SimpleDateFormat("d");
 		dayf = new SimpleDateFormat("EEE");
 		datef = new SimpleDateFormat("EEE, d MMM");
         
@@ -84,13 +114,12 @@ public class HomeScreen extends Activity {
         header.setOnTouchListener(activitySwipeDetector);
 
         
-        mealPlanHeader = (TextView)header.findViewById(R.id.txtHeader);
-        mealPlanHeader.setText(df.format(rightNow.getTime()));
-
+        mealPlanHeaderDay = (TextView)header.findViewById(R.id.txtHeaderDay);
+        mealPlanHeaderDate = (TextView)header.findViewById(R.id.txtHeaderDate);
+        updateHeaderDate();
         planHealthRating = (RatingBar)header.findViewById(R.id.planHealthRating);
         planTasteRating = (RatingBar)header.findViewById(R.id.planTasteRating);
         planCostRating = (RatingBar)header.findViewById(R.id.planCostRating);
-        mealPlanHeader.setText(df.format(rightNow.getTime()));
 
         updateRatings();
         mealPlanListView.addHeaderView(header);
@@ -101,7 +130,44 @@ public class HomeScreen extends Activity {
 		 
 		//expand all Groups
 		expandAll();
-
+		
+		// drawer
+        // get list items from strings.xml
+        drawerListViewItems = getResources().getStringArray(R.array.items);
+ 
+        // get ListView defined in activity_main.xml
+        drawerListView = (ListView) findViewById(R.id.right_drawer);
+        drawerListView.setOnItemClickListener(new DrawerItemClickListener());
+        
+        // Set the adapter for the list view
+        drawerListView.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_listview_item, drawerListViewItems));
+        
+        // App Icon 
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+ 
+        actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                drawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_settings,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+                );
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
+        
+        // Set actionBarDrawerToggle as the DrawerListener
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+ 
+        getActionBar().setDisplayHomeAsUpEnabled(false);
+ 
+        // just styling option add shadow the right edge of the drawer
+        //drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+    }
+    
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
     
     //method to expand all groups
@@ -270,9 +336,9 @@ public class HomeScreen extends Activity {
     public void nextDay(View view) {
     	rightNow.add(Calendar.DAY_OF_MONTH, 1);
     	olderRightNow = rightNow;
-    	mealPlanHeader.setText(df.format(rightNow.getTime()));
-    	mealPlanHeader.invalidate();
-    	
+
+    	updateHeaderDate();
+
     	loadData();
     	listAdapter.notifyDataSetInvalidated();
         updateRatings();  
@@ -282,9 +348,9 @@ public class HomeScreen extends Activity {
     public void previousDay(View view) {
         // Do something in response to button click
     	rightNow.add(Calendar.DAY_OF_MONTH, -1);
+
+    	updateHeaderDate();
     	olderRightNow = rightNow;
-    	mealPlanHeader.setText(df.format(rightNow.getTime()));
-    	mealPlanHeader.invalidate();
 
     	loadData();
     	listAdapter.notifyDataSetInvalidated();
@@ -300,15 +366,29 @@ public class HomeScreen extends Activity {
 
     @Override
 	public boolean onOptionsItemSelected(MenuItem item)	{
+       // call ActionBarDrawerToggle.onOptionsItemSelected(), if it returns true
+       // then it has handled the app icon touch event
+       if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+           return true;
+       }
+       
 		switch(item.getItemId()) {
 		case R.id.action_groceries:
 			startActivity(new Intent(this, Groceries.class));
 			break;
 		case R.id.action_settings:
+			drawerLayout.openDrawer(GravityCompat.END);
 			break;
 		}
 		return false;
 	}
+    
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+         actionBarDrawerToggle.syncState();
+    }
     
   //load some initial data into out list 
     private void loadData(){
@@ -396,7 +476,14 @@ public class HomeScreen extends Activity {
     	planCostRating.setRating(cost_avg);
     	planCostRating.invalidate();
     }
-    
+
+    private void updateHeaderDate(){
+        mealPlanHeaderDay.setText(dfday.format(rightNow.getTime()).toUpperCase());
+        mealPlanHeaderDate.setText(dfdate.format(rightNow.getTime()));
+        mealPlanHeaderDay.invalidate();
+        mealPlanHeaderDate.invalidate();
+    }
+
     @Override
     protected void onResume() {
       datasource.open();
