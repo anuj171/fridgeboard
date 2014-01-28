@@ -17,7 +17,9 @@
         android:paddingLeft="35sp"
         android:textColor="@color/header_bg"
         android:text="breakfast"
+        android:textStyle="bold"
 	 />
+    
 	<ImageButton
         android:id="@+id/buttonAdd"
         android:layout_width="40dp"

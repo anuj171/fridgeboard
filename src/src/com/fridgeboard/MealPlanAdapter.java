@@ -89,8 +89,17 @@ public class MealPlanAdapter extends BaseExpandableListAdapter {
       LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       view = inf.inflate(R.layout.meal_plan_category, null);
      }
-      
-     ((TextView) view.findViewById(R.id.category)).setText(category.category.trim());
+     
+     String categoryStr = category.category.trim();
+     if(categoryStr.equals("BREAKFAST")){
+    	 categoryStr = "Breakfast";
+		} else if(categoryStr.equals("LUNCH")){
+			categoryStr = "Lunch";
+		} else if(categoryStr.equals("DINNER")){
+			categoryStr = "Dinner";
+		}
+			
+     ((TextView) view.findViewById(R.id.category)).setText(categoryStr);
 	 ImageButton add = (ImageButton) view.findViewById(R.id.buttonAdd);
 	 int[] tag_array = new int[1]; 
 	 tag_array[0] = groupPosition;
