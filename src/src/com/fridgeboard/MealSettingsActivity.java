@@ -1,3 +1,4 @@
+
 package com.fridgeboard;
 
 import com.fridgeboard.DataAccess.DataSource;
@@ -95,3 +96,4 @@ public class MealSettingsActivity extends Activity {
 	}
 
 }
+

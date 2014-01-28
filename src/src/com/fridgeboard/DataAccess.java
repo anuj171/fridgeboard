@@ -13,9 +13,9 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 27;
-
-	public enum RecipeCategory{
+	private static final int DATABASE_VERSION = 28;
+	
+	  public enum RecipeCategory{
 		  BreakFast,
 		  LunchOrDinnerMainDish,
 		  Snacks,
