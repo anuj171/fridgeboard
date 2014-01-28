@@ -39,6 +39,15 @@
             android:name="com.fridgeboard.Groceries"
             android:label="@string/title_activity_groceries" >
         </activity>
+        <activity
+            android:name="com.fridgeboard.MealSettingsActivity"
+            android:label="@string/title_activity_meal_settings" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
