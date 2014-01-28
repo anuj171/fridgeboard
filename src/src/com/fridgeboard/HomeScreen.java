@@ -127,7 +127,6 @@ public class HomeScreen extends Activity {
         
 		//get reference to the ExpandableListView
 		mealPlanListView = (ExpandableListView) findViewById(R.id.mealPlanExpandableList);
-		
         
         View header = (View)getLayoutInflater().inflate(R.layout.home_screen_header, null);
         ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
@@ -313,7 +312,7 @@ public class HomeScreen extends Activity {
 		
 		List<Long> recipeIdsToAvoid = generateAvoidList();
 		
-		int count = 5;
+		int count = 10;
 		while (count-- >= 0 && recipeIdsToAvoid != null)
 		{
 			if (!recipeIdsToAvoid.contains(recipes.get(recipeId).getId()))

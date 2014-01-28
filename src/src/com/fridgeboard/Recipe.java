@@ -7,14 +7,17 @@ import com.fridgeboard.util.SystemUiHider;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -33,6 +36,10 @@ public class Recipe extends Activity {
 		getActionBar().setDisplayShowHomeEnabled(false);
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
         getActionBar().setCustomView(R.layout.actionbar);
+        
+        ImageButton searchButton = (ImageButton) findViewById(R.id.share_button);
+        searchButton.setVisibility(View.VISIBLE);
+        
         TextView titleText = (TextView) findViewById(R.id.titletext);
         titleText.setText(R.string.title_activity_recipe);
 		
@@ -164,5 +171,10 @@ public class Recipe extends Activity {
 				"clock60", 
 				"drawable", getApplicationContext().getPackageName());
 		}
+	
+    public void onShareClicked(View v)
+    {
+    	Toast.makeText(this, R.string.share, Toast.LENGTH_LONG).show();
+    }
 
 }

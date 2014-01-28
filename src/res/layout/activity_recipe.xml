@@ -250,7 +250,7 @@
 	    android:textColor="@color/header_bg"
 	    android:background="@color/header_fg"
 	    android:textStyle="bold"
-	    android:textSize="14sp"/>
+	    android:textSize="16sp"/>
     
      <com.fridgeboard.ExpandableTextView
         android:id="@+id/ingredients_text"
@@ -270,7 +270,7 @@
 	    android:textColor="@color/header_bg"
 	    android:background="@color/header_fg"
 	    android:textStyle="bold"
-	    android:textSize="14sp"/>
+	    android:textSize="16sp"/>
     
      <com.fridgeboard.ExpandableTextView
         android:id="@+id/instructions_text"
@@ -291,7 +291,7 @@
 	    android:textColor="@color/header_bg"
 	    android:background="@color/header_fg"
 	    android:textStyle="bold"
-	    android:textSize="14sp"/>
+	    android:textSize="16sp"/>
     
      <TextView
         android:id="@+id/links_text"
