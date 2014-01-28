@@ -6,6 +6,7 @@ import com.fridgeboard.DataAccess.Setting;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -27,39 +28,11 @@ public class MealSettingsActivity extends Activity {
     	datasource = dataAccess.new DataSource(this);
         datasource.open();
         
-        Button saveButton = (Button) findViewById(R.id.button1);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-        		EditText noOfPortions = (EditText) findViewById(R.id.editText1);
-        		datasource.setSetting(Setting.NoOfPortions, noOfPortions.getText().toString());
-        		
-        		CheckBox skipBreakfast = (CheckBox) findViewById(R.id.checkBox1);
-        		datasource.setSetting(Setting.SkipBreakfast, Boolean.toString(skipBreakfast.isChecked()));
-        		
-        		CheckBox skipLunch = (CheckBox) findViewById(R.id.checkBox2);
-        		datasource.setSetting(Setting.SkipLunch, Boolean.toString(skipLunch.isChecked()));
-        		
-        		CheckBox skipDinner = (CheckBox) findViewById(R.id.checkBox3);
-        		datasource.setSetting(Setting.SkipDinner, Boolean.toString(skipDinner.isChecked()));
-        		
-        		CheckBox skipDrinks = (CheckBox) findViewById(R.id.checkBox4);
-        		datasource.setSetting(Setting.SkipDrinks, Boolean.toString(skipDrinks.isChecked()));
-        		
-        		CheckBox skipSnacks = (CheckBox) findViewById(R.id.checkBox5);
-        		datasource.setSetting(Setting.SkipSnacks, Boolean.toString(skipSnacks.isChecked()));
-        		
-        		RatingBar healthRating = (RatingBar) findViewById(R.id.ratingBar1);
-        		datasource.setSetting(Setting.HealthFactor, Float.toString(healthRating.getRating()));
-        		
-        		RatingBar tasteRating = (RatingBar) findViewById(R.id.ratingBar2);
-        		datasource.setSetting(Setting.TasteFactor, Float.toString(tasteRating.getRating()));
-        		
-        		RatingBar costRating = (RatingBar) findViewById(R.id.ratingBar3);
-        		datasource.setSetting(Setting.CostFactor, Float.toString(costRating.getRating()));
-            }
-        });
+        hookSaveButtonEvents();
+		setSettingValuesFromDatabase();
+	}
 
-        
+	private void setSettingValuesFromDatabase() {
 		EditText noOfPortions = (EditText) findViewById(R.id.editText1);
 		noOfPortions.setText(datasource.getSetting(Setting.NoOfPortions));
 		
@@ -88,6 +61,43 @@ public class MealSettingsActivity extends Activity {
 		costRating.setRating(Float.parseFloat((datasource.getSetting(Setting.CostFactor))));
 	}
 
+	private void hookSaveButtonEvents() {
+		Button saveButton = (Button) findViewById(R.id.button1);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+        		EditText noOfPortions = (EditText) findViewById(R.id.editText1);
+        		datasource.setSetting(Setting.NoOfPortions, noOfPortions.getText().toString());
+        		
+        		CheckBox skipBreakfast = (CheckBox) findViewById(R.id.checkBox1);
+        		datasource.setSetting(Setting.SkipBreakfast, Boolean.toString(skipBreakfast.isChecked()));
+        		
+        		CheckBox skipLunch = (CheckBox) findViewById(R.id.checkBox2);
+        		datasource.setSetting(Setting.SkipLunch, Boolean.toString(skipLunch.isChecked()));
+        		
+        		CheckBox skipDinner = (CheckBox) findViewById(R.id.checkBox3);
+        		datasource.setSetting(Setting.SkipDinner, Boolean.toString(skipDinner.isChecked()));
+        		
+        		CheckBox skipDrinks = (CheckBox) findViewById(R.id.checkBox4);
+        		datasource.setSetting(Setting.SkipDrinks, Boolean.toString(skipDrinks.isChecked()));
+        		
+        		CheckBox skipSnacks = (CheckBox) findViewById(R.id.checkBox5);
+        		datasource.setSetting(Setting.SkipSnacks, Boolean.toString(skipSnacks.isChecked()));
+        		
+        		RatingBar healthRating = (RatingBar) findViewById(R.id.ratingBar1);
+        		datasource.setSetting(Setting.HealthFactor, Float.toString(healthRating.getRating()));
+        		
+        		RatingBar tasteRating = (RatingBar) findViewById(R.id.ratingBar2);
+        		datasource.setSetting(Setting.TasteFactor, Float.toString(tasteRating.getRating()));
+        		
+        		RatingBar costRating = (RatingBar) findViewById(R.id.ratingBar3);
+        		datasource.setSetting(Setting.CostFactor, Float.toString(costRating.getRating()));
+        		
+        		Intent intent = new Intent(MealSettingsActivity.this, HomeScreen.class);
+	        	startActivity(intent);
+            }
+        });
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -96,4 +106,3 @@ public class MealSettingsActivity extends Activity {
 	}
 
 }
-
