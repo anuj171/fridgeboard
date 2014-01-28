@@ -16,37 +16,32 @@
     <string name="title_section4">Pulses</string>
     <string name="today">today</string>
     <string name="grocery_list_duration_title">Show list for</string>
-    
-    
-    <!--  recipe page -->
+
+    <!-- recipe page -->
     <string name="recipe_name">Rajma Masala</string>
     <string name="recipe_desc">Red kidney beans cooked in tomatoes, onions and spices.</string>
     <string name="recipe_img">Recipe Image</string>
     <string name="ingredients_title">Ingredients</string>
     <string name="ingredients_text">Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2</string>
-<string name="instructions_title">Instructions</string>
-<string name="instructions_text">
-1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n
+    <string name="instructions_title">Instructions</string>
+    <string name="instructions_text">1. Soak rajma overnight atleast for 8 hrs, rinse it in water for 2-3 times.Then pressure cook along with water till immersing level until soft(I did for 7 whistles, depends on variety of rajma), Set aside.Reserve the drained rajma cooked water for later use.Heat oil in a pan add the ingredients listed under to saute and grind.\n
 2. Cook till raw smell of tomatoes leave and is slightly mushy. Cool down and then transfer it to a mixer.\n
 3. Grind it to smooth paste without adding water,set aside. Heat oil in a pan - temper jeera, let it splutter.Then add the onion tomato paste.\n
 4. Then add garam masala and saute for 2mins then add reserved rajma cooked water and let it boil for mins. Dilute it well as it has to cook for more time.Then add cooked rajma and required salt.\n
-5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.
-</string>
-<string name="links_title">Links</string>
-<string name="links_text">
-http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\n
-http://cooks.ndtv.com/recipe/show/rajma-233367
-</string>
-<string name="preptime_title">PREP TIME</string>
-<string name="preptime_text">9 mins</string>
-<string name="cooktime_title">COOK TIME</string>
-<string name="cooktime_text">45 mins</string>
-<string name="totaltime_title">TOTAL TIME</string>
-<string name="totaltime_text">54 mins</string>
-<string name="taste_text">Taste:</string>
-<string name="health_text">Health:</string>
+5. Cover with a lid and let the gravy thicken and let rajma absorb the gravy well.Add milk/cream, give a quick stir and cook for 2mins. Finally garnish with coriander leaves and kasoori methi, quick stir and switch off.</string>
+    <string name="links_title">Links</string>
+    <string name="links_text">http://www.vegrecipesofindia.com/rajma-masala-recipe-restaurant-style\n
+http://cooks.ndtv.com/recipe/show/rajma-233367</string>
+    <string name="preptime_title">PREP TIME</string>
+    <string name="preptime_text">9 mins</string>
+    <string name="cooktime_title">COOK TIME</string>
+    <string name="cooktime_text">45 mins</string>
+    <string name="totaltime_title">TOTAL TIME</string>
+    <string name="totaltime_text">54 mins</string>
+    <string name="taste_text">Taste:</string>
+    <string name="health_text">Health:</string>
 
-<string-array name="items">
+    <string-array name="items">
         <item>Settings</item>
         <item>Add Recipe</item>
         <item>Print</item>
@@ -56,10 +51,12 @@ http://cooks.ndtv.com/recipe/show/rajma-233367
         <item>OneNote</item>
         <item>ToDo</item>
         <item>Charts</item>
-</string-array>
+    </string-array>
 
-<string name="drawer_open">Open Options</string>
-<string name="drawer_close">Close Options</string>
-<string name="share">Share</string>
+    <string name="drawer_open">Open Options</string>
+    <string name="drawer_close">Close Options</string>
+    <string name="share">Share</string>
+    <string name="title_activity_graph">Graph</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
