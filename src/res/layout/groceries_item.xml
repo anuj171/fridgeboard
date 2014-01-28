@@ -8,6 +8,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="6dp"
     android:paddingTop="6dp"
+    android:background="@color/page_bg"
     tools:context=".Groceries$GroceriesItem" >
 
     <ImageView android:id="@+id/grocery_img"
@@ -49,10 +50,10 @@
     
     <CheckedTextView 
 	    android:id="@+id/grocery_namecb"
-	    android:layout_width="fill_parent"
+	    android:layout_width="match_parent"
 	    android:layout_height="?android:attr/listPreferredItemHeightSmall"
 	    android:gravity="right|center_vertical"
-	    android:checkMark="@layout/grocery_checkmark"
+	    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
 	    android:paddingLeft="6dip"
 	    android:paddingRight="6dip"
 	/>
