@@ -10,6 +10,17 @@
     android:paddingTop="6dp"
     tools:context=".Groceries$GroceriesItem" >
 
+    <ImageView android:id="@+id/grocery_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:scaleType="fitXY" 
+        android:layout_marginBottom="5dp" />
+    
     <TextView android:id="@+id/grocery_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
