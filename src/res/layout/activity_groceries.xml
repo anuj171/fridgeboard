@@ -42,7 +42,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:textColor="@color/black_overlay"
+        android:textColor="@color/header_bg"
     	android:background="@color/header_fg"
         android:text="23 items remaining"/>
     
