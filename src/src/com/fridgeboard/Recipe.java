@@ -174,7 +174,7 @@ public class Recipe extends Activity {
 	
     public void onShareClicked(View v)
     {
-    	Toast.makeText(this, R.string.share, Toast.LENGTH_LONG).show();
+    	Toast.makeText(this, R.string.sharerecipe, Toast.LENGTH_LONG).show();
     }
 
 }

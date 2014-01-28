@@ -56,7 +56,9 @@ http://cooks.ndtv.com/recipe/show/rajma-233367</string>
     <string name="drawer_open">Open Options</string>
     <string name="drawer_close">Close Options</string>
     <string name="share">Share</string>
-    <string name="title_activity_graph">Graph</string>
+    <string name="sharerecipe">Share Recipe</string>
+    <string name="sharereport">Share Report</string>
+    <string name="title_activity_graph">Report</string>
     <string name="hello_world">Hello world!</string>
 
 </resources>
