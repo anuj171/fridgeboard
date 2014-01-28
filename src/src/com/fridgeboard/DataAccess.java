@@ -15,7 +15,7 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 19;
+	private static final int DATABASE_VERSION = 20;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
@@ -247,13 +247,21 @@ public class DataSource {
 		  createIngredient("Bread Sticks", category, "no");
 		  
 		  
-		  createIngredient("Sugar", 1, "gm"); //34
+		  createIngredient("Sugar", 1, "gm");            //34
 		  createIngredient("Wheat Flour", 1, "gm");
 		  createIngredient("Eggs", 4, "no");
-		  createIngredient("Basmati Rice", 1, "gm"); //37
+		  createIngredient("Basmati Rice", 1, "gm");      //37
 		  createIngredient("Wheat Flour", 1, "gm");
 		  createIngredient("French Beans", 0, "gm");
 		  createIngredient("Green Peas", 0, "gm");
+		  createIngredient("Poha", 4, "gm");              //41
+		  createIngredient("Mustard Seeds", 4, "gm");
+		  createIngredient("Peanuts", 4, "gm");
+		  createIngredient("Chicken", 4, "gm");
+		  createIngredient("Cinnamon", 1, "mm");          // 45
+		  createIngredient("Cloves", 1, "no");
+		  createIngredient("Cardamom", 1, "no");
+		  
 	  }
 	  
 	  public void fillRecipeIngrRelation()
@@ -316,6 +324,44 @@ public class DataSource {
 		  createRelation(7, 16, 20);
 		  createRelation(7, 7, 50);
 		  createRelation(7, 27, 50);
+		  
+		  // bread omelete
+		  createRelation(8, 1, 50);
+		  createRelation(8, 36, 2);
+		  createRelation(8, 15, 10);
+		  createRelation(8, 30, 1);
+		  
+		  // poha
+		  createRelation(9, 41, 250);
+		  createRelation(9, 42, 25);
+		  createRelation(9, 10, 25);
+		  createRelation(9, 1, 50);
+		  createRelation(9, 2, 50);
+		  createRelation(9, 43, 25);
+		  
+		  // chicken biryani
+		  createRelation(10, 37, 500);
+		  createRelation(10, 44, 1000);
+		  createRelation(10, 26, 500);
+		  createRelation(10, 10, 10);
+		  createRelation(10, 1, 250);
+		  createRelation(10, 9, 10);
+		  createRelation(10, 17, 100);
+		  
+		  // veg biryani
+		  createRelation(11, 37, 500);
+		  createRelation(11, 45, 25);
+		  createRelation(11, 46, 2);
+		  createRelation(11, 47, 2);
+		  createRelation(7, 12, 50);
+		  createRelation(7, 6, 20);
+		  createRelation(7, 2, 50);
+		  createRelation(7, 39, 20);
+		  createRelation(7, 3, 30);
+		  createRelation(7, 40, 50);
+		  createRelation(7, 1, 100);
+
+		  
 	  }
 	  	  
 	  public void fillRecipe()
@@ -400,6 +446,46 @@ public class DataSource {
 					  "2 cups of mix chopped veggies – cauliflower, carrots, potatoes, french beans, capsicum, peas. \n1 onion chopped finely \n2 tomatoes chopped finely \n1 green chili chopped finely \n1 tsp ginger-garlic paste \n2 tsp coriander powder \n1/2 tsp turmeric powder \n1/4 tsp chilli powder (use more if you want it to be spicy) \n1/2 tsp garam masala powder \n1 tsp cumin seeds \n8-10 paneer cubes (optional) \n2 cups water \n2 tbsp cream or malai \n2 tbsp oil \na few sprigs of cilantro/coriander leaves chopped \nsalt as per taste", 
 					  "In a kadhai or thick bottomed pan, heat oil. \nAdd cumin seeds. Once they splutter, add the chopped onions. \nFry the onions till they become transparent. \nAdd the ginger-garlic paste. Fry for a minute or till the raw smell disappears. \nAdd the tomatoes. Keep on stirring till the tomatoes become soft and pulpy. When the mixture becomes smooth and one, then add all the spice powders mentioned above. \nThe process of frying the tomatoes takes a little longer. If you want to quicken the process, add some salt to the onion-tomato mixture. Fry the tomatoes on a low flame as you don’t want the tomatoes to get burnt. \nNow add all the spice powders one by one. \nStir the spice powders with the onion-tomato mixture. Add the green chili. \nMix in the chopped veggies, salt and water. \nCover and let the veggies cook. \nOnce the veggies are semi cooked…… that is they are half cooked. Add the cream. \nGive a stir. \nCover again and simmer the veggies till they are done. \nDon’t forget to check the veggies after occasionally. \nAdd more water if the water dries up and if the veggies are still to be cooked. \nIf using paneer, then add the paneer once the veggies are cooked. Simmer without the lid for 2 minutes. \nYou can also garnish mix vegetable dish with fried paneer cubes. Otherwise simply garnish with chopped coriander leaves. \nServe mix vegetables dish hot with pooris, parathas, kulcha or chapatis.", 
 					  "http://www.vegrecipesofindia.com/mix-veg-recipe-indian/", 
+					  RecipeCategory.LunchOrDinnerMainDish);
+			  
+			  // 8
+			  createRecipeItem(
+					  "Bread Omelette", "easy, Indian breakfast menu", "breadomelette",
+					  "2 mins", "8 mins", "10 mins",
+					  (float) 4, (float) 4,
+					  "Bread - 2 slices \nEgg - 1 or 2 nos,\nPepper powder - as needed \nSalt - to taste \nOnion - 1 tbsp, finely chopped \nOil - 1/2 tsp",
+					  "Make sure you have everything set near your stove top. \nBreak the egg in a bowl and whisk well. Add the chopped onion, a pinch of pepper powder and a pinch of salt. Whisk together again until it combines well. \nHeat 1/2 of oil in a dosa pan or any wide pan for 10 sec and pour the egg mixture in the middle. \nSlightly tilt the pan to spread the egg and immediately take one bread and place it on top of the egg mixture on the left side. Again take one more slice and place on the top on the right side. \nCook for 10 sec and flip the omelette along with the bread. Now, the bread slices should be facing the heat and the omelette will be facing up. Cook for few more sec so that the bread gets nicely toasted and flip again. Fold the bread slices on top of one another and serve hot.",
+					  "http://www.kitchensecretsandsnippets.com/2013/05/bread-omelette-toast.html", 
+					  RecipeCategory.BreakFast);
+			  
+			  // 9
+			  createRecipeItem(
+					  "Poha", "typical western India breakfast item made of flattened rice", "poha",
+					  "5 mins", "5 mins", "10 mins",
+					  (float) 3, (float) 2.5, 
+					  "2-3 cups (when dry) Poha (flattened rice) \n1 teaspoon mustard seeds \n1-2 green chillies (chopped small) \n1 onion (small dice) \n1 potato (small diced) \n1/2 cup peanuts or cashews \n3/4 teaspoon turmeric \n4-5 curry leaves \nSalt to taste \n1/2 cup fresh cilantro (chopped) for garnish \nFresh lemon (to squeeze at end)",
+					  "Soak the Poha for 5 mins then drain in a colander (there's a thick and a thin Poha - this recipe is for the thick Poha). Heat oil in a pan (Devesh uses a wok). Season with asafoetida, then mustard seeds. As soon as they crackle, add diced onion and green chilies. Fry until translucent. \nIn parallel, heat diced potatoes in microwave for ~2 minutes to partly cook them. Add turmeric and curry leaves to hot oil once onions are done. Add nuts. Add heated potatoes. Sauté until potatoes are done. Add Poha and salt and mix thoroughly. Cook for 3-4 minutes. \nTransfer to serving bowl and sprinkle with fresh chopped cilantro and lemon juice (or lime juice) before serving.",
+					  "http://www.thekitchn.com/recipe-breakfast-poha-47062",
+					  RecipeCategory.BreakFast);
+			  
+			  // 10
+			  createRecipeItem(
+					  "Chicken Biryani", "Rice cooked overnight with chicken", "chickenbiryani", 
+					  "30 mins", "60 mins", "90 mins",
+					  (float) 4, (float) 2,
+					  "1/2 kg Basmati Rice (semi-cooked) \n1 kg Boneless Meat (washed and chopped into square pieces) \n500 gm Curd \n4-6 tsp Ginger-Garlic Paste \n4-6 Green Chilli \n8-10 Big Onions (sliced) \n1/4 cup Lime Juice \n1/2 tsp Red Chilli Powder \n1/2 A pinch of Caraway Seeds (Shahi Zeera) \n5-6 twigs Coriander Leaves (chopped) \n5-6 twigs Mint Leaves (chopped) \n2-4 pinch Saffron,pods Cardamom, Cinnamon \n2-3 drops Saffron Color \n1-2 pods Clove \n2 cup Oil \n2 tsp Ghee \nSalt to taste", 
+					  "Smear the pieces of meat with ginger-garlic paste. Keep them to marinate for an hour.\n In the meanwhile, fry the sliced onions in a heated pan on low flame till light brown. Let the onions cool down and crush them. Now add crushed fried onion (only three-fourth), curd, red chilli powder, cinnamon, green chilli paste, cardamom, shahi zeera, coriander leaves, clove, saffron water, mint leaves and salt to the marinated meat. Leave the meat as it is for 1 hour.\n Make the mixture of aromatic water by adding salt (one tsp), cinnamon, clove, cardamom, mint leaves and coriander leaves in a little water. Now spread a layer of semi-cooked rice in a heavy bottomed vessel. Add saffron color, limejuice, ghee and the remaining crushed onions over the layer of rice. Spread a layer of marinated meat over this, and again spread the remaining semi-cooked rice. Now add the aromatic water in a circular motion over the rice layer. Now tightly cover the vessel with a lid. Keep it on a low flame on tawa.\n Remove the vessel from the flame exactly after 15 minutes. Shahi Nawabi Biryani is ready to eat. Serve hot. Garnish with Coriander and mint leaves and small piece of Lemon. ",
+					  "http://allrecipes.co.in/recipe/11825/shahi-nawabi-biryani.aspx", 
+					  RecipeCategory.LunchOrDinnerMainDish);
+			  
+			  // 11
+			  createRecipeItem(
+					  "Vegetable Biryani", "traditional mughlai main course item loaded with chopped vegetables, spices, saffron and dry fruits", "vegbiryani", 
+					  "15 mins", "40 mins", "55 mins",
+					  (float) 3.5, (float) 3,
+					  "2 cups long grained rice (basmati) , soaked and drained \n1 bayleaf (tejpatta) \n25 mm  piece cinnamon (dalchini) \n1 clove (laung / lavang) \n1 cardamom (elaichi) \n2 cups chopped and boiled mixed vegetables (carrots , peas , cauliflower , french beans and potatoes) \n2 tbsp oil \n1/2 tsp cumin seeds (jeera) \n3/4 cup finely chopped onions \n2 tsp ginger-green chilli paste \n1/4 tsp turmeric powder (haldi) \n2 tsp coriander (dhania) powder \n1 tsp chilli powder \n1/2 tsp garam masala \n1 cup roughly chopped tomatoes \n1/4 cup paneer (cottage cheese) cubes \nsalt to taste \n1/4 cup milk \na pinch of sugar \n1/4 cup fresh curds (dahi) \n1/4 cup finely chopped coriander (dhania) \na few drops of edible saffron colour \n2 tbsp ghee",
+					  "For the rice \nCombine 4 cups of water, bayleaf, cinnamon, clove, cardamom, rice and salt in a deep non-stick pan, cover with a lid and cook on a medium flame for 10 to 12 minutes or till the rice is cooked. \nStrain the rice using a strainer and keep aside. \n \nFor the vegetable gravy \nHeat the oil in a deep non-stick pan and add the cumin seeds. \nWhen the seeds crackle, add the onions and sauté on a medium flame for 1 to 2 minutes or till the onions turn translucent. \nAdd the ginger-green chilli paste, turmeric powder, coriander powder, chilli powder and garam masala and sauté on a medium flame for a few seconds. \nAdd the tomatoes and 2 tbsp of water, mix well and cook on a medium flame for 4 to 5 minutes. \nAdd the mixed vegetables, paneer, salt and milk and cook on a medium flame for another 2 to 3 minutes, while stirring occasionally. \nAdd the sugar, mix well and cook on a medium flame for 1 more minute. \n \nHow to proceed \nCombine the curds, coriander and saffron colour in a bowl and mix well. \nAdd the prepared rice mixture and mix well. \nTransfer 1 of the rice mixture in a handi and spread it evenly with the back of a spoon. \nAdd all the prepared vegetable gravy on it and spread it evenly. \nTop it with the remaining ½ of the rice mixture and spread it evenly. \nPour the ghee evenly over it and cover it with a lid. \nPlace the handi on a non-stick tava (griddle) and cook on a slow flame for 25 to 30 minutes. \nServe immediately.",
+					  "http://www.tarladalal.com/Vegetable-Biryani-1551r",
 					  RecipeCategory.LunchOrDinnerMainDish);
 	  }
 	  
