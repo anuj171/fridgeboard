@@ -5,6 +5,7 @@ import com.fridgeboard.DataAccess.DataSource;
 import com.fridgeboard.DataAccess.Setting;
 
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
@@ -24,6 +25,12 @@ public class MealSettingsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_meal_settings);
 		
+		getActionBar().setDisplayShowHomeEnabled(false);
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
+        getActionBar().setCustomView(R.layout.actionbar);
+        TextView titleText = (TextView) findViewById(R.id.titletext);
+        titleText.setText(R.string.title_activity_meal_settings);
+        
 		DataAccess dataAccess = new DataAccess();
     	datasource = dataAccess.new DataSource(this);
         datasource.open();

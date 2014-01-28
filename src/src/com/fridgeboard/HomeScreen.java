@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -83,7 +84,11 @@ public class HomeScreen extends Activity {
         setContentView(R.layout.home_screen);
         
         getActionBar().setDisplayShowHomeEnabled(false);
-
+        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
+        getActionBar().setCustomView(R.layout.actionbar);
+        TextView titleText = (TextView) findViewById(R.id.titletext);
+        titleText.setText(R.string.app_name);
+        
         rightNow = Calendar.getInstance();
 		
 		df = new SimpleDateFormat("EEE, d MMM");
@@ -142,7 +147,7 @@ public class HomeScreen extends Activity {
         drawerListViewItems = getResources().getStringArray(R.array.items);
  
         // get ListView defined in activity_main.xml
-        drawerListView = (ListView) findViewById(R.id.right_drawer);
+        drawerListView = (ListView) findViewById(R.id.left_drawer);
         drawerListView.setOnItemClickListener(new DrawerItemClickListener());
         
         // Set the adapter for the list view
@@ -155,11 +160,13 @@ public class HomeScreen extends Activity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 drawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_settings,  /* nav drawer icon to replace 'Up' caret */
+                R.drawable.settings,  /* nav drawer icon to replace 'Up' caret */
                 R.string.drawer_open,  /* "open drawer" description */
                 R.string.drawer_close  /* "close drawer" description */
                 );
-        actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
+        
+        //  enable and show "up" arrow
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
         // Set actionBarDrawerToggle as the DrawerListener
         drawerLayout.setDrawerListener(actionBarDrawerToggle);

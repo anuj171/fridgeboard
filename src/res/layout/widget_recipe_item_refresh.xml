@@ -3,6 +3,7 @@
 	    android:orientation="horizontal" 
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
+    android:background="@color/page_bg"
 	    android:gravity="center"
 	   	android:padding="10dp"
 	    >
@@ -16,6 +17,6 @@
 	    	android:gravity="left"
 	        android:text="SUGGEST\nNEW MEAL"
 	        android:onClick="refreshMeal"
-	        android:background="#5EE75E" />
+	        android:background="#0ABB8E" />
            
 </LinearLayout>

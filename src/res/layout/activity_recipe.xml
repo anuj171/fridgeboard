@@ -159,14 +159,14 @@
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:text="@string/preptime_title"
-			    android:textColor="#222222"
+	    android:textColor="@color/page_fg"
 			    android:textSize="12sp" />
 		    
 		     <TextView
 		         android:id="@+id/preptime_text"
 		         android:layout_width="wrap_content"
 		         android:layout_height="wrap_content"
-		         android:textColor="#222222"
+	    android:textColor="@color/page_fg"
 		         android:textSize="12sp" />
 
 		</LinearLayout>
@@ -182,14 +182,14 @@
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:text="@string/cooktime_title"
-			    android:textColor="#222222"
+	    android:textColor="@color/page_fg"
 			    android:textSize="12sp" />
 		    
 		     <TextView
 		         android:id="@+id/cooktime_text"
 		         android:layout_width="wrap_content"
 		         android:layout_height="wrap_content"
-		         android:textColor="#222222"
+	    android:textColor="@color/page_fg"
 		         android:textSize="12sp" />
 
 		</LinearLayout>	
@@ -205,14 +205,14 @@
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:text="@string/totaltime_title"
-			    android:textColor="#222222"
+	    		android:textColor="@color/page_fg"
 			    android:textSize="12sp" />
 		    
 		     <TextView
 		         android:id="@+id/totaltime_text"
 		         android:layout_width="wrap_content"
 		         android:layout_height="wrap_content"
-		         android:textColor="#222222"
+	    		 android:textColor="@color/page_fg"
 		         android:textSize="12sp" />
 
 		</LinearLayout>	
@@ -235,7 +235,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:padding="5dp"
-	    android:textColor="#444444"
+	    android:textColor="@color/page_fg"
     android:background="@color/page_bg"
 	    android:textSize="14sp"/>
      
@@ -256,7 +256,7 @@
 	    android:layout_height="wrap_content"
 	    android:padding="5dp"
 	    android:text="@string/instructions_text"
-	    android:textColor="#444444"
+	    android:textColor="@color/page_fg"
     android:background="@color/page_bg"
 	    android:textSize="14sp"/>
      
@@ -276,7 +276,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:padding="5dp"
-	    android:textColor="#444444"
+	    android:textColor="@color/page_fg"
     android:background="@color/page_bg"
 	    android:textSize="14sp"/> 
 	

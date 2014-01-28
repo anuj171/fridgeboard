@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="55dip"
+    android:background="@color/header_fg"
     android:orientation="horizontal" >
  
     <TextView
@@ -14,6 +15,7 @@
         android:layout_weight="1"
         android:textAlignment="center"
         android:paddingLeft="35sp"
+        android:textColor="@color/header_bg"
         android:text="breakfast"
 	 />
 	<ImageButton
@@ -21,7 +23,7 @@
         android:layout_width="40dp"
         android:layout_height="20dp"
         android:scaleType="fitXY"
-       	android:background="#ffffff"
+       	android:background="@color/header_fg"
         android:layout_gravity="right"
        	android:onClick="addMeal"
         android:paddingRight="20sp"
