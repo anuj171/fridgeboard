@@ -37,6 +37,7 @@
                 android:hint="Enter recipe name"
                 android:singleLine="true"
                 android:ellipsize="end"
+                android:ems="10"
                 android:lines="1" >
 
                 <requestFocus />

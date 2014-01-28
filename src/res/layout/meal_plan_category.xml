@@ -7,8 +7,8 @@
  
     <TextView
         android:layout_height="fill_parent"
-        android:layout_width="50dp"
-        android:paddingRight="20sp" />
+        android:layout_width="35dp"
+        android:paddingRight="5dp" />
     
     <TextView
         android:id="@+id/category"
@@ -30,13 +30,13 @@
     
 	<ImageButton
         android:id="@+id/buttonAdd"
-        android:layout_width="50dp"
+        android:layout_width="35dp"
         android:layout_height="30dp"
         android:scaleType="fitXY"
        	android:background="@color/header_fg"
         android:layout_gravity="right"
        	android:onClick="addMeal"
-        android:paddingRight="20sp"
+        android:paddingRight="5dp"
         android:src="@drawable/plus" />
     
 </LinearLayout>
