@@ -44,10 +44,11 @@ public class RecipeListAdapter extends ArrayAdapter<RecipeItem> {
             row = inflater.inflate(layoutResourceId, parent, false);
             
             holder = new RecipeHolder();
-            holder.image = (ImageView)row.findViewById(R.id.imgIcon);
-            holder.title = (TextView)row.findViewById(R.id.txtTitle);
-            holder.desc = (TextView)row.findViewById(R.id.txtDesc);
-            holder.duration = (TextView)row.findViewById(R.id.txtDuration);
+            holder.image = (ImageView)row.findViewById(R.id.imgIconSearch);
+            holder.title = (TextView)row.findViewById(R.id.txtTitleSearch);
+            holder.desc = (TextView)row.findViewById(R.id.txtDescSearch);
+            holder.duration = (TextView)row.findViewById(R.id.txtDurationSearch);
+            holder.nutrition = (TextView)row.findViewById(R.id.txtNutritionSearch);
             
             row.setTag(holder);
         }
@@ -55,7 +56,7 @@ public class RecipeListAdapter extends ArrayAdapter<RecipeItem> {
         {
             holder = (RecipeHolder)row.getTag();
         }
-        
+
         holder.title.setText(item.getName());
         holder.desc.setText(item.getDescription());
         holder.duration.setText(item.getTotalTime());
@@ -72,5 +73,6 @@ public class RecipeListAdapter extends ArrayAdapter<RecipeItem> {
 		TextView title;
 		TextView desc;
 		TextView duration;
+		TextView nutrition;
 	}
 }
