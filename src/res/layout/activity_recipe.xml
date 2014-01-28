@@ -22,30 +22,115 @@
 	    	    
 	    <LinearLayout 
 		    android:orientation="vertical" 
-		    android:layout_width="match_parent"
+		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:gravity="left"
 		   	android:paddingRight="5dp"
 		    android:paddingLeft="5dp"
-		    android:background="#222222">
+		    android:background="@color/header_bg">
 	
 			<TextView
 			    android:id="@+id/recipe_name"
-			    android:layout_width="match_parent"
+			    android:layout_width="fill_parent"
 			    android:layout_height="wrap_content"
-			    android:textColor="#d0d0d0"
-			    android:textSize="18sp"
+			    android:gravity="center"
+			    android:textColor="@color/header_fg"
+			    android:textSize="24sp"
+			    android:text="Recipe Name"
 			    android:textStyle="bold"/>
 			
 			<TextView
 			    android:id="@+id/recipe_desc"
-			    android:layout_width="match_parent"
+			    android:layout_width="fill_parent"
 			    android:layout_height="wrap_content"
-			    android:textColor="#909090"
+			    android:gravity="center"
+			    android:textColor="@color/header_fg"
 			    android:textSize="12sp"
-			    android:textStyle="italic"/>
+			    android:text="description description description"
+			    android:textStyle="italic"
+			    android:paddingBottom="5sp"/>
 		</LinearLayout>
-	
+<LinearLayout 
+    android:orientation="horizontal" 
+    android:background="@color/ratings_bg"
+
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+	<LinearLayout 
+	    android:orientation="vertical" 
+	    android:layout_width="wrap_content"
+	    android:layout_gravity="left"
+	    android:padding="10dp" 
+	    android:layout_weight="1"
+	    android:layout_height="fill_parent">
+	    <TextView
+	         android:text="HEALTH"
+	    	 android:layout_gravity="left"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:textSize="10dp" />
+	    
+	    <RatingBar
+        android:id="@+id/healthRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="3"
+        android:stepSize="0.5" />
+	    	    
+	</LinearLayout>
+	<LinearLayout 
+	    android:orientation="vertical"
+	    android:layout_gravity="center"  
+	    android:layout_width="wrap_content"
+	    android:padding="10dp" 
+	    android:layout_weight="1"
+	    android:layout_height="fill_parent">
+		<TextView
+	         android:text="YUMMY"
+	    	 android:layout_gravity="center"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:textSize="10dp" />
+	    
+	    <RatingBar
+        android:id="@+id/tasteRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+	    android:layout_gravity="center"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="3"
+        android:stepSize="0.5" />
+	</LinearLayout>
+	<LinearLayout 
+	    android:orientation="vertical" 
+	    android:layout_gravity="right"  
+	    android:layout_width="wrap_content"
+	    android:padding="10dp" 
+	    android:layout_weight="1"
+	    android:layout_height="fill_parent">
+	    		<TextView
+	         android:text="ECONOMY"
+	    	 android:layout_gravity="right"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:textSize="10dp" />
+	    <RatingBar
+        android:id="@+id/costRating"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+	    android:layout_gravity="right"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="3"
+        android:stepSize="0.5" />
+	</LinearLayout>
+</LinearLayout>
+	    
 	<ImageView 
 	    android:id="@+id/recipe_image"
 		android:paddingRight="5dp"
@@ -60,7 +145,7 @@
 	    android:layout_height="wrap_content"
 	    android:gravity="left"
 	   	android:padding="5dp"
-	    android:background="#222222">
+	    android:background="@color/ratings_bg">
 	
 	    <LinearLayout
 	        android:layout_width="wrap_content"
@@ -73,14 +158,14 @@
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:text="@string/preptime_title"
-			    android:textColor="#909090"
+			    android:textColor="#222222"
 			    android:textSize="12sp" />
 		    
 		     <TextView
 		         android:id="@+id/preptime_text"
 		         android:layout_width="wrap_content"
 		         android:layout_height="wrap_content"
-		         android:textColor="#909090"
+		         android:textColor="#222222"
 		         android:textSize="12sp" />
 
 		</LinearLayout>
@@ -96,14 +181,14 @@
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:text="@string/cooktime_title"
-			    android:textColor="#909090"
+			    android:textColor="#222222"
 			    android:textSize="12sp" />
 		    
 		     <TextView
 		         android:id="@+id/cooktime_text"
 		         android:layout_width="wrap_content"
 		         android:layout_height="wrap_content"
-		         android:textColor="#909090"
+		         android:textColor="#222222"
 		         android:textSize="12sp" />
 
 		</LinearLayout>	
@@ -119,76 +204,29 @@
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:text="@string/totaltime_title"
-			    android:textColor="#909090"
+			    android:textColor="#222222"
 			    android:textSize="12sp" />
 		    
 		     <TextView
 		         android:id="@+id/totaltime_text"
 		         android:layout_width="wrap_content"
 		         android:layout_height="wrap_content"
-		         android:textColor="#909090"
+		         android:textColor="#222222"
 		         android:textSize="12sp" />
 
 		</LinearLayout>	
 	</LinearLayout>
     
-	<LinearLayout 
-	    android:orientation="horizontal" 
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:gravity="center"
-	   	android:padding="5dp">
-	    
-	    <TextView
-	         android:text="@string/taste_text"
-	         android:layout_width="wrap_content"
-	         android:layout_height="wrap_content"
-	         android:textSize="12sp" />
-	   
-	    <RatingBar
-        android:id="@+id/tasteRating"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:isIndicator="false"
-        android:numStars="5"
-        android:rating="4.5"
-        android:stepSize="0.5" />
-
-	    <LinearLayout 
-	    android:orientation="horizontal" 
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:gravity="center"
-	   	android:padding="5dp" 
-	   	android:layout_weight="1"/>
-		     
-	    <TextView
-	         android:text="@string/health_text"
-	         android:layout_width="wrap_content"
-	         android:layout_height="wrap_content"
-	         android:textSize="12sp" />
-	    
-	    <RatingBar
-        android:id="@+id/healthRating"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:isIndicator="false"
-        android:numStars="5"
-        android:rating="3"
-        android:stepSize="0.5" />
-	    
-	</LinearLayout>
 	
     <TextView
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
+	    android:gravity="center"
 	    android:paddingRight="5dp"
     	android:paddingLeft="5dp"
 	    android:text="@string/ingredients_title"
-	    android:textColor="#909090"
-	    android:background="#222222"
+	    android:textColor="@color/header_fg"
+	    android:background="@color/header_bg"
 	    android:textSize="12sp"/>
     
      <com.fridgeboard.ExpandableTextView
@@ -198,16 +236,18 @@
 	    android:paddingRight="5dp"
     	android:paddingLeft="5dp"
 	    android:textColor="#909090"
+	    android:background="#FFFFFF"
 	    android:textSize="12sp"/>
      
      <TextView
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
+	    android:gravity="center"
 	    android:paddingRight="5dp"
     	android:paddingLeft="5dp"
 	    android:text="@string/instructions_title"
-	    android:textColor="#909090"
-	    android:background="#222222"
+	    android:textColor="@color/header_fg"
+	    android:background="@color/header_bg"
 	    android:textSize="12sp"/>
     
      <com.fridgeboard.ExpandableTextView
@@ -218,16 +258,18 @@
     	android:paddingLeft="5dp"
 	    android:text="@string/instructions_text"
 	    android:textColor="#909090"
+	    android:background="#FFFFFF"
 	    android:textSize="12sp"/>
      
       <TextView
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
+	    android:gravity="center"
 	    android:paddingRight="5dp"
     	android:paddingLeft="5dp"
 	    android:text="@string/links_title"
-	    android:textColor="#909090"
-	    android:background="#222222"
+	    android:textColor="@color/header_fg"
+	    android:background="@color/header_bg"
 	    android:textSize="12sp"/>
     
      <TextView
@@ -237,6 +279,7 @@
 	    android:paddingRight="5dp"
     	android:paddingLeft="5dp"
 	    android:textColor="#909090"
+	    android:background="#FFFFFF"
 	    android:textSize="12sp"/> 
 	
 </LinearLayout>
