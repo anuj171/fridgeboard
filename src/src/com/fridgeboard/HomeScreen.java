@@ -122,6 +122,7 @@ public class HomeScreen extends Activity {
 			addSearchedRecipeItem = datasource.getRecipeItem(AddSearchedRecipeId);
 			if(olderRightNow == null)olderRightNow=rightNow;
 			addSearchedRecipe();
+
 			// the assumption here is the loadData will go and update the UI
 		}
 		// olderRightNow is used so that when we navigate from this page and come back we have
@@ -258,8 +259,11 @@ public class HomeScreen extends Activity {
     
     private void addSearchedRecipe(){
     	
-    	DataAccess.MealItem new_mealitem = datasource.createMealItem(datef.format(olderRightNow.getTime()), GetCategory(addSearchedRecipeItem), (int)AddSearchedRecipeId);
+    	String cat = GetCategory(addSearchedRecipeItem);
+    	DataAccess.MealItem new_mealitem = datasource.createMealItem(datef.format(olderRightNow.getTime()), cat, (int)AddSearchedRecipeId);
 		CreateMealItem(new_mealitem, addSearchedRecipeItem);
+		String text = "Added "+addSearchedRecipeItem.getName()+" to " + cat;
+		Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
     
     /** Called when the user touches the button */
