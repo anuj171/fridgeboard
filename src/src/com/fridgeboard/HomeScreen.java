@@ -312,7 +312,7 @@ public class HomeScreen extends Activity {
 		
 		List<Long> recipeIdsToAvoid = generateAvoidList();
 		
-		int count = 5;
+		int count = 10;
 		while (count-- >= 0 && recipeIdsToAvoid != null)
 		{
 			if (!recipeIdsToAvoid.contains(recipes.get(recipeId).getId()))

@@ -48,13 +48,13 @@ http://cooks.ndtv.com/recipe/show/rajma-233367
 
 <string-array name="items">
         <item>Settings</item>
+        <item>Add Recipe</item>
         <item>Print</item>
         <item>Facebook</item>
         <item>BigBasket</item>
         <item>WhatsApp</item>
-        <item>Add Recipe</item>
-        <item>Send to OneNote</item>
-        <item>Send to ToDo</item>
+        <item>OneNote</item>
+        <item>ToDo</item>
         <item>Charts</item>
 </string-array>
 
