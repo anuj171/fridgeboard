@@ -17,8 +17,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +55,7 @@ public class HomeScreen extends Activity {
     	DataAccess dataAccess = new DataAccess();
    	
         datasource = dataAccess.new DataSource(this);
-        datasource.open();
+        datasource.open(); 
 
         loadData();
 		
@@ -62,6 +64,9 @@ public class HomeScreen extends Activity {
 		
         
         View header = (View)getLayoutInflater().inflate(R.layout.home_screen_header, null);
+        ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
+        header.setOnTouchListener(activitySwipeDetector);
+
         
         mealPlanHeader = (TextView)header.findViewById(R.id.txtHeader);
         mealPlanHeader.setText(df.format(rightNow.getTime()));
@@ -71,7 +76,6 @@ public class HomeScreen extends Activity {
         mealPlanHeader.setText(df.format(rightNow.getTime()));
 
         updateRatings();
-
         mealPlanListView.addHeaderView(header);
 		//create the adapter by passing your ArrayList data
 		listAdapter = new MealPlanAdapter(this, categoryList);
@@ -348,4 +352,77 @@ public class HomeScreen extends Activity {
       datasource.close();
       super.onPause();
     }
+}
+class ActivitySwipeDetector implements View.OnTouchListener {
+
+static final String logTag = "ActivitySwipeDetector";
+private HomeScreen activity;
+static final int MIN_DISTANCE = 100;
+private float downX, downY, upX, upY;
+
+public ActivitySwipeDetector(HomeScreen activity){
+    this.activity = activity;
+}
+
+public void onRightToLeftSwipe(){
+    Log.i(logTag, "RightToLeftSwipe!");
+    activity.previousDay(null);
+}
+
+public void onLeftToRightSwipe(){
+    Log.i(logTag, "LeftToRightSwipe!");
+    activity.nextDay(null);
+}
+
+public void onTopToBottomSwipe(){
+    Log.i(logTag, "onTopToBottomSwipe!");
+//    activity.doSomething();
+}
+
+public void onBottomToTopSwipe(){
+    Log.i(logTag, "onBottomToTopSwipe!");
+//    activity.doSomething();
+}
+
+public boolean onTouch(View v, MotionEvent event) {
+    switch(event.getAction()){
+        case MotionEvent.ACTION_DOWN: {
+            downX = event.getX();
+            downY = event.getY();
+            return true;
+        }
+        case MotionEvent.ACTION_UP: {
+            upX = event.getX();
+            upY = event.getY();
+
+            float deltaX = downX - upX;
+            float deltaY = downY - upY;
+
+            // swipe horizontal?
+            if(Math.abs(deltaX) > MIN_DISTANCE){
+                // left or right
+                if(deltaX < 0) { this.onLeftToRightSwipe(); return true; }
+                if(deltaX > 0) { this.onRightToLeftSwipe(); return true; }
+            }
+            else {
+                    Log.i(logTag, "Swipe was only " + Math.abs(deltaX) + " long, need at least " + MIN_DISTANCE);
+                    return false; // We don't consume the event
+            }
+
+            // swipe vertical?
+            if(Math.abs(deltaY) > MIN_DISTANCE){
+                // top or down
+                if(deltaY < 0) { this.onTopToBottomSwipe(); return true; }
+                if(deltaY > 0) { this.onBottomToTopSwipe(); return true; }
+            }
+            else {
+                    Log.i(logTag, "Swipe was only " + Math.abs(deltaX) + " long, need at least " + MIN_DISTANCE);
+                    return false; // We don't consume the event
+            }
+
+            return true;
+        }
+    }
+    return false;
+}
 }
