@@ -3,10 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/page_bg"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".SearchRecipeActivity" >
 
     <LinearLayout
@@ -22,7 +18,7 @@
             android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp" >
+            android:background="@color/header_bg" >
 
             <Button
                 android:id="@+id/button1"
@@ -31,14 +27,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/search" />
+                android:background="@drawable/search"/>
 
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteTextView1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="Enter recipe name" >
+                android:hint="Enter recipe name"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:lines="1" >
 
                 <requestFocus />
             </AutoCompleteTextView>

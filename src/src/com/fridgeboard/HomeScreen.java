@@ -16,6 +16,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -85,6 +87,12 @@ public class HomeScreen extends Activity {
         getActionBar().setCustomView(R.layout.actionbar);
         TextView titleText = (TextView) findViewById(R.id.titletext);
         titleText.setText(R.string.app_name);
+        
+        ImageButton searchButton = (ImageButton) findViewById(R.id.search_button);
+        searchButton.setVisibility(View.VISIBLE);
+        
+        ImageButton groceriesButton = (ImageButton) findViewById(R.id.action_groceries);
+        groceriesButton.setVisibility(View.VISIBLE);
         
         if(olderRightNow == null)
         	rightNow = Calendar.getInstance();
@@ -167,7 +175,8 @@ public class HomeScreen extends Activity {
                 );
         
         //  enable and show "up" arrow
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(false);
+        getActionBar().setDisplayShowHomeEnabled(false);
         
         // Set actionBarDrawerToggle as the DrawerListener
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
@@ -372,8 +381,29 @@ public class HomeScreen extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+       //setMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+    
+    public void onSearchClicked(View v)
+    {
+    	startActivity(new Intent(this, SearchRecipeActivity.class));
+    }
+    
+    public void onGroceriesClicked(View v)
+    {
+    	startActivity(new Intent(this, Groceries.class));
+    }
+    
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent e) {
+        switch(keycode) {
+            case KeyEvent.KEYCODE_MENU:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onKeyDown(keycode, e);
     }
 
     @Override
@@ -384,14 +414,14 @@ public class HomeScreen extends Activity {
            return true;
        }
        
-		switch(item.getItemId()) {
-		case R.id.action_groceries:
-			startActivity(new Intent(this, Groceries.class));
-			break;
-		case R.id.search_settings:
-			startActivity(new Intent(this, SearchRecipeActivity.class));
-			break;
-		}
+//		switch(item.getItemId()) {
+//		case R.id.action_groceries:
+//			startActivity(new Intent(this, Groceries.class));
+//			break;
+//		case R.id.search_settings:
+//			startActivity(new Intent(this, SearchRecipeActivity.class));
+//			break;
+//		}
 		return false;
 	}
     

@@ -91,7 +91,7 @@ public class Groceries extends FragmentActivity {
 		case R.id.item0:
 			//Toast.makeText(this, "Ordering on Big Basket", Toast.LENGTH_SHORT).show();
 			new AlertDialog.Builder(this)
-		    .setTitle("Shop for groceries on BigBasket.com")
+		    .setTitle("Shop on BigBasket.com")
 		    .setMessage("We will pass on your grocery list to BigBasket. You'll be able to make changes before checkout.")
 		    .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
 		        public void onClick(DialogInterface dialog, int which) { 

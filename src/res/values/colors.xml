@@ -2,6 +2,7 @@
 
     <color name="black_overlay">#66000000</color>
     <color name="blue_actionbar">#06718F</color>
+    <color name="menu_background">#06718F</color>
 	<color name="white">#ffffff</color>
 	<color name="light_blue">#BBDDFF</color>
 	<color name="header_bg"> #04485C</color>
