@@ -64,7 +64,7 @@ public class HomeScreen extends Activity {
 	private ExpandableListView mealPlanListView;
 
     Calendar rightNow;
-    Calendar olderRightNow;
+    private static Calendar olderRightNow = null;
 	DateFormat df;
 	DateFormat dfday;
 	DateFormat dfdate;
@@ -100,6 +100,7 @@ public class HomeScreen extends Activity {
 		if (extras != null) {
 			AddSearchedRecipeId = extras.getLong(Recipe.RECIPE_ID);
 			addSearchedRecipeItem = datasource.getRecipeItem(AddSearchedRecipeId);
+			if(olderRightNow==null)olderRightNow=rightNow;
 			addSearchedRecipe();
 			// the assumption here is the loadData will go and update the UI
 		}
