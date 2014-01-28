@@ -39,7 +39,7 @@ public class HomeScreen extends Activity {
 	DateFormat datef;
 	
 	private TextView mealPlanHeader;
-	private RatingBar planHealthRating, planTasteRating;
+	private RatingBar planHealthRating, planTasteRating, planCostRating;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,7 @@ public class HomeScreen extends Activity {
 
         planHealthRating = (RatingBar)header.findViewById(R.id.planHealthRating);
         planTasteRating = (RatingBar)header.findViewById(R.id.planTasteRating);
+        planCostRating = (RatingBar)header.findViewById(R.id.planCostRating);
         mealPlanHeader.setText(df.format(rightNow.getTime()));
 
         updateRatings();
@@ -302,6 +303,7 @@ public class HomeScreen extends Activity {
 					(int) recipe.getId(), 
 					recipe.getHealthRating(), 
 					recipe.getTasteRating(),
+					recipe.getCostRating(),
 					recipe.getCategory() == RecipeCategory.LunchOrDinnerSideDish);
 	}    
     
@@ -323,22 +325,27 @@ public class HomeScreen extends Activity {
     private void updateRatings(){
     	int meal_count = 0;
     	float health_avg=0, health_sum = 0;
+    	float cost_avg=0, cost_sum = 0;
     	float taste_avg=0, taste_sum = 0;
     	for(int i=0;i<categoryList.size();i++){
     		for(int j=0;j<categoryList.get(i).mealList.size(); j++){
     			meal_count++;
     			health_sum += categoryList.get(i).mealList.get(j).health_rating;
     			taste_sum += categoryList.get(i).mealList.get(j).taste_rating;
+    			cost_sum += categoryList.get(i).mealList.get(j).cost_rating;
     		}
     	}
     	if (meal_count > 0){
     		health_avg = health_sum/meal_count;
     		taste_avg = taste_sum/meal_count;
+    		cost_avg = cost_sum/meal_count;
     	}
     	planHealthRating.setRating(health_avg);
     	planHealthRating.invalidate();
     	planTasteRating.setRating(taste_avg);
     	planTasteRating.invalidate();
+    	planCostRating.setRating(cost_avg);
+    	planCostRating.invalidate();
     }
     
     @Override
