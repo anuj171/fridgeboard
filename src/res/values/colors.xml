@@ -1,5 +1,7 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
-
+    <color name="blue_actionbar">#5267d2</color>
+	<color name="white">#ffffff</color>
+	<color name="light_blue">#BBDDFF</color>
 </resources>

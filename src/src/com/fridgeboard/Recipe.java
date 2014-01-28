@@ -40,6 +40,7 @@ public class Recipe extends Activity {
 		if (extras != null) {
 			recipeId = extras.getLong(RECIPE_ID);
 		}
+		
 		LoadView(recipeId);
 	}
 	

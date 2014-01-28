@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     
+    
+    
     <!-- The main content view -->
 	<LinearLayout 
 	    android:orientation="vertical" 
@@ -19,19 +21,18 @@
 	     
 	</LinearLayout>
 	
-	
-	
 	<!-- The navigation drawer -->
-    <ListView android:id="@+id/left_drawer"
+    <ListView android:id="@+id/right_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:layout_gravity="end"
         android:choiceMode="singleChoice"
         android:divider="#666"
         android:dividerHeight="1dp"
         android:background="#333"
         android:paddingLeft="15sp"
-        android:paddingRight="15sp"
-        />
+        android:paddingRight="15sp">
+  
+     </ListView>
     
 </android.support.v4.widget.DrawerLayout>

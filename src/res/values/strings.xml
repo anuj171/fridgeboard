@@ -46,12 +46,16 @@ http://cooks.ndtv.com/recipe/show/rajma-233367
 <string name="taste_text">Taste:</string>
 <string name="health_text">Health:</string>
 
-<string name="settings">Settings</string>
-<string name="print">Print</string>
-<string name="facebook">Facebook</string>
-<string name="bigbasket">BigBasket</string>
-<string name="whatsapp">WhatsApp</string>
-<string name="email">Email</string>
-<string name="addrecipe">Add Recipe</string>
+<string-array name="items">
+        <item>Settings</item>
+        <item>Print</item>
+        <item>Facebook</item>
+        <item>BigBasket</item>
+        <item>WhatsApp</item>
+        <item>Add Recipe</item>
+</string-array>
+
+<string name="drawer_open">Open Options</string>
+<string name="drawer_close">Close Options</string>
 
 </resources>
