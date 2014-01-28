@@ -43,6 +43,10 @@ public class HomeScreen extends Activity {
 	    	   	Intent intent = new Intent(HomeScreen.this, MealSettingsActivity.class);
 	        	startActivity(intent);
 			}
+			else if(position == 1){
+				Intent intent = new Intent(HomeScreen.this, SearchRecipeActivity.class);
+				startActivity(intent);
+			}
         	
             drawerLayout.closeDrawer(drawerListView); 
 		}

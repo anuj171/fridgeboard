@@ -13,7 +13,7 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 28;
+	private static final int DATABASE_VERSION = 30;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
@@ -224,7 +224,7 @@ public class DataSource {
 		  createIngredient("Kasoori methi", category, "gm");
 		  createIngredient("Salt", category, "gm");
 		  createIngredient("Jeera", category, "gm");
-		  createIngredient("Vegetable Oil", category, "lt"); //17
+		  createIngredient("Vegetable Oil", category, "ml"); //17
 		  
 		  // Pulses
 		  category = 2;

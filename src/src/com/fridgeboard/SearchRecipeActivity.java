@@ -37,10 +37,11 @@ public class SearchRecipeActivity extends Activity {
         dummyItem = datasource.dummyItem;
         datasource.close();
         
-		ListView recipeListView = (ListView)findViewById(R.id.listView1);
-		recipeListAdapter = new RecipeListAdapter(this,R.layout.widget_recipe_item_one, recipeList);
+		final ListView recipeListView = (ListView)findViewById(R.id.listView1);
+		recipeListAdapter = new RecipeListAdapter(this, R.layout.widget_recipe_item_one, recipeList);
 		recipeListAdapter.dummyItem = dummyItem;
 		recipeListView.setAdapter(recipeListAdapter);
+		recipeListAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -51,14 +52,14 @@ public class SearchRecipeActivity extends Activity {
 	}
 	
     public void loadRecipe(View view) {
-    	int[] tag_array = (int [])view.getTag();
-	   	int position = tag_array[0];
-	
-	   	RecipeItem item = (RecipeItem) recipeListAdapter.recipeItems.get(position);
-	   	
-	   	Intent recipeAddIntent = new Intent(this, HomeScreen.class);
-	   	recipeAddIntent.putExtra(Recipe.RECIPE_ID, item.getId());
-	   	
-    	startActivity(recipeAddIntent);
+//    	int[] tag_array = (int [])view.getTag();
+//	   	int position = tag_array[0];
+//	
+//	   	RecipeItem item = (RecipeItem) recipeListAdapter.recipeItems.get(position);
+//	   	
+//	   	Intent recipeAddIntent = new Intent(this, HomeScreen.class);
+//	   	recipeAddIntent.putExtra(Recipe.RECIPE_ID, item.getId());
+//	   	
+//    	startActivity(recipeAddIntent);
 	}
 }
