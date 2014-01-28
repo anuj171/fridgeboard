@@ -5,17 +5,35 @@
         AppBaseTheme from BOTH res/values/styles.xml and
         res/values-v11/styles.xml on API 14+ devices.
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- API 14 theme customizations can go here. -->
+    
+    <style name="AppTheme" parent="@android:style/Theme.Holo.Light">    
+	<item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
+	</style>
+
+	<style name="AppTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+		<item name="android:windowBackground">@color/blue_actionbar</item>
+		<item name="android:background">@color/blue_actionbar</item>
+		<item name="android:drawableBottom">@color/blue_actionbar</item>
+		<item name="android:titleTextStyle">@style/AppTheme.ActionBar.Text</item>   
+	</style>
+	
+	<style name="AppTheme.ActionBar.Text" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+    <!--
+    <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
     
-    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.ActionBar.Solid">
 		<item name="android:windowBackground">@color/blue_actionbar</item>
 		<item name="android:background">@color/blue_actionbar</item>
-		<item name="android:textColor">@color/white</item>
+		<item name="android:textColor">@android:color/white</item>
+
 		<item name="android:iconifiedByDefault">false</item>
 		
 	</style>
-
+	-->
 </resources>

@@ -77,6 +77,8 @@ public class HomeScreen extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_screen);
+        
+        getActionBar().setDisplayShowHomeEnabled(false);
 
         rightNow = Calendar.getInstance();
 		
@@ -157,8 +159,6 @@ public class HomeScreen extends Activity {
         
         // Set actionBarDrawerToggle as the DrawerListener
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
- 
-        getActionBar().setDisplayHomeAsUpEnabled(false);
  
         // just styling option add shadow the right edge of the drawer
         //drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);

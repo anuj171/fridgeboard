@@ -25,6 +25,9 @@ public class SearchRecipeActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		getActionBar().setDisplayShowHomeEnabled(false);
+		
 		setContentView(R.layout.activity_search_recipe);
 		
 		DataAccess dataAccess = new DataAccess();

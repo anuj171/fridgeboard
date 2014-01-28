@@ -29,6 +29,8 @@ public class Recipe extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		getActionBar().setDisplayShowHomeEnabled(false);
+		
 		setContentView(R.layout.activity_recipe);
 
 		//final View controlsView = findViewById(R.id.fullscreen_content_controls);

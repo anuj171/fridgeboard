@@ -58,6 +58,8 @@ public class Groceries extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_groceries);
+		
+        getActionBar().setDisplayShowHomeEnabled(false);
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
