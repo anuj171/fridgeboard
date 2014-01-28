@@ -7,14 +7,17 @@ import com.fridgeboard.util.SystemUiHider;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -33,6 +36,10 @@ public class Recipe extends Activity {
 		getActionBar().setDisplayShowHomeEnabled(false);
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
         getActionBar().setCustomView(R.layout.actionbar);
+        
+        ImageButton searchButton = (ImageButton) findViewById(R.id.share_button);
+        searchButton.setVisibility(View.VISIBLE);
+        
         TextView titleText = (TextView) findViewById(R.id.titletext);
         titleText.setText(R.string.title_activity_recipe);
 		
@@ -70,12 +77,18 @@ public class Recipe extends Activity {
         
 		TextView prepsTextView = (TextView) findViewById(R.id.preptime_text);
 		prepsTextView.setText(recipeItem != null ? recipeItem.getPrepTime() : "9 mins" );
+		ImageView prepsImageView = (ImageView) findViewById(R.id.preptime_image);
+		prepsImageView.setImageResource(getClockImageFromTime(recipeItem != null ? recipeItem.getPrepTime() : "9 mins" ));
 		
 		TextView cookTextView = (TextView) findViewById(R.id.cooktime_text);
 		cookTextView.setText(recipeItem != null ? recipeItem.getCookingTime() : "45 mins" );
+		ImageView cookImageView = (ImageView) findViewById(R.id.cooktime_image);
+		cookImageView.setImageResource(getClockImageFromTime(recipeItem != null ? recipeItem.getCookingTime() : "9 mins" ));
 		
 		TextView totalTextView = (TextView) findViewById(R.id.totaltime_text);
 		totalTextView.setText(recipeItem != null ? recipeItem.getTotalTime() : "54 mins" );
+		ImageView totalImageView = (ImageView) findViewById(R.id.totaltime_image);
+		totalImageView.setImageResource(getClockImageFromTime(recipeItem != null ? recipeItem.getTotalTime() : "9 mins" ));
 		
 		RatingBar tasteRating = (RatingBar) findViewById(R.id.tasteRating);
 		tasteRating.setRating(recipeItem != null ? recipeItem.getTasteRating() : 4);
@@ -106,5 +119,62 @@ public class Recipe extends Activity {
 		super.onPostCreate(savedInstanceState);
 
 	}
+	
+	int getClockImageFromTime(String time_string){
+		int time = (int) Integer.parseInt(time_string.substring(0, time_string.length()-5));
+		if (time <= 5){
+			return getResources().getIdentifier(
+    				"clock05", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 10){
+			return getResources().getIdentifier(
+    				"clock10", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 15){
+			return getResources().getIdentifier(
+    				"clock15", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 20){
+			return getResources().getIdentifier(
+    				"clock20", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 25){
+			return getResources().getIdentifier(
+    				"clock25", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 30){
+			return getResources().getIdentifier(
+    				"clock30", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 35){
+			return getResources().getIdentifier(
+    				"clock35", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 40){
+			return getResources().getIdentifier(
+    				"clock40", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 45){
+			return getResources().getIdentifier(
+    				"clock45", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 50){
+			return getResources().getIdentifier(
+    				"clock50", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 55){
+			return getResources().getIdentifier(
+    				"clock55", 
+    				"drawable", getApplicationContext().getPackageName());
+		}  
+		return getResources().getIdentifier(
+				"clock60", 
+				"drawable", getApplicationContext().getPackageName());
+		}
+	
+    public void onShareClicked(View v)
+    {
+    	Toast.makeText(this, R.string.sharerecipe, Toast.LENGTH_LONG).show();
+    }
 
 }

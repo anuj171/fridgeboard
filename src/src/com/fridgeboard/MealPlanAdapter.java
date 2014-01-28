@@ -89,8 +89,17 @@ public class MealPlanAdapter extends BaseExpandableListAdapter {
       LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       view = inf.inflate(R.layout.meal_plan_category, null);
      }
-      
-     ((TextView) view.findViewById(R.id.category)).setText(category.category.trim());
+     
+     String categoryStr = category.category.trim();
+     if(categoryStr.equals("BREAKFAST")){
+    	 categoryStr = "Breakfast";
+		} else if(categoryStr.equals("LUNCH")){
+			categoryStr = "Lunch";
+		} else if(categoryStr.equals("DINNER")){
+			categoryStr = "Dinner";
+		}
+			
+     ((TextView) view.findViewById(R.id.category)).setText(categoryStr);
 	 ImageButton add = (ImageButton) view.findViewById(R.id.buttonAdd);
 	 int[] tag_array = new int[1]; 
 	 tag_array[0] = groupPosition;
@@ -151,14 +160,20 @@ public class MealPlanAdapter extends BaseExpandableListAdapter {
 	               	 tagT_array[1] = childPosition;
 	               	 midLayout.setTag(tagT_array);
 	               	 ((TextView)view.findViewById(R.id.txtDesc)).setText(meal.desc);
-	               	 ((TextView)view.findViewById(R.id.txtNutrition)).setText(meal.nutrition);
-	               	 ((TextView)view.findViewById(R.id.txtDuration)).setText("Time: "+meal.duration);
+	               	 ((TextView)view.findViewById(R.id.txtNutrition)).setText("Nutrition: "+meal.nutrition);
+	               	 ((TextView)view.findViewById(R.id.txtDuration2)).setText(meal.duration);
 	               	 ImageView imgIcon = (ImageView)view.findViewById(R.id.imgIcon);
 	               	 imgIcon.setImageResource(meal.icon);
 	               	 int[] tagI_array = new int[2]; 
 	               	 tagI_array[0] = groupPosition;
 	               	 tagI_array[1] = childPosition;
 	               	 imgIcon.setTag(tagI_array);
+	               	 ImageView imgTime = (ImageView)view.findViewById(R.id.imageTimeTaken);
+	               	 imgTime.setImageResource(meal.imageTime);
+	               	 int[] tagI2_array = new int[2]; 
+	               	 tagI2_array[0] = groupPosition;
+	               	 tagI2_array[1] = childPosition;
+	               	 imgTime.setTag(tagI2_array);
                         break;
                 case 2:
                     view = inflater.inflate (R.layout.widget_recipe_item_refresh, null);

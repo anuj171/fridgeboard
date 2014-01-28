@@ -17,7 +17,8 @@
 	     <ExpandableListView
 	        android:id="@+id/mealPlanExpandableList"
 	        android:layout_width="fill_parent"
-	        android:layout_height="fill_parent" />
+	        android:layout_height="fill_parent"
+	        android:groupIndicator="@android:color/transparent" />
 	     
 	</LinearLayout>
 	
@@ -27,9 +28,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:divider="#666"
+        android:divider="@color/header_bg"
         android:dividerHeight="1dp"
-        android:background="#333"
+        android:background="@color/menu_background"
         android:paddingLeft="15sp"
         android:paddingRight="15sp">
   

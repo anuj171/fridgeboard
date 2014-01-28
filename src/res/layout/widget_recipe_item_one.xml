@@ -46,19 +46,35 @@
 		    android:textStyle="italic"/>
 		<TextView android:id="@+id/txtNutrition"
 		    android:layout_width="match_parent"
-		    android:layout_height="16sp"
+		    android:layout_height="wrap_content"
 		    android:text="Nutrition"
 	    android:textColor="@color/page_fg"
 		    android:textSize="12sp"
-		    android:textStyle="normal"/>
-		<TextView android:id="@+id/txtDuration"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:text="Time: 15 Min"
-	    android:textColor="@color/page_fg"
-		    android:textSize="12sp"
-		    android:textStyle="bold"
-		    />
+		    android:textStyle="bold"/>
 	</LinearLayout>
-           
+    <LinearLayout android:id="@+id/recipeClockLayout"
+	    android:orientation="vertical" 
+	    android:layout_width="50dp"
+	    android:layout_height="80dp"
+	    android:gravity="left"
+        android:onClick="loadRecipe"
+	    >
+     <ImageView android:id="@+id/imageTimeTaken"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        android:gravity="center_vertical"
+        android:scaleType="fitXY" 
+        android:onClick="loadRecipe"
+        android:src="@drawable/clock05"
+	 />
+	<TextView android:id="@+id/txtDuration2"
+	    android:layout_width="50dp"
+	    android:layout_height="30dp"
+	    android:text="15 mins"
+    	android:textColor="@color/page_fg"
+	    android:textSize="12sp"
+	    />
+	</LinearLayout>
+     
 </LinearLayout>

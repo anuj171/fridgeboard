@@ -162,7 +162,14 @@
 	    android:textColor="@color/page_fg"
 			    android:textSize="12sp" />
 		    
-		     <TextView
+			<ImageView 
+			    android:id="@+id/preptime_image"
+				android:paddingRight="5dp"
+				android:paddingLeft="5dp"
+				android:layout_width="50dp"
+				android:layout_height="50dp"
+				 />
+					     <TextView
 		         android:id="@+id/preptime_text"
 		         android:layout_width="wrap_content"
 		         android:layout_height="wrap_content"
@@ -184,7 +191,15 @@
 			    android:text="@string/cooktime_title"
 	    android:textColor="@color/page_fg"
 			    android:textSize="12sp" />
-		    
+			
+			<ImageView 
+			    android:id="@+id/cooktime_image"
+				android:paddingRight="5dp"
+				android:paddingLeft="5dp"
+				android:layout_width="50dp"
+				android:layout_height="50dp"
+				 />
+					    
 		     <TextView
 		         android:id="@+id/cooktime_text"
 		         android:layout_width="wrap_content"
@@ -207,7 +222,14 @@
 			    android:text="@string/totaltime_title"
 	    		android:textColor="@color/page_fg"
 			    android:textSize="12sp" />
-		    
+		    <ImageView 
+			    android:id="@+id/totaltime_image"
+				android:paddingRight="5dp"
+				android:paddingLeft="5dp"
+				android:layout_width="50dp"
+				android:layout_height="50dp"
+				 />
+			
 		     <TextView
 		         android:id="@+id/totaltime_text"
 		         android:layout_width="wrap_content"
@@ -228,7 +250,7 @@
 	    android:textColor="@color/header_bg"
 	    android:background="@color/header_fg"
 	    android:textStyle="bold"
-	    android:textSize="14sp"/>
+	    android:textSize="16sp"/>
     
      <com.fridgeboard.ExpandableTextView
         android:id="@+id/ingredients_text"
@@ -248,7 +270,7 @@
 	    android:textColor="@color/header_bg"
 	    android:background="@color/header_fg"
 	    android:textStyle="bold"
-	    android:textSize="14sp"/>
+	    android:textSize="16sp"/>
     
      <com.fridgeboard.ExpandableTextView
         android:id="@+id/instructions_text"
@@ -269,7 +291,7 @@
 	    android:textColor="@color/header_bg"
 	    android:background="@color/header_fg"
 	    android:textStyle="bold"
-	    android:textSize="14sp"/>
+	    android:textSize="16sp"/>
     
      <TextView
         android:id="@+id/links_text"

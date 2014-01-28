@@ -16,6 +16,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -41,6 +43,11 @@ public class HomeScreen extends Activity {
 			if (position == 0)
 			{
 	    	   	Intent intent = new Intent(HomeScreen.this, MealSettingsActivity.class);
+	        	startActivity(intent);
+			}
+			else if (position == 8)
+			{
+				Intent intent = new Intent(HomeScreen.this, GraphActivity.class);
 	        	startActivity(intent);
 			}
 			else
@@ -86,6 +93,12 @@ public class HomeScreen extends Activity {
         TextView titleText = (TextView) findViewById(R.id.titletext);
         titleText.setText(R.string.app_name);
         
+        ImageButton searchButton = (ImageButton) findViewById(R.id.search_button);
+        searchButton.setVisibility(View.VISIBLE);
+        
+        ImageButton groceriesButton = (ImageButton) findViewById(R.id.action_groceries);
+        groceriesButton.setVisibility(View.VISIBLE);
+        
         if(olderRightNow == null)
         	rightNow = Calendar.getInstance();
         else
@@ -119,7 +132,6 @@ public class HomeScreen extends Activity {
         
 		//get reference to the ExpandableListView
 		mealPlanListView = (ExpandableListView) findViewById(R.id.mealPlanExpandableList);
-		
         
         View header = (View)getLayoutInflater().inflate(R.layout.home_screen_header, null);
         ActivitySwipeDetector activitySwipeDetector = new ActivitySwipeDetector(this);
@@ -167,7 +179,8 @@ public class HomeScreen extends Activity {
                 );
         
         //  enable and show "up" arrow
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(false);
+        getActionBar().setDisplayShowHomeEnabled(false);
         
         // Set actionBarDrawerToggle as the DrawerListener
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
@@ -304,7 +317,7 @@ public class HomeScreen extends Activity {
 		
 		List<Long> recipeIdsToAvoid = generateAvoidList();
 		
-		int count = 5;
+		int count = 10;
 		while (count-- >= 0 && recipeIdsToAvoid != null)
 		{
 			if (!recipeIdsToAvoid.contains(recipes.get(recipeId).getId()))
@@ -372,8 +385,29 @@ public class HomeScreen extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+       //setMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+    
+    public void onSearchClicked(View v)
+    {
+    	startActivity(new Intent(this, SearchRecipeActivity.class));
+    }
+    
+    public void onGroceriesClicked(View v)
+    {
+    	startActivity(new Intent(this, Groceries.class));
+    }
+    
+    @Override
+    public boolean onKeyDown(int keycode, KeyEvent e) {
+        switch(keycode) {
+            case KeyEvent.KEYCODE_MENU:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onKeyDown(keycode, e);
     }
 
     @Override
@@ -384,14 +418,14 @@ public class HomeScreen extends Activity {
            return true;
        }
        
-		switch(item.getItemId()) {
-		case R.id.action_groceries:
-			startActivity(new Intent(this, Groceries.class));
-			break;
-		case R.id.search_settings:
-			startActivity(new Intent(this, SearchRecipeActivity.class));
-			break;
-		}
+//		switch(item.getItemId()) {
+//		case R.id.action_groceries:
+//			startActivity(new Intent(this, Groceries.class));
+//			break;
+//		case R.id.search_settings:
+//			startActivity(new Intent(this, SearchRecipeActivity.class));
+//			break;
+//		}
 		return false;
 	}
     
@@ -451,7 +485,8 @@ public class HomeScreen extends Activity {
 					recipe.getHealthRating(), 
 					recipe.getTasteRating(),
 					recipe.getCostRating(),
-					recipe.getCategory() == RecipeCategory.LunchOrDinnerSideDish);
+					recipe.getCategory() == RecipeCategory.LunchOrDinnerSideDish,
+					getClockImageFromTime(recipe.getTotalTime()));
 	}    
     
     private void createData() {
@@ -495,6 +530,59 @@ public class HomeScreen extends Activity {
         mealPlanHeaderDay.invalidate();
         mealPlanHeaderDate.invalidate();
     }
+    
+	int getClockImageFromTime(String time_string){
+		int time = (int) Integer.parseInt(time_string.substring(0, time_string.length()-5));
+		if (time <= 5){
+			return getResources().getIdentifier(
+    				"clock05", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 10){
+			return getResources().getIdentifier(
+    				"clock10", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 15){
+			return getResources().getIdentifier(
+    				"clock15", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 20){
+			return getResources().getIdentifier(
+    				"clock20", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 25){
+			return getResources().getIdentifier(
+    				"clock25", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 30){
+			return getResources().getIdentifier(
+    				"clock30", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 35){
+			return getResources().getIdentifier(
+    				"clock35", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 40){
+			return getResources().getIdentifier(
+    				"clock40", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 45){
+			return getResources().getIdentifier(
+    				"clock45", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 50){
+			return getResources().getIdentifier(
+    				"clock50", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 55){
+			return getResources().getIdentifier(
+    				"clock55", 
+    				"drawable", getApplicationContext().getPackageName());
+		}  
+		return getResources().getIdentifier(
+				"clock60", 
+				"drawable", getApplicationContext().getPackageName());
+		}
+
 
     @Override
     protected void onResume() {
