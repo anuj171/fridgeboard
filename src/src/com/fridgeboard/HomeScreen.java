@@ -391,8 +391,8 @@ public class HomeScreen extends Activity {
 		case R.id.action_groceries:
 			startActivity(new Intent(this, Groceries.class));
 			break;
-		case R.id.action_settings:
-			drawerLayout.openDrawer(GravityCompat.END);
+		case R.id.search_settings:
+			startActivity(new Intent(this, SearchRecipeActivity.class));
 			break;
 		}
 		return false;

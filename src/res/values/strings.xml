@@ -49,7 +49,7 @@ http://cooks.ndtv.com/recipe/show/rajma-233367
 
 <string-array name="items">
         <item>Settings</item>
-        <item >Search</item><item>Print</item>
+        <item>Print</item>
         <item>Facebook</item>
         <item>BigBasket</item>
         <item>WhatsApp</item>
