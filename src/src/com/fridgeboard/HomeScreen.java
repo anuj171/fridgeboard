@@ -485,7 +485,8 @@ public class HomeScreen extends Activity {
 					recipe.getHealthRating(), 
 					recipe.getTasteRating(),
 					recipe.getCostRating(),
-					recipe.getCategory() == RecipeCategory.LunchOrDinnerSideDish);
+					recipe.getCategory() == RecipeCategory.LunchOrDinnerSideDish,
+					getClockImageFromTime(recipe.getTotalTime()));
 	}    
     
     private void createData() {
@@ -529,6 +530,59 @@ public class HomeScreen extends Activity {
         mealPlanHeaderDay.invalidate();
         mealPlanHeaderDate.invalidate();
     }
+    
+	int getClockImageFromTime(String time_string){
+		int time = (int) Integer.parseInt(time_string.substring(0, time_string.length()-5));
+		if (time <= 5){
+			return getResources().getIdentifier(
+    				"clock05", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 10){
+			return getResources().getIdentifier(
+    				"clock10", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 15){
+			return getResources().getIdentifier(
+    				"clock15", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 20){
+			return getResources().getIdentifier(
+    				"clock20", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 25){
+			return getResources().getIdentifier(
+    				"clock25", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 30){
+			return getResources().getIdentifier(
+    				"clock30", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 35){
+			return getResources().getIdentifier(
+    				"clock35", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 40){
+			return getResources().getIdentifier(
+    				"clock40", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 45){
+			return getResources().getIdentifier(
+    				"clock45", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 50){
+			return getResources().getIdentifier(
+    				"clock50", 
+    				"drawable", getApplicationContext().getPackageName());
+		} else if (time <= 55){
+			return getResources().getIdentifier(
+    				"clock55", 
+    				"drawable", getApplicationContext().getPackageName());
+		}  
+		return getResources().getIdentifier(
+				"clock60", 
+				"drawable", getApplicationContext().getPackageName());
+		}
+
 
     @Override
     protected void onResume() {

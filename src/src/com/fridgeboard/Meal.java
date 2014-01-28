@@ -3,6 +3,7 @@ package com.fridgeboard;
 public class Meal {
 	public long meal_id;
 	public int icon;
+	public int imageTime;
     public String title;
     public String desc;
     public String nutrition;
@@ -17,7 +18,7 @@ public class Meal {
         super();
     }
 
-    public Meal(long meal_id, int icon, String title, String desc, String nutrition, String duration, int recipe_id, float health_rating, float taste_rating, float cost_rating, boolean isSideDish) {
+    public Meal(long meal_id, int icon, String title, String desc, String nutrition, String duration, int recipe_id, float health_rating, float taste_rating, float cost_rating, boolean isSideDish, int imageTime) {
         super();
         this.meal_id = meal_id;
         this.icon = icon;
@@ -30,6 +31,7 @@ public class Meal {
         this.taste_rating = taste_rating;
         this.cost_rating = cost_rating;
         this.isSideDish = isSideDish;
+        this.imageTime = imageTime;
     }
 
 }
