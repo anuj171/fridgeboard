@@ -1,5 +1,6 @@
 package com.fridgeboard;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -52,6 +53,8 @@ public class Groceries extends FragmentActivity {
 	ViewPager mViewPager;
 	
 	static TextView mRemainingLabel;
+	static HashMap selected;
+	static Boolean labelSet;
 
 	public static String[] Categories = {"Vegetables", "Staples", "Pulses", "Dairy", "Other"};
 	
@@ -76,6 +79,13 @@ public class Groceries extends FragmentActivity {
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 
 		mRemainingLabel = (TextView) findViewById(R.id.remaining_items_label);
+		
+	    selected = new HashMap();
+	    for(int j=0; j<Categories.length; j++) {
+	    	selected.put(j, 0);
+	    }
+	    
+	    labelSet = false;
 	}
 
 	@Override
@@ -172,15 +182,18 @@ public class Groceries extends FragmentActivity {
 		public void onActivityCreated(Bundle savedInstanceState) {
 		    super.onActivityCreated(savedInstanceState);
 
-		    int option = getArguments().getInt(ARG_CATEGORY);
+		    final int option = getArguments().getInt(ARG_CATEGORY);
 
 		    GroceriesData groceries = new GroceriesData(getActivity());
 		    Cursor list = groceries.getListForCategory(option);
 		    getActivity().startManagingCursor(list);
 		    
 		    total = groceries.getTotalCount();
-
-		    mRemainingLabel.setText(total + " items remaining");
+		    
+		    if(!labelSet) {
+		    	mRemainingLabel.setText(total + " items remaining");
+		    	labelSet = true;
+		    }
  
             String[] columns = new String[] { "name", "value", "desc" };
             int[] to = new int[] { R.id.grocery_name, R.id.grocery_value, R.id.grocery_desc};
@@ -200,8 +213,15 @@ public class Groceries extends FragmentActivity {
 		        	CheckedTextView cb = (CheckedTextView) view.findViewById(R.id.grocery_namecb);
 		        	cb.setChecked(!cb.isChecked());
 		        	
-		        	int x = getListView().getCheckedItemCount();
-		        	int remaining = total - x;
+		        	int x = getListView().getCheckedItemCount();		        	
+		        	selected.put(option, x);
+		        	
+		        	int currentSel = 0;
+		        	for(int j=0; j<Categories.length; j++) {
+		        		currentSel += (Integer) selected.get(j);
+		        	}
+		        	int remaining = total - currentSel;
+		        	
 		        	mRemainingLabel.setText(remaining + " items remaining");
 		        }
 		    });
