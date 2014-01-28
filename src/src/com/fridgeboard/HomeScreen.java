@@ -45,6 +45,11 @@ public class HomeScreen extends Activity {
 	    	   	Intent intent = new Intent(HomeScreen.this, MealSettingsActivity.class);
 	        	startActivity(intent);
 			}
+			else if (position == 8)
+			{
+				Intent intent = new Intent(HomeScreen.this, GraphActivity.class);
+	        	startActivity(intent);
+			}
 			else
 				Toast.makeText(HomeScreen.this, ((TextView)view).getText(), Toast.LENGTH_LONG).show();
         	
