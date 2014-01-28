@@ -7,6 +7,15 @@
     android:gravity="center"
 	android:background = "@color/blue_actionbar">
     
+    <ImageButton
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/title_activity_search_recipe"
+        android:src="@drawable/search"
+        android:visibility="invisible"
+        android:onClick="onSearchClicked" />
+
     <TextView
         android:id="@+id/titletext"
         android:layout_width="0dip" 
@@ -16,7 +25,17 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="20sp"
+        android:textStyle="bold|italic"
         android:text="">
     </TextView>
+    
+    <ImageButton
+        android:id="@+id/action_groceries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/action_groceries"
+        android:src="@drawable/ic_grocery_list"
+        android:visibility="invisible"
+        android:onClick="onGroceriesClicked" />
 
 </LinearLayout>
