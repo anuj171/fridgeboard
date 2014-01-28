@@ -1,6 +1,5 @@
 package com.fridgeboard;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +9,11 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.location.Criteria;
 import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 18;
+	private static final int DATABASE_VERSION = 20;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
