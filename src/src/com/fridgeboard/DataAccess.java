@@ -146,6 +146,7 @@ public class DataSource {
 	  public void close() {
 	    dbHelper.close();
 	  }
+	  public RecipeItem dummyItem;
 	  
 	  public void fillData(SQLiteDatabase databse)
 	  {
@@ -178,7 +179,7 @@ public class DataSource {
 	  
 	  public void fillRecipe()
 	  {
-			  createRecipeItem(
+			  dummyItem =createRecipeItem(
 					  "Rajma Masala",
 					  "Red kidney beans cooked in tomatoes, onions and spices.",
 					  "punjabirajma",
