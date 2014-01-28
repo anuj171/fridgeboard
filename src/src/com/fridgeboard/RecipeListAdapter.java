@@ -31,14 +31,14 @@ public class RecipeListAdapter extends ArrayAdapter<RecipeItem> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
 		RecipeItem item;
-		if(position < this.recipeItems.size()){
+		if(position < this.recipeItems.size())
+		{
 			item=(RecipeItem)this.recipeItems.get(position);			
 			}
 		else
 			item = this.dummyItem;
 		
-        RecipeHolder holder = null;
-        
+		RecipeHolder holder = null;
         if(row == null)
         {
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
