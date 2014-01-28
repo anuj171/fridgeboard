@@ -75,3 +75,4 @@ public class RecipeListAdapter extends ArrayAdapter<RecipeItem> {
 		TextView duration;
 	}
 }
+

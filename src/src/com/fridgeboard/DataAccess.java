@@ -13,7 +13,7 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 27;
+	private static final int DATABASE_VERSION = 30;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
