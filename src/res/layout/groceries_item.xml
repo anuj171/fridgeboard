@@ -35,7 +35,7 @@
         android:layout_toRightOf="@id/grocery_name"
         android:paddingLeft="10dp"
         android:layout_alignBaseline="@id/grocery_name"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textSize="14sp" />
     
     <TextView android:id="@+id/grocery_desc"
         android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="?android:attr/listPreferredItemHeightSmall"
 	    android:gravity="right|center_vertical"
-	    android:checkMark="?android:attr/textCheckMark"
+	    android:checkMark="@layout/grocery_checkmark"
 	    android:paddingLeft="6dip"
 	    android:paddingRight="6dip"
 	/>

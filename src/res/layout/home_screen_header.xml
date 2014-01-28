@@ -22,7 +22,7 @@
         android:clickable="true"
         android:textSize="13dp"
         android:textColor="@color/header_fg"
-        android:text="PREVIOUS\nDAY"
+        android:text="PREV\nDAY"
  />
 	<LinearLayout 
 	    android:orientation="vertical" 
