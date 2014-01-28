@@ -82,7 +82,10 @@ public class Recipe extends Activity {
 		
 		RatingBar healthRating = (RatingBar) findViewById(R.id.healthRating);
 		healthRating.setRating(recipeItem != null ? recipeItem.getHealthRating() : (float)3.5);
-		
+
+		RatingBar costRating = (RatingBar) findViewById(R.id.costRating);
+		costRating.setRating(recipeItem != null ? recipeItem.getCostRating() : (float)3.5);
+
 		ExpandableTextView ingredientsTextView = (ExpandableTextView) findViewById(R.id.ingredients_text);
 		ingredientsTextView.setText(recipeItem != null ? recipeItem.getIngredients() : "Rajma(Red Kidney Bean) - 3/4 cup\nGaram Masala powder- 1/4 tsp(optional)\nKasoori Methi - 1 generous pinch\nCream / Milk - 1 tbsp(optional)\nCoriander leaves - 2 tsp chopped\nSalt - to taste\nOil - 2 tsp\nJeera - 1/2 tsp\nCoriander seeds - 2 tsp\nRed Chillies - 2\nOnion - 1 medium sized\nTomatoes - 2 medium sized\nGarlic - 4 cloves\nGinger - 1/2 inch piece\nCinnamon - 1/4 inch piece\nCloves - 2");
         

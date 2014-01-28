@@ -37,17 +37,14 @@ public class HomeScreen extends Activity {
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
-			Toast.makeText(HomeScreen.this, ((TextView)view).getText(), Toast.LENGTH_LONG).show();
             
 			if (position == 0)
 			{
 	    	   	Intent intent = new Intent(HomeScreen.this, MealSettingsActivity.class);
 	        	startActivity(intent);
 			}
-			else if(position == 1){
-				Intent intent = new Intent(HomeScreen.this, SearchRecipeActivity.class);
-				startActivity(intent);
-			}
+			else
+				Toast.makeText(HomeScreen.this, ((TextView)view).getText(), Toast.LENGTH_LONG).show();
         	
             drawerLayout.closeDrawer(drawerListView); 
 		}
@@ -391,8 +388,8 @@ public class HomeScreen extends Activity {
 		case R.id.action_groceries:
 			startActivity(new Intent(this, Groceries.class));
 			break;
-		case R.id.action_settings:
-			drawerLayout.openDrawer(GravityCompat.END);
+		case R.id.search_settings:
+			startActivity(new Intent(this, SearchRecipeActivity.class));
 			break;
 		}
 		return false;
