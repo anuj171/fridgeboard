@@ -37,7 +37,14 @@ public class HomeScreen extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long arg3) {
 			Toast.makeText(HomeScreen.this, ((TextView)view).getText(), Toast.LENGTH_LONG).show();
-            drawerLayout.closeDrawer(drawerListView);
+            
+			if (position == 0)
+			{
+	    	   	Intent intent = new Intent(HomeScreen.this, MealSettingsActivity.class);
+	        	startActivity(intent);
+			}
+        	
+            drawerLayout.closeDrawer(drawerListView); 
 		}
     }
 
