@@ -89,7 +89,10 @@ public class HomeScreen extends Activity {
         TextView titleText = (TextView) findViewById(R.id.titletext);
         titleText.setText(R.string.app_name);
         
-        rightNow = Calendar.getInstance();
+        if(olderRightNow == null)
+        	rightNow = Calendar.getInstance();
+        else
+        	rightNow = olderRightNow;
 		
 		df = new SimpleDateFormat("EEE, d MMM");
 		dfday = new SimpleDateFormat("EEEE");
@@ -107,7 +110,7 @@ public class HomeScreen extends Activity {
 		if (extras != null) {
 			AddSearchedRecipeId = extras.getLong(Recipe.RECIPE_ID);
 			addSearchedRecipeItem = datasource.getRecipeItem(AddSearchedRecipeId);
-			if(olderRightNow==null)olderRightNow=rightNow;
+			if(olderRightNow == null)olderRightNow=rightNow;
 			addSearchedRecipe();
 			// the assumption here is the loadData will go and update the UI
 		}
