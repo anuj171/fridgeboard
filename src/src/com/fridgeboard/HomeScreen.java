@@ -98,13 +98,13 @@ public class HomeScreen extends Activity {
 	   	int childPosition = tag_array[1];
 	   	long meal_id_to_delete = listAdapter.categoryList.get(groupPosition).mealList.get(childPosition).meal_id;
 	   	DataAccess.MealItem mealitem_to_be_deleted = datasource.getMealItemByID(meal_id_to_delete);  
-	   	List<RecipeItem> recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinner.ordinal());
+	   	List<RecipeItem> recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinnerMainDish.ordinal());
 	   	if (mealitem_to_be_deleted.category.equals("BREAKFAST")){
 	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.BreakFast.ordinal());   	
 	   	} else if(mealitem_to_be_deleted.category.equals("LUNCH")){
-	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinner.ordinal());   	
+	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinnerMainDish.ordinal());   	
 	   	} else if(mealitem_to_be_deleted.category.equals("DINNER")){
-	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinner.ordinal());   	
+	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinnerMainDish.ordinal());   	
 	   	}
     	RecipeItem breakfast = recipes.get((new Random()).nextInt(recipes.size()));
     	while( mealitem_to_be_deleted.recipe_id == (int) breakfast.getId()){
@@ -177,13 +177,13 @@ public class HomeScreen extends Activity {
 	   	int groupPosition = tag_array[0];
 
 	   	String meal_category = listAdapter.categoryList.get(groupPosition).category;
-	   	List<RecipeItem> recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinner.ordinal());
+	   	List<RecipeItem> recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinnerMainDish.ordinal());
 	   	if (meal_category.equals("BREAKFAST")){
 	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.BreakFast.ordinal());   	
 	   	} else if(meal_category.equals("LUNCH")){
-	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinner.ordinal());   	
+	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinnerMainDish.ordinal());   	
 	   	} else if(meal_category.equals("DINNER")){
-	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinner.ordinal());   	
+	    	recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinnerMainDish.ordinal());   	
 	   	}
     	RecipeItem recipe = recipes.get((new Random()).nextInt(recipes.size()));
 	   	DataAccess.MealItem new_mealitem = datasource.createMealItem(datef.format(rightNow.getTime()), meal_category, (int)recipe.getId());
@@ -325,7 +325,7 @@ public class HomeScreen extends Activity {
     }    
     private void createData(){
     	List<RecipeItem> breakfast_recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.BreakFast.ordinal());   	
-    	List<RecipeItem> lunch_dinner_recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinner.ordinal());   	
+    	List<RecipeItem> lunch_dinner_recipes = datasource.getRecipesByCriteria(DataHelper.RECIPE_COLUMN_CATEGORY + " = " + RecipeCategory.LunchOrDinnerMainDish.ordinal());   	
     	RecipeItem breakfast = breakfast_recipes.get((new Random()).nextInt(breakfast_recipes.size()));
     	datasource.createMealItem(datef.format(rightNow.getTime()), "BREAKFAST", (int) breakfast.getId());
     	int l_id = (int) (new Random()).nextInt(lunch_dinner_recipes.size());
