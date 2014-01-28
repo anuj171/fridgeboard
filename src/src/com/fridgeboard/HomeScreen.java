@@ -35,10 +35,12 @@ public class HomeScreen extends Activity {
 
     Calendar rightNow;
 	DateFormat df;
+	DateFormat dfday;
+	DateFormat dfdate;
 	DateFormat dayf;
 	DateFormat datef;
 	
-	private TextView mealPlanHeader;
+	private TextView mealPlanHeaderDay, mealPlanHeaderDate;
 	private RatingBar planHealthRating, planTasteRating, planCostRating;
 	
     @Override
@@ -49,6 +51,8 @@ public class HomeScreen extends Activity {
         rightNow = Calendar.getInstance();
 		
 		df = new SimpleDateFormat("EEE, d MMM");
+		dfday = new SimpleDateFormat("EEEE");
+		dfdate = new SimpleDateFormat("d");
 		dayf = new SimpleDateFormat("EEE");
 		datef = new SimpleDateFormat("EEE, d MMM");
         
@@ -68,13 +72,12 @@ public class HomeScreen extends Activity {
         header.setOnTouchListener(activitySwipeDetector);
 
         
-        mealPlanHeader = (TextView)header.findViewById(R.id.txtHeader);
-        mealPlanHeader.setText(df.format(rightNow.getTime()));
-
+        mealPlanHeaderDay = (TextView)header.findViewById(R.id.txtHeaderDay);
+        mealPlanHeaderDate = (TextView)header.findViewById(R.id.txtHeaderDate);
+        updateHeaderDate();
         planHealthRating = (RatingBar)header.findViewById(R.id.planHealthRating);
         planTasteRating = (RatingBar)header.findViewById(R.id.planTasteRating);
         planCostRating = (RatingBar)header.findViewById(R.id.planCostRating);
-        mealPlanHeader.setText(df.format(rightNow.getTime()));
 
         updateRatings();
         mealPlanListView.addHeaderView(header);
@@ -240,9 +243,7 @@ public class HomeScreen extends Activity {
     /** Called when the user touches the button */
     public void nextDay(View view) {
     	rightNow.add(Calendar.DAY_OF_MONTH, 1);
-    	mealPlanHeader.setText(df.format(rightNow.getTime()));
-    	mealPlanHeader.invalidate();
-    	
+    	updateHeaderDate();
     	loadData();
     	listAdapter.notifyDataSetInvalidated();
         updateRatings();  
@@ -253,9 +254,7 @@ public class HomeScreen extends Activity {
     public void previousDay(View view) {
         // Do something in response to button click
     	rightNow.add(Calendar.DAY_OF_MONTH, -1);
-    	mealPlanHeader.setText(df.format(rightNow.getTime()));
-    	mealPlanHeader.invalidate();
-
+    	updateHeaderDate();
     	loadData();
     	listAdapter.notifyDataSetInvalidated();
         updateRatings();    
@@ -366,7 +365,14 @@ public class HomeScreen extends Activity {
     	planCostRating.setRating(cost_avg);
     	planCostRating.invalidate();
     }
-    
+
+    private void updateHeaderDate(){
+        mealPlanHeaderDay.setText(dfday.format(rightNow.getTime()).toUpperCase());
+        mealPlanHeaderDate.setText(dfdate.format(rightNow.getTime()));
+        mealPlanHeaderDay.invalidate();
+        mealPlanHeaderDate.invalidate();
+    }
+
     @Override
     protected void onResume() {
       datasource.open();

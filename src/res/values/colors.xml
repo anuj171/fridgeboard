@@ -1,5 +1,8 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
-
+	<color name="header_bg"> #DBE0FA</color>
+	<color name="header_fg"> #363837</color>
+	<color name="ratings_bg"> #EEEEFA</color>
+	<color name="ratings_fg"> #DBE0FA</color>
 </resources>
