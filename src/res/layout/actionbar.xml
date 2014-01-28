@@ -9,13 +9,15 @@
     
     <ImageButton
         android:id="@+id/search_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:contentDescription="@string/title_activity_search_recipe"
         android:src="@drawable/search"
         android:visibility="invisible"
         android:onClick="onSearchClicked"
-        android:background="@android:color/transparent" />
+        android:scaleType="centerInside"
+        android:background="@android:color/transparent"
+        android:paddingLeft="5dp" />
 
     <TextView
         android:id="@+id/titletext"
@@ -38,6 +40,8 @@
         android:src="@drawable/ic_grocery_list"
         android:visibility="invisible"
         android:onClick="onGroceriesClicked"
-        android:background="@android:color/transparent" />
+        android:scaleType="centerInside"
+        android:background="@android:color/transparent"
+        android:paddingRight="5dp" />
 
 </LinearLayout>
