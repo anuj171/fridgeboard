@@ -33,12 +33,11 @@ public class RecipeListAdapter extends ArrayAdapter<RecipeItem> {
 		RecipeItem item;
 		if(position < this.recipeItems.size()){
 			item=(RecipeItem)this.recipeItems.get(position);			
-			}
+		}
 		else
 			item = this.dummyItem;
 		
-        RecipeHolder holder = null;
-        
+		RecipeHolder holder = null;
         if(row == null)
         {
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
@@ -75,4 +74,3 @@ public class RecipeListAdapter extends ArrayAdapter<RecipeItem> {
 		TextView duration;
 	}
 }
-
