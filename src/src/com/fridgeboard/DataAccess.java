@@ -13,7 +13,7 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 25;
+	private static final int DATABASE_VERSION = 26;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
@@ -266,7 +266,7 @@ public class DataSource {
 		  createIngredient("Cinnamon", 1, "mm");          // 45
 		  createIngredient("Cloves", 1, "no");
 		  createIngredient("Cardamom", 1, "no");
-		  
+		  createIngredient("Lamb", 4, "gm");
 	  }
 	  
 	  public void fillRecipeIngrRelation()
@@ -366,6 +366,31 @@ public class DataSource {
 		  createRelation(7, 40, 50);
 		  createRelation(7, 1, 100);
 
+		  // korma
+		  createRelation(12, 17, 20);
+		  createRelation(12, 1, 50);
+		  createRelation(12, 2, 100);
+		  createRelation(12, 6, 100);
+		  createRelation(12, 7, 50);
+		  createRelation(12, 40, 50);
+		  
+		  // butter chicken
+		  createRelation(13, 1, 100);
+		  createRelation(13, 44, 500);
+		  createRelation(13, 28, 100);
+		  
+		  // sheekh kabab
+		  createRelation(14, 48, 1000);
+		  createRelation(14, 1, 150);
+		  createRelation(14, 17, 100);
+		  createRelation(14, 15, 10);
+		  
+		  // shahi paneer
+		  createRelation(15, 17, 50);
+		  createRelation(15, 1, 50);
+		  createRelation(15, 3, 150);
+		  createRelation(15, 27, 250);
+		  
 		  
 	  }
 	  	  
@@ -501,7 +526,51 @@ public class DataSource {
 					  "For the rice \nCombine 4 cups of water, bayleaf, cinnamon, clove, cardamom, rice and salt in a deep non-stick pan, cover with a lid and cook on a medium flame for 10 to 12 minutes or till the rice is cooked. \nStrain the rice using a strainer and keep aside. \n \nFor the vegetable gravy \nHeat the oil in a deep non-stick pan and add the cumin seeds. \nWhen the seeds crackle, add the onions and sauté on a medium flame for 1 to 2 minutes or till the onions turn translucent. \nAdd the ginger-green chilli paste, turmeric powder, coriander powder, chilli powder and garam masala and sauté on a medium flame for a few seconds. \nAdd the tomatoes and 2 tbsp of water, mix well and cook on a medium flame for 4 to 5 minutes. \nAdd the mixed vegetables, paneer, salt and milk and cook on a medium flame for another 2 to 3 minutes, while stirring occasionally. \nAdd the sugar, mix well and cook on a medium flame for 1 more minute. \n \nHow to proceed \nCombine the curds, coriander and saffron colour in a bowl and mix well. \nAdd the prepared rice mixture and mix well. \nTransfer 1 of the rice mixture in a handi and spread it evenly with the back of a spoon. \nAdd all the prepared vegetable gravy on it and spread it evenly. \nTop it with the remaining ½ of the rice mixture and spread it evenly. \nPour the ghee evenly over it and cover it with a lid. \nPlace the handi on a non-stick tava (griddle) and cook on a slow flame for 25 to 30 minutes. \nServe immediately.",
 					  "http://www.tarladalal.com/Vegetable-Biryani-1551r",
 					  RecipeCategory.LunchOrDinnerMainDish);
-	  }
+			  
+			  // 12
+			  createRecipeItem(
+					  "Vegetarian Korma", "Rich, creamy and flavorful vegetables", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "vegkorma", 
+					  "20 mins", "30 mins", "50 mins",
+					  (float) 3, (float) 3, (float) 2, 
+					  "2 tablespoons vegetable oil \n1 small onion, diced \n1 teaspoon minced fresh ginger root \n4 cloves garlic, minced \n2 potatoes, cubed \n4 carrots, cubed \n1 fresh jalapeno pepper, seeded and sliced \n3 tablespoons ground unsalted cashews \n1 (4 ounce) can tomato sauce \n2 teaspoons salt \n2 tablespoons curry powder \n1 cup frozen green peas \n1 green bell pepper, chopped \n1 red bell pepper, chopped \n1 cup heavy cream \n1 bunch fresh cilantro for garnish", 
+					  "Heat the oil in a skillet over medium heat. Stir in the onion, and cook until tender. Mix in ginger and garlic, and continue cooking 1 minute. Mix potatoes, carrots, jalapeno, cashews, and tomato sauce. Season with salt and curry powder. Cook and stir 10 minutes, or until potatoes are tender.\n Stir peas, green bell pepper, red bell pepper, and cream into the skillet. Reduce heat to low, cover, and simmer 10 minutes. Garnish with cilantro to serve.", 
+					  "http://allrecipes.com/Recipe/Vegetarian-Korma/Detail.aspx", 
+					  RecipeCategory.LunchOrDinnerMainDish);
+			  
+			  // 13
+			  createRecipeItem(
+					  "Butter Chicken", "Popular North-Indian chicken main dish", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "butterchicken", 
+					  "35 mins", "25 mins", "60 mins",
+					  (float) 5, (float) 2, (float) 4, 
+					  "1 pound dry ziti pasta \n1 onion, chopped \n1 pound lean ground beef \n2 (26 ounce) jars spaghetti sauce \n6 ounces provolone cheese, sliced \n1 1/2 cups sour cream \n6 ounces mozzarella cheese, shredded \n2 tablespoons grated Parmesan cheese", 
+					  "1. Bring a large pot of lightly salted water to a boil. Add ziti pasta, and cook until al dente, about 8 minutes; drain. \n2. In a large skillet, brown onion and ground beef over medium heat. Add spaghetti sauce, and simmer 15 minutes. \n3. Preheat the oven to 350 degrees F (175 degrees C). Butter a 9x13 inch baking dish. Layer as follows: 1/2 of the ziti, Provolone cheese, sour cream, 1/2 sauce mixture, remaining ziti, mozzarella cheese and remaining sauce mixture. Top with grated Parmesan cheese. \n4. Bake for 30 minutes in the preheated oven, or until cheeses are melted.", 
+					  "http://allrecipes.com/recipe/easy-indian-butter-chicken/kitchenview.aspx", 
+					  RecipeCategory.LunchOrDinnerMainDish);
+			  
+			  // 14
+			  createRecipeItem(
+					  "Sheekh Kabab", "spicy and extremely flavorful recipe perfect for BBQ", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "sheekhkabab", 
+					  "15 mins", "20 mins", "45 mins",
+					  (float) 4.5, (float) 2, (float) 4, 
+					  "2 pounds lean ground lamb \n2 onions, finely chopped \n1/2 cup fresh mint leaves, finely chopped \n1/2 cup cilantro, finely chopped \n1 tablespoon ginger paste \n1 tablespoon green chile paste \n2 teaspoons ground cumin \n2 teaspoons ground coriander \n2 teaspoons paprika \n1 teaspoon cayenne pepper \n2 teaspoons salt \n1/4 cup vegetable oil", 
+					  "In a large bowl, mix ground lamb, onions, mint, cilantro, ginger paste, and chile paste. Season with cumin, coriander, paprika, cayenne, and salt. Cover, and refrigerate for 2 hours. \nMold handfuls of the lamb mixture, about 1 cup, to form sausages around skewers. Make sure the meat is spread to an even thickness. Refrigerate until you are ready to grill. \nPreheat grill for high heat. \nBrush grate liberally with oil, and arrange kabobs on grill. Cook for 10 minutes, or until well done, turning as needed to brown evenly.", 
+					  "http://allrecipes.com/recipe/indian-style-sheekh-kabab/detail.aspx", 
+					  RecipeCategory.LunchOrDinnerMainDish);
+
+			  // 15
+			  createRecipeItem(
+					  "Shahi Paneer", "Popular main dish made from farmer's cheese", 
+					  "Calories: 211 | Fat: 4.5g | Protein: 6.1g", "shahipaneer", 
+					  "10 mins", "25 mins", "35 mins",
+					  (float) 4.5, (float) 2.5, (float) 4, 
+					  "2 tablespoons cooking oil \n1 large onion, thinly sliced \n4 cloves garlic, minced \n1 teaspoon ground cumin \n1 teaspoon ground coriander \n1/2 teaspoon ground turmeric \n1/2 teaspoon Kashmiri red chili powder \n4 tomatoes, pureed \n1/2 pound paneer, cubed \n1/4 cup water \n1 teaspoon white sugar \nsalt to taste \n1/4 cup cream \n2 tablespoons chopped fresh cilantro", 
+					  "Heat the oil in a large skillet over medium heat. Cook the onion and garlic in the hot oil until the onions are soft and golden brown, about 5 minutes. Sprinkle the cumin, coriander, turmeric, and chili powder over the onion and garlic; continue cooking until the seasonings are fragrant, about 30 seconds.\nPour the pureed tomatoes into the skillet; cook until the excess liquid evaporates and the oil separates, 3 to 5 minutes. Add the paneer, water, sugar, and salt to the mixture; stir gently so the paneer does not break apart. Cook until the paneer begins to absorb some of the liquid, about 10 minutes. Stir the cream into the mixture and simmer another 5 minutes. Garnish with cilantro to serve.", 
+					  "http://allrecipes.com/Recipe/Shahi-Paneer/Detail.aspx", 
+					  RecipeCategory.LunchOrDinnerMainDish);
+}
 	  
 	  private void createIngredient(String name, int category, String unit) {
 		  ContentValues values = new ContentValues();
