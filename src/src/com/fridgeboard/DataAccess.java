@@ -13,7 +13,7 @@ import android.util.Log;
 
 public class DataAccess {
 	private static final String DATABASE_NAME = "meals_database.db";
-	private static final int DATABASE_VERSION = 30;
+	private static final int DATABASE_VERSION = 31;
 	
 	  public enum RecipeCategory{
 		  BreakFast,
@@ -530,7 +530,7 @@ public class DataSource {
 					  "2 cups long grained rice (basmati) , soaked and drained \n1 bayleaf (tejpatta) \n25 mm  piece cinnamon (dalchini) \n1 clove (laung / lavang) \n1 cardamom (elaichi) \n2 cups chopped and boiled mixed vegetables (carrots , peas , cauliflower , french beans and potatoes) \n2 tbsp oil \n1/2 tsp cumin seeds (jeera) \n3/4 cup finely chopped onions \n2 tsp ginger-green chilli paste \n1/4 tsp turmeric powder (haldi) \n2 tsp coriander (dhania) powder \n1 tsp chilli powder \n1/2 tsp garam masala \n1 cup roughly chopped tomatoes \n1/4 cup paneer (cottage cheese) cubes \nsalt to taste \n1/4 cup milk \na pinch of sugar \n1/4 cup fresh curds (dahi) \n1/4 cup finely chopped coriander (dhania) \na few drops of edible saffron colour \n2 tbsp ghee",
 					  "For the rice \nCombine 4 cups of water, bayleaf, cinnamon, clove, cardamom, rice and salt in a deep non-stick pan, cover with a lid and cook on a medium flame for 10 to 12 minutes or till the rice is cooked. \nStrain the rice using a strainer and keep aside. \n \nFor the vegetable gravy \nHeat the oil in a deep non-stick pan and add the cumin seeds. \nWhen the seeds crackle, add the onions and sauté on a medium flame for 1 to 2 minutes or till the onions turn translucent. \nAdd the ginger-green chilli paste, turmeric powder, coriander powder, chilli powder and garam masala and sauté on a medium flame for a few seconds. \nAdd the tomatoes and 2 tbsp of water, mix well and cook on a medium flame for 4 to 5 minutes. \nAdd the mixed vegetables, paneer, salt and milk and cook on a medium flame for another 2 to 3 minutes, while stirring occasionally. \nAdd the sugar, mix well and cook on a medium flame for 1 more minute. \n \nHow to proceed \nCombine the curds, coriander and saffron colour in a bowl and mix well. \nAdd the prepared rice mixture and mix well. \nTransfer 1 of the rice mixture in a handi and spread it evenly with the back of a spoon. \nAdd all the prepared vegetable gravy on it and spread it evenly. \nTop it with the remaining ½ of the rice mixture and spread it evenly. \nPour the ghee evenly over it and cover it with a lid. \nPlace the handi on a non-stick tava (griddle) and cook on a slow flame for 25 to 30 minutes. \nServe immediately.",
 					  "http://www.tarladalal.com/Vegetable-Biryani-1551r",
-					  RecipeCategory.LunchOrDinnerMainDish);
+					  RecipeCategory.LunchOrDinnerSideDish);
 			  
 			  // 12
 			  createRecipeItem(
