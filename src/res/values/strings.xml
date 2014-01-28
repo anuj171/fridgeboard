@@ -53,7 +53,9 @@ http://cooks.ndtv.com/recipe/show/rajma-233367
         <item>BigBasket</item>
         <item>WhatsApp</item>
         <item>Add Recipe</item>
-        
+        <item>Send to OneNote</item>
+        <item>Send to ToDo</item>
+        <item>Charts</item>
 </string-array>
 
 <string name="drawer_open">Open Options</string>
