@@ -34,6 +34,7 @@ public class HomeScreen extends Activity {
 	private ExpandableListView mealPlanListView;
 
     Calendar rightNow;
+    Calendar olderRightNow;
 	DateFormat df;
 	DateFormat dfday;
 	DateFormat dfdate;
@@ -42,6 +43,9 @@ public class HomeScreen extends Activity {
 	
 	private TextView mealPlanHeaderDay, mealPlanHeaderDate;
 	private RatingBar planHealthRating, planTasteRating, planCostRating;
+	
+	private long AddSearchedRecipeId;
+	RecipeItem addSearchedRecipeItem;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,8 +65,20 @@ public class HomeScreen extends Activity {
         datasource = dataAccess.new DataSource(this);
         datasource.open(); 
 
-        loadData();
+        // Add data of a meal if we are moving here from search screen
+        Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			AddSearchedRecipeId = extras.getLong(Recipe.RECIPE_ID);
+			addSearchedRecipeItem = datasource.getRecipeItem(AddSearchedRecipeId);
+			addSearchedRecipe();
+			// the assumption here is the loadData will go and update the UI
+		}
+		// olderRightNow is used so that when we navigate from this page and come back we have
+		// the recipe to add. Here after adding the recipe, we update the value of olderRightNow
+		olderRightNow = rightNow;
 		
+        loadData();
+        
 		//get reference to the ExpandableListView
 		mealPlanListView = (ExpandableListView) findViewById(R.id.mealPlanExpandableList);
 		
@@ -144,13 +160,26 @@ public class HomeScreen extends Activity {
     	startActivity(recipeLaunchIntent);
 	}
     
+    // Hard coded for search activity. Can be improved.
+    private String GetCategory(RecipeItem recipeItem){
+    	if(recipeItem.getCategory() == RecipeCategory.BreakFast)
+    		return "BREAKFAST";
+    	else
+    		return "LUNCH";
+    }
+    
+    private void addSearchedRecipe(){
+    	
+    	DataAccess.MealItem new_mealitem = datasource.createMealItem(datef.format(olderRightNow.getTime()), GetCategory(addSearchedRecipeItem), (int)AddSearchedRecipeId);
+		CreateMealItem(new_mealitem, addSearchedRecipeItem);
+    }
+    
     /** Called when the user touches the button */
     public void addMeal(View view) {
     	int[] tag_array = (int [])view.getTag();
 	   	int groupPosition = tag_array[0];
-
 	   	String meal_category = listAdapter.categoryList.get(groupPosition).category;
-	   	
+    		
 	   	List<Meal> meals = addMealsToCategory(meal_category);
 	   	
 	   	if (meals.size() > 0)
@@ -243,18 +272,19 @@ public class HomeScreen extends Activity {
     /** Called when the user touches the button */
     public void nextDay(View view) {
     	rightNow.add(Calendar.DAY_OF_MONTH, 1);
+    	olderRightNow = rightNow;
     	updateHeaderDate();
     	loadData();
     	listAdapter.notifyDataSetInvalidated();
         updateRatings();  
 	}
     
-    
     /** Called when the user touches the button */
     public void previousDay(View view) {
         // Do something in response to button click
     	rightNow.add(Calendar.DAY_OF_MONTH, -1);
     	updateHeaderDate();
+    	olderRightNow = rightNow;
     	loadData();
     	listAdapter.notifyDataSetInvalidated();
         updateRatings();    
