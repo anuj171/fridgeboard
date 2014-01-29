@@ -130,9 +130,6 @@ public class HomeScreen extends Activity {
 			canDismissHelp = extras.getBoolean(SplashScreenActivity.FROM_SPASH);
 		}
 		
-		if(canDismissHelp)
-			dismissHelp();
-		
 		// olderRightNow is used so that when we navigate from this page and come back we have
 		// the recipe to add. Here after adding the recipe, we update the value of olderRightNow
 		olderRightNow = rightNow;
@@ -193,6 +190,9 @@ public class HomeScreen extends Activity {
         
         // Set actionBarDrawerToggle as the DrawerListener
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        
+		if(canDismissHelp)
+			dismissHelp();
  
         // just styling option add shadow the right edge of the drawer
         //drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
