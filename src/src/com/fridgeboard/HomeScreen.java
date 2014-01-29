@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -85,6 +86,8 @@ public class HomeScreen extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().hide();
+        
         setContentView(R.layout.home_screen);
         
         getActionBar().setDisplayShowHomeEnabled(false);
@@ -188,6 +191,14 @@ public class HomeScreen extends Activity {
  
         // just styling option add shadow the right edge of the drawer
         //drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+    }
+    
+    public void helpScreenClick(View v)
+    {
+    	ImageView helpView  = (ImageView) findViewById(R.id.helpScreen);
+    	helpView.setVisibility(View.GONE);
+    	getActionBar().show();
+    	mealPlanListView.setVisibility(View.VISIBLE);
     }
     
     @Override
