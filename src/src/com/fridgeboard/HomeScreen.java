@@ -10,6 +10,7 @@ import java.util.Random;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -89,6 +90,10 @@ public class HomeScreen extends Activity {
         getActionBar().hide();
         
         setContentView(R.layout.home_screen);
+        
+    	int orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        // or = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        setRequestedOrientation(orientation);
         
         getActionBar().setDisplayShowHomeEnabled(false);
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
@@ -216,6 +221,11 @@ public class HomeScreen extends Activity {
     
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
+    	
+    	int orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        // or = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        setRequestedOrientation(orientation);
+        
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
