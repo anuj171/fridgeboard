@@ -14,10 +14,20 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	    android:background="#FFFFFF"> 
+	    
+	    <ImageView 
+		    android:id="@+id/helpScreen"
+			android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+			android:scaleType="fitXY"
+			android:src="@drawable/help"
+			android:onClick="helpScreenClick" />
+	    
 	     <ExpandableListView
 	        android:id="@+id/mealPlanExpandableList"
 	        android:layout_width="fill_parent"
 	        android:layout_height="fill_parent"
+	        android:visibility="gone"
 	        android:groupIndicator="@android:color/transparent" />
 	     
 	</LinearLayout>

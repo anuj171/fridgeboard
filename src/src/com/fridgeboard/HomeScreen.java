@@ -10,6 +10,7 @@ import java.util.Random;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -25,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -85,7 +87,13 @@ public class HomeScreen extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().hide();
+        
         setContentView(R.layout.home_screen);
+        
+    	int orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        // or = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        setRequestedOrientation(orientation);
         
         getActionBar().setDisplayShowHomeEnabled(false);
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
@@ -115,16 +123,21 @@ public class HomeScreen extends Activity {
         datasource = dataAccess.new DataSource(this);
         datasource.open(); 
 
+        boolean canDismissHelp = true;
         // Add data of a meal if we are moving here from search screen
         Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			AddSearchedRecipeId = extras.getLong(Recipe.RECIPE_ID);
-			addSearchedRecipeItem = datasource.getRecipeItem(AddSearchedRecipeId);
-			if(olderRightNow == null)olderRightNow=rightNow;
-			addSearchedRecipe();
-
-			// the assumption here is the loadData will go and update the UI
+			if(extras.getBoolean(SplashScreenActivity.FROM_SPASH)) {
+				canDismissHelp = false;
+			}
+			else{
+				AddSearchedRecipeId = extras.getLong(Recipe.RECIPE_ID);
+				addSearchedRecipeItem = datasource.getRecipeItem(AddSearchedRecipeId);
+				if(olderRightNow == null)olderRightNow=rightNow;
+				addSearchedRecipe();
+			}
 		}
+		
 		// olderRightNow is used so that when we navigate from this page and come back we have
 		// the recipe to add. Here after adding the recipe, we update the value of olderRightNow
 		olderRightNow = rightNow;
@@ -185,13 +198,34 @@ public class HomeScreen extends Activity {
         
         // Set actionBarDrawerToggle as the DrawerListener
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        
+		if(canDismissHelp)
+			dismissHelp();
  
         // just styling option add shadow the right edge of the drawer
         //drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
     }
     
+    public void helpScreenClick(View v)
+    {
+    	dismissHelp();
+    }
+    
+    private void dismissHelp()
+    {
+    	ImageView helpView  = (ImageView) findViewById(R.id.helpScreen);
+    	helpView.setVisibility(View.GONE);
+    	getActionBar().show();
+    	mealPlanListView.setVisibility(View.VISIBLE);
+    }
+    
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
+    	
+    	int orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        // or = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        setRequestedOrientation(orientation);
+        
         super.onConfigurationChanged(newConfig);
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }

@@ -60,5 +60,6 @@ http://cooks.ndtv.com/recipe/show/rajma-233367</string>
     <string name="sharereport">Share Report</string>
     <string name="title_activity_graph">Report</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_splash_screen">Food Oracle</string>
 
 </resources>
