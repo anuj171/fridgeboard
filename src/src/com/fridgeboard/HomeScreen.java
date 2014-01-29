@@ -122,12 +122,15 @@ public class HomeScreen extends Activity {
         // Add data of a meal if we are moving here from search screen
         Bundle extras = getIntent().getExtras();
 		if (extras != null) {
-			AddSearchedRecipeId = extras.getLong(Recipe.RECIPE_ID);
-			addSearchedRecipeItem = datasource.getRecipeItem(AddSearchedRecipeId);
-			if(olderRightNow == null)olderRightNow=rightNow;
-			addSearchedRecipe();
-
-			canDismissHelp = extras.getBoolean(SplashScreenActivity.FROM_SPASH);
+			if(extras.getBoolean(SplashScreenActivity.FROM_SPASH)) {
+				canDismissHelp = false;
+			}
+			else{
+				AddSearchedRecipeId = extras.getLong(Recipe.RECIPE_ID);
+				addSearchedRecipeItem = datasource.getRecipeItem(AddSearchedRecipeId);
+				if(olderRightNow == null)olderRightNow=rightNow;
+				addSearchedRecipe();
+			}
 		}
 		
 		// olderRightNow is used so that when we navigate from this page and come back we have
