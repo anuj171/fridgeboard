@@ -8,6 +8,8 @@ import android.view.Menu;
 
 public class SplashScreenActivity extends Activity {
 
+	public static String FROM_SPASH = "FROM_SPLASH";
+	
 	   // Splash screen timer
     private static int SPLASH_TIME_OUT = 2000;
  
@@ -28,6 +30,7 @@ public class SplashScreenActivity extends Activity {
                 // This method will be executed once the timer is over
                 // Start your app main activity
                 Intent i = new Intent(SplashScreenActivity.this, HomeScreen.class);
+                i.putExtra(FROM_SPASH, true);
                 startActivity(i);
  
                 // close this activity

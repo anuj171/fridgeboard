@@ -118,6 +118,7 @@ public class HomeScreen extends Activity {
         datasource = dataAccess.new DataSource(this);
         datasource.open(); 
 
+        boolean canDismissHelp = true;
         // Add data of a meal if we are moving here from search screen
         Bundle extras = getIntent().getExtras();
 		if (extras != null) {
@@ -126,8 +127,12 @@ public class HomeScreen extends Activity {
 			if(olderRightNow == null)olderRightNow=rightNow;
 			addSearchedRecipe();
 
-			// the assumption here is the loadData will go and update the UI
+			canDismissHelp = extras.getBoolean(SplashScreenActivity.FROM_SPASH);
 		}
+		
+		if(canDismissHelp)
+			dismissHelp();
+		
 		// olderRightNow is used so that when we navigate from this page and come back we have
 		// the recipe to add. Here after adding the recipe, we update the value of olderRightNow
 		olderRightNow = rightNow;
@@ -194,6 +199,11 @@ public class HomeScreen extends Activity {
     }
     
     public void helpScreenClick(View v)
+    {
+    	dismissHelp();
+    }
+    
+    private void dismissHelp()
     {
     	ImageView helpView  = (ImageView) findViewById(R.id.helpScreen);
     	helpView.setVisibility(View.GONE);
