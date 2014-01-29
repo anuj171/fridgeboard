@@ -184,7 +184,7 @@ public class Groceries extends FragmentActivity {
 
 		    final int option = getArguments().getInt(ARG_CATEGORY);
 
-		    GroceriesData groceries = new GroceriesData(getActivity());
+		    GroceriesDb groceries = new GroceriesDb(getActivity());
 		    Cursor list = groceries.getListForCategory(option);
 		    getActivity().startManagingCursor(list);
 		    
@@ -199,7 +199,7 @@ public class Groceries extends FragmentActivity {
             int[] to = new int[] { R.id.grocery_name, R.id.grocery_value, R.id.grocery_desc};
  
             try {
-            	SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.groceries_item, list, columns, to);
+            	GroceriesData adapter = new GroceriesData(getActivity(), R.layout.groceries_item, list, columns, to, 0);
             	setListAdapter(adapter);
             }
             catch(Exception e) {
