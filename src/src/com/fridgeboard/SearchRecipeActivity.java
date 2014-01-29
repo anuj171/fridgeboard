@@ -148,7 +148,7 @@ public class SearchRecipeActivity extends Activity {
 			for(int i=0;i<fullRecipeList.size();++i){
 				RecipeItem item = fullRecipeList.get(i);
 				String name = item.getName();				
-				if(name.toLowerCase().startsWith(text.toLowerCase())){
+				if(name.toLowerCase().contains(text.toLowerCase())){
 					recipeList.add(item);
 					recipeNames.add(name);
 				}
