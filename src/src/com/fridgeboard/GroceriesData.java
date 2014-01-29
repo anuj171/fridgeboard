@@ -3,6 +3,7 @@ package com.fridgeboard;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.widget.ImageView;
 
 class GroceriesDb {
 	
@@ -43,5 +44,11 @@ public class GroceriesData extends SimpleCursorAdapter {
 	    this.layout = layout;
 	}
 	
+	@Override
+	public void setViewImage(ImageView image, String imgname) {
+		imgname = imgname.toLowerCase().replace(' ', '_');
+		int img = context.getResources().getIdentifier(imgname, "drawable", "com.fridgeboard");
+		image.setImageResource(img);
+	}
 }
 

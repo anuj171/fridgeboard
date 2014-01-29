@@ -195,8 +195,8 @@ public class Groceries extends FragmentActivity {
 		    	labelSet = true;
 		    }
  
-            String[] columns = new String[] { "name", "value", "desc" };
-            int[] to = new int[] { R.id.grocery_name, R.id.grocery_value, R.id.grocery_desc};
+            String[] columns = new String[] { "name", "value", "desc", "name" };
+            int[] to = new int[] { R.id.grocery_name, R.id.grocery_value, R.id.grocery_desc, R.id.grocery_img};
  
             try {
             	GroceriesData adapter = new GroceriesData(getActivity(), R.layout.groceries_item, list, columns, to, 0);

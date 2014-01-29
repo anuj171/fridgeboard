@@ -15,17 +15,14 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:gravity="center_vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
-        android:scaleType="fitXY" 
-        android:layout_marginBottom="5dp" />
+        android:scaleType="fitXY" />
     
     <TextView android:id="@+id/grocery_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
+        android:layout_toRightOf="@id/grocery_img"
+        android:paddingLeft="4dp"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
     
     <TextView
@@ -41,8 +38,9 @@
     <TextView android:id="@+id/grocery_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@id/grocery_name"
+        android:layout_toRightOf="@id/grocery_img"
+        android:paddingLeft="4dp"
         android:text="Used in Rajma Chawal"
         android:textColor="#666"
         android:textSize="12sp"
