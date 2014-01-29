@@ -37,6 +37,9 @@ public class Recipe extends Activity {
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM); 
         getActionBar().setCustomView(R.layout.actionbar);
         
+        ImageButton groceryButton = (ImageButton) findViewById(R.id.action_groceries);
+        groceryButton.setVisibility(View.GONE);
+        
         ImageButton searchButton = (ImageButton) findViewById(R.id.share_button);
         searchButton.setVisibility(View.VISIBLE);
         
