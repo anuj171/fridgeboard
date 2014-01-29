@@ -69,10 +69,20 @@ public class Recipe extends Activity {
         TextView descView = (TextView) findViewById(R.id.recipe_desc);
         descView.setText(recipeItem != null ? recipeItem.getDescription() : "Red kidney beans cooked in tomatoes, onions and spices.");
         
-        ImageView recipeImageView = (ImageView) findViewById(R.id.recipe_image);
+        ImageView recipeImageView = (ImageView) findViewById(R.id.recipe_image_1);
         recipeImageView.setImageResource(
         		getResources().getIdentifier(
-    				recipeItem != null ? recipeItem.getImage() : "punjabirajma", 
+    				recipeItem != null ? recipeItem.getImage()+"1" : "punjabirajma1", 
+    				"drawable", getApplicationContext().getPackageName()));
+        ImageView recipeImageView2 = (ImageView) findViewById(R.id.recipe_image_2);
+        recipeImageView2.setImageResource(
+        		getResources().getIdentifier(
+    				recipeItem != null ? recipeItem.getImage()+"2" : "punjabirajma12", 
+    				"drawable", getApplicationContext().getPackageName()));
+        ImageView recipeImageView3 = (ImageView) findViewById(R.id.recipe_image_3);
+        recipeImageView3.setImageResource(
+        		getResources().getIdentifier(
+    				recipeItem != null ? recipeItem.getImage()+"3" : "punjabirajma3", 
     				"drawable", getApplicationContext().getPackageName()));
         
 		TextView prepsTextView = (TextView) findViewById(R.id.preptime_text);
